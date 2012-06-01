@@ -25,7 +25,7 @@ namespace lastfm
         private const string root_url = "http://ws.audioscrobbler.com/2.0/";
         public delegate void MethodToCallAfter(KeyValuePair<int, string> response);
 
-        public static void MakeRequest(RequestParameters rParams, bool toSign = false, MethodToCallAfter method = null)
+        public static void MakeRequest_old(RequestParameters rParams, bool toSign = false, MethodToCallAfter method = null)
         {
             rParams.Add("api_key", api_key);
             if (toSign == true)
@@ -79,6 +79,43 @@ namespace lastfm
                     method(new KeyValuePair<int, string>(0, responseString));
                 }
             }), null);
+        }
+        public async static void MakeRequest(RequestParameters rParams, bool toSign = false)
+        {
+            rParams.Add("api_key", api_key);
+            if (toSign == true)
+            {
+                StringBuilder sb = new StringBuilder();
+                //All arguments must be sorted in signature
+                //Because silverlight doesn't support SortedDictionary, I used Linq instead
+                var sortedList = from q in rParams orderby q.Key ascending select q.Key;
+                foreach (string key in sortedList)
+                {
+                    sb.Append(key.ToString() + rParams[key]);
+                }
+                sb.Append(secret);
+                MessageBox.Show(sb.ToString());
+                rParams.Add("api_sig", MD5CryptoServiceProvider.GetMd5String(sb.ToString()));
+            }
+            string request_string = rParams.ToString();
+            WebClient client = new WebClient();
+            client.Headers["User-Agent"] = "last.fm scrobbler for WP";
+            client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
+            client.Headers["Accept-Charset"] = "utf-8";
+            client.Encoding = Encoding.UTF8;
+            byte[] byteArray = rParams.ToBytes();
+            MessageBox.Show(rParams.ToString());
+            string response = "not set";
+            try
+            {
+                response = await client.UploadStringTaskAsync(new Uri(root_url), "POST", rParams.ToString());
+            }
+            catch (WebException ex)
+            {
+                using (StreamReader sr = new StreamReader(((HttpWebResponse)ex.Response).GetResponseStream()))
+                    response = sr.ReadToEnd();
+            }
+            MessageBox.Show(response);
         }
     }
 }

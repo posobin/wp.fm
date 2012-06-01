@@ -26,14 +26,7 @@ namespace lastfm
             rParams.Add("authToken", authToken);
             rParams.Add("method", "auth.getMobileSession");
             AutoResetEvent wh = new AutoResetEvent(false);
-            string resp = "";
-            Request.MakeRequest(rParams, true, x => 
-            {
-                resp = x.Value;
-                SessionName = new Session(resp);
-                method(x);
-            });
-            //wh.WaitOne();
+            Request.MakeRequest(rParams, true);
         }
     }
 }
