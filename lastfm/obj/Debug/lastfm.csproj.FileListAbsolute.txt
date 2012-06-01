@@ -1,0 +1,16 @@
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\ApplicationIcon.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\Background.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\lastfm.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\lastfm.pdb
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\AppManifest.xaml
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\lastfm.xap
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\App.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\LoginPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\MainPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\lastfm.g.resources
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\lastfm.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\lastfm.pdb
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\XapCacheFile.xml
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\AsyncCtpLibrary_Phone.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\AsyncCtpLibrary_Phone.xml
