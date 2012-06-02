@@ -17,7 +17,7 @@ namespace lastfm
 {
     public class auth
     {
-        public static void authorize(string username, string password, Session SessionName,Request.MethodToCallAfter method = null)
+        public static void authorize(string username, string password, Session SessionName)
         {
             string password_hash = MD5CryptoServiceProvider.GetMd5String(password);
             string authToken = MD5CryptoServiceProvider.GetMd5String(username.ToLower() + password_hash);

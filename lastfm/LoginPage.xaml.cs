@@ -23,16 +23,18 @@ namespace lastfm
         {
             InitializeComponent();
             prog = new ProgressIndicator();
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Click me...";
-            SystemTray.SetProgressIndicator(this, prog);
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
             mainSession = new Session();
-            auth.authorize(txtUsername.Text, txtPassword.Text, mainSession, x => Deployment.Current.Dispatcher.BeginInvoke(()=>MessageBox.Show(mainSession.SessionKey)));
+            prog.IsVisible = true;
+            prog.IsIndeterminate = true;
+            prog.Text = "Click me...";
+            SystemTray.SetProgressIndicator(this, prog);
+            auth.authorize(txtUsername.Text, txtPassword.Text, mainSession);
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
         }
     }
 }
