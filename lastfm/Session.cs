@@ -14,14 +14,22 @@ namespace lastfm
     public class Session
     {
         //session key returned after authorization
-        private string sk;
+        private string _sk;
+        private string _UserName;
+
+        public string UserName
+        {
+            get { return _UserName; }
+        }
 
         public string SessionKey
         {
-            get { return sk; }
-            set { sk = value; }
+            get { return _sk; }
         }
-        public Session(string skey) { SessionKey = skey; }
-        public Session() { SessionKey = ""; }
+        public Session(string skey, string userName)
+        {
+            _sk = skey;
+            _UserName = userName;
+        }
     }
 }

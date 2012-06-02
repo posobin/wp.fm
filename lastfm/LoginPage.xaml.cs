@@ -25,14 +25,13 @@ namespace lastfm
             prog = new ProgressIndicator();
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private async void button1_Click(object sender, RoutedEventArgs e)
         {
-            mainSession = new Session();
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Click me...";
             SystemTray.SetProgressIndicator(this, prog);
-            auth.authorize(txtUsername.Text, txtPassword.Text, mainSession);
+            mainSession = await auth.authorize(txtUsername.Text, txtPassword.Text);
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }

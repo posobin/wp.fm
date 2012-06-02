@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Windows;
@@ -10,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.Xml.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using JeffWilcox.Utilities.Silverlight;
 
@@ -17,7 +20,7 @@ namespace lastfm
 {
     public class auth
     {
-        public static void authorize(string username, string password, Session SessionName)
+        public static async Task<Session> authorize(string username, string password)
         {
             string password_hash = MD5CryptoServiceProvider.GetMd5String(password);
             string authToken = MD5CryptoServiceProvider.GetMd5String(username.ToLower() + password_hash);
@@ -26,7 +29,22 @@ namespace lastfm
             rParams.Add("authToken", authToken);
             rParams.Add("method", "auth.getMobileSession");
             AutoResetEvent wh = new AutoResetEvent(false);
-            Request.MakeRequest(rParams, true);
+            XDocument ReturnedXML = await Request.MakeRequest(rParams, true);
+            //Checking whether operation was succesful or not
+            IEnumerable<XElement> lfm = from el in ReturnedXML.Descendants("lfm") select el;
+            string status = lfm.First().Attribute("status").Value.ToString();
+
+            if (status.ToLower() == "ok")
+            {
+                string skey = (from el in ReturnedXML.Descendants("key") select el).First().Value;
+                string user = (from el in ReturnedXML.Descendants("name") select el).First().Value;
+                return new Session(skey, user);
+            }
+            else
+            {
+                MessageBox.Show("Sorry, something went wrong. Probably, you specified wrong password or username. Please, try again");
+                return null;
+            }
         }
     }
 }

@@ -36,12 +36,11 @@ namespace lastfm
                 //All arguments must be sorted in signature
                 //Because silverlight doesn't support SortedDictionary, I used Linq instead
                 var sortedList = from q in rParams orderby q.Key ascending select q.Key;
+
                 foreach (string key in sortedList)
-                {
                     sb.Append(key.ToString() + rParams[key]);
-                }
+
                 sb.Append(secret);
-                MessageBox.Show(sb.ToString());
                 rParams.Add("api_sig", MD5CryptoServiceProvider.GetMd5String(sb.ToString()));
             }
             string request_string = rParams.ToString();
@@ -51,7 +50,6 @@ namespace lastfm
             client.Headers["Accept-Charset"] = "utf-8";
             client.Encoding = Encoding.UTF8;
             byte[] byteArray = rParams.ToBytes();
-            MessageBox.Show(rParams.ToString());
             Stream toReadFrom;
             try
             {
