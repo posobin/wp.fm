@@ -15,7 +15,6 @@ namespace lastfm
 {
     public partial class MainPage : PhoneApplicationPage
     {
-        // Конструктор
         public MainPage()
         {
             InitializeComponent();
@@ -23,8 +22,12 @@ namespace lastfm
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-
             NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
+        }
+
+        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

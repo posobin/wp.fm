@@ -4,44 +4,54 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
-    SupportedOrientations="Portrait" Orientation="Portrait"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
-    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
+    <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+        <!--Pivot Control-->
+        <controls:Pivot Title="last.fm scrobbler for WP7" Margin="1,0,-1,0">
+            <!--Pivot item one-->
+            <controls:PivotItem Header="item1">
+                <Grid>
+                    <Button Content="Button" Height="72" HorizontalAlignment="Left" Margin="1,2,0,0" Name="button1" VerticalAlignment="Top" Width="160" Click="button1_Click" />
+                </Grid>
+            </controls:PivotItem>
 
-        <!--TitlePanel содержит имя приложения и заголовок страницы-->
-        <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="МОЕ ПРИЛОЖЕНИЕ" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="имя страницы" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
-        </StackPanel>
-
-        <!--ContentPanel — поместите здесь дополнительное содержимое-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <Button Content="Button" Height="72" HorizontalAlignment="Left" Margin="10,10,0,0" Name="button1" VerticalAlignment="Top" Width="160" Click="button1_Click" />
-        </Grid>
+            <!--Pivot item two-->
+            <controls:PivotItem Header="search">
+                <StackPanel>
+                    <TextBox Height="72" HorizontalAlignment="Stretch" Margin="10" Name="txtSearchText" VerticalAlignment="Top" />
+                    <TextBlock Text="search for..." Margin="10" Padding="10,0" FontSize="24" />
+                    <ListBox HorizontalAlignment="Stretch" Margin="10" Name="listBox1" VerticalAlignment="Top" Padding="15,10" FontSize="28" SelectedIndex="0">
+                        <ListBoxItem Content="album" />
+                        <ListBoxItem Content="artist" />
+                        <ListBoxItem Content="radio" />
+                        <ListBoxItem Content="tag" />
+                    </ListBox>
+                    <Button Content="Search" Height="72" Name="btnSearch" Click="btnSearch_Click" />
+                </StackPanel>
+            </controls:PivotItem>
+        </controls:Pivot>
     </Grid>
- 
-    <!--Пример кода, иллюстрирующий использование ApplicationBar-->
+
+    <!--Sample code showing usage of ApplicationBar-->
     <!--<phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button1.png" Text="Кнопка 1"/>
-            <shell:ApplicationBarIconButton IconUri="/Images/appbar_button2.png" Text="Кнопка 2"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"/>
             <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Элемент меню 1"/>
-                <shell:ApplicationBarMenuItem Text="Элемент меню 2"/>
+                <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="MenuItem 1"/>
+                <shell:ApplicationBarMenuItem x:Name="menuItem2" Text="MenuItem 2"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>-->
-
+    
 </phone:PhoneApplicationPage>

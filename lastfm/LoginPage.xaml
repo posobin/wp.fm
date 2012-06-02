@@ -22,16 +22,15 @@
 
         <!--TitlePanel содержит имя приложения и заголовок страницы-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="МОЕ ПРИЛОЖЕНИЕ" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="имя страницы" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="last.fm scrobbler for WP7" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="PageTitle" Text="log in" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel – поместите здесь дополнительное содержимое-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBox Height="72" HorizontalAlignment="Left" Margin="0,84,0,0" Name="txtPassword" Text="TextBox" VerticalAlignment="Top" Width="460" />
-            <TextBox Height="72" HorizontalAlignment="Left" Margin="0,6,0,0" Name="txtUsername" Text="TextBox" VerticalAlignment="Top" Width="460" />
+            <TextBox Height="72" HorizontalAlignment="Left" Margin="0,84,0,0" Name="txtPassword" Text="password" VerticalAlignment="Top" Width="460" />
+            <TextBox Height="72" HorizontalAlignment="Left" Margin="0,6,0,0" Name="txtUsername" Text="username" VerticalAlignment="Top" Width="460" />
             <Button Content="Log in" Height="72" Margin="12,162,6,0" Name="button1" VerticalAlignment="Top" Click="button1_Click" />
-            <TextBlock Height="349" HorizontalAlignment="Left" Margin="12,240,0,0" Name="textBlock1" Text="TextBlock" VerticalAlignment="Top" Width="438" TextWrapping="Wrap" />
         </Grid>
     </Grid>
  

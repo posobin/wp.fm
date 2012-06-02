@@ -18,7 +18,6 @@ namespace lastfm
     public partial class LoginPage : PhoneApplicationPage
     {
         ProgressIndicator prog;
-        Session mainSession;
         public LoginPage()
         {
             InitializeComponent();
@@ -31,7 +30,9 @@ namespace lastfm
             prog.IsIndeterminate = true;
             prog.Text = "Click me...";
             SystemTray.SetProgressIndicator(this, prog);
-            mainSession = await auth.authorize(txtUsername.Text, txtPassword.Text);
+            Session.CurrentSession = await auth.authorize(txtUsername.Text, txtPassword.Text);
+            if (Session.CurrentSession != null)
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }

@@ -14,6 +14,8 @@ namespace lastfm
     public class Session
     {
         //session key returned after authorization
+        public static Session CurrentSession = null;
+
         private string _sk;
         private string _UserName;
 
