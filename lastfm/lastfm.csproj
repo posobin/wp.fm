@@ -68,6 +68,9 @@
     </Compile>
     <Compile Include="artist.cs" />
     <Compile Include="artistInfo.cs" />
+    <Compile Include="artistSearchPage.xaml.cs">
+      <DependentUpon>artistSearchPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="auth.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -89,6 +92,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="artistSearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="LoginPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

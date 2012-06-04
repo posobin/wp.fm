@@ -10,29 +10,35 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
-using System.IO;
+using System.Windows.Data;
 using Microsoft.Phone.Shell;
 
 namespace lastfm
 {
-    public partial class LoginPage : PhoneApplicationPage
+    public partial class artistSearchPage : PhoneApplicationPage
     {
+        List<artistInfo> lstResults;
         ProgressIndicator prog;
-        public LoginPage()
+        protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            string searchText = "";
+            if (NavigationContext.QueryString.TryGetValue("searchText", out searchText))
+                getList(searchText);
+        }
+        public artistSearchPage()
         {
             InitializeComponent();
             prog = new ProgressIndicator();
         }
-
-        private async void button1_Click(object sender, RoutedEventArgs e)
+        private async void getList(string searchText)
         {
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
-            SystemTray.SetProgressIndicator(this, prog);
-            Session.CurrentSession = await auth.authorize(txtUsername.Text, txtPassword.Text);
-            if (Session.CurrentSession != null)
-                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+            lstResults = await artist.search(searchText);
+            txtSearch.Text = searchText;
+            this.DataContext = lstResults;
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }

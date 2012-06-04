@@ -30,12 +30,11 @@ namespace lastfm
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)
             {
-                //MessageBox.Show(returnedXml.Descendants("artist"));
                 List<artistInfo> artists = new List<artistInfo>((from item in returnedXml.Descendants("artistmatches").Elements() select new artistInfo(item)));
                 return artists;
             }
             else
-                MessageBox.Show("Sorry, there was some error while executing your request." + Request.CheckStatus(returnedXml).ToString());
+                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
             return null;
         }
     }
