@@ -67,6 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="artist.cs" />
+    <Compile Include="artistInfo.cs" />
     <Compile Include="auth.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -80,6 +81,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="RequestParameters.cs" />
+    <Compile Include="statistics.cs" />
+    <Compile Include="tagInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

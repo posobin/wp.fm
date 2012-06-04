@@ -25,9 +25,9 @@ namespace lastfm
             NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
+        private async void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show((await artist.search(txtSearchText.Text)).ToString());
         }
     }
 }

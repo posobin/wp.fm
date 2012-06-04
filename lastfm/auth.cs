@@ -30,11 +30,8 @@ namespace lastfm
             rParams.Add("method", "auth.getMobileSession");
             AutoResetEvent wh = new AutoResetEvent(false);
             XDocument ReturnedXML = await Request.MakeRequest(rParams, true);
-            //Checking whether operation was succesful or not
-            IEnumerable<XElement> lfm = from el in ReturnedXML.Descendants("lfm") select el;
-            string status = lfm.First().Attribute("status").Value.ToString();
 
-            if (status.ToLower() == "ok")
+            if (Request.CheckStatus(ReturnedXML) == 0)
             {
                 string skey = (from el in ReturnedXML.Descendants("key") select el).First().Value;
                 string user = (from el in ReturnedXML.Descendants("name") select el).First().Value;

@@ -14,3 +14,5 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\l
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\XapCacheFile.xml
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\AsyncCtpLibrary_Phone.dll
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\AsyncCtpLibrary_Phone.xml
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\Microsoft.Phone.Controls.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\Microsoft.Phone.Controls.xml

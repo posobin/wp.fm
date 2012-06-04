@@ -2,5 +2,6 @@
   <Deployment.Parts>
     <AssemblyPart x:Name="lastfm" Source="lastfm.dll" />
     <AssemblyPart x:Name="AsyncCtpLibrary_Phone" Source="AsyncCtpLibrary_Phone.dll" />
+    <AssemblyPart x:Name="Microsoft.Phone.Controls" Source="Microsoft.Phone.Controls.dll" />
   </Deployment.Parts>
 </Deployment>

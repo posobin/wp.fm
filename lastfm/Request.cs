@@ -27,6 +27,19 @@ namespace lastfm
         private const string root_url = "http://ws.audioscrobbler.com/2.0/";
         public delegate void MethodToCallAfter(KeyValuePair<int, string> response);
 
+        public static int CheckStatus(XDocument xml)
+        {
+            IEnumerable<XElement> lfm = from el in xml.Descendants("lfm") select el;
+            string status = lfm.First().Attribute("status").Value.ToString();
+            if (status.ToLower() == "ok")
+                return 0;
+            else
+            {
+                string code = lfm.First().Element("error").Attribute("code").Value.ToString();
+                return Int32.Parse(code);
+            }
+        }
+
         public async static Task<XDocument> MakeRequest(RequestParameters rParams, bool toSign = false)
         {
             rParams.Add("api_key", api_key);
