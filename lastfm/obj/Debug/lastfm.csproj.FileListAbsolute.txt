@@ -17,3 +17,4 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\A
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\Microsoft.Phone.Controls.dll
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\Microsoft.Phone.Controls.xml
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\artistSearchPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\albumSearchPage.g.i.cs

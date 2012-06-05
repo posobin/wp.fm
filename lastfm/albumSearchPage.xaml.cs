@@ -9,16 +9,15 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 using Microsoft.Phone.Controls;
-using System.Windows.Data;
+using System.Collections.ObjectModel;
 using Microsoft.Phone.Shell;
 
 namespace lastfm
 {
-    public partial class artistSearchPage : PhoneApplicationPage
+    public partial class albumSearchPage : PhoneApplicationPage
     {
-        ObservableCollection<artistInfo> lstResults = new ObservableCollection<artistInfo>();
+        ObservableCollection<albumInfo> lstResults = new ObservableCollection<albumInfo>();
         ProgressIndicator prog;
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
@@ -27,7 +26,7 @@ namespace lastfm
             if (NavigationContext.QueryString.TryGetValue("searchText", out searchText))
                 getList(searchText);
         }
-        public artistSearchPage()
+        public albumSearchPage()
         {
             InitializeComponent();
             this.DataContext = lstResults;
@@ -40,7 +39,7 @@ namespace lastfm
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
-            foreach (artistInfo info in await artist.search(searchText))
+            foreach (albumInfo info in await album.search(searchText))
                 lstResults.Add(info);
             prog.IsIndeterminate = false;
             prog.IsVisible = false;

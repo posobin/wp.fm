@@ -27,7 +27,9 @@ namespace lastfm
 
         private void btnSearch_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/artistSearchPage.xaml?searchText="+txtSearchText.Text, UriKind.Relative));
+            string selectedItem = ((ListBoxItem) lstSearch.SelectedItem).Content.ToString();
+            if (selectedItem == "artist") this.NavigationService.Navigate(new Uri("/artistSearchPage.xaml?searchText="+txtSearchText.Text, UriKind.Relative));
+            else if (selectedItem == "album") this.NavigationService.Navigate(new Uri("/albumSearchPage.xaml?searchText=" + txtSearchText.Text, UriKind.Relative));
         }
     }
 }

@@ -30,7 +30,7 @@
                 <StackPanel>
                     <TextBox Height="72" HorizontalAlignment="Stretch" Margin="10" Name="txtSearchText" VerticalAlignment="Top" />
                     <TextBlock Text="search for..." Margin="10" Padding="10,0" FontSize="24" />
-                    <ListBox HorizontalAlignment="Stretch" Margin="10" Name="listBox1" VerticalAlignment="Top" Padding="15,10" FontSize="28" SelectedIndex="0">
+                    <ListBox HorizontalAlignment="Stretch" Margin="10" Name="lstSearch" VerticalAlignment="Top" Padding="15,10" FontSize="28" SelectedIndex="0">
                         <ListBoxItem Content="album" />
                         <ListBoxItem Content="artist" />
                         <ListBoxItem Content="radio" />
