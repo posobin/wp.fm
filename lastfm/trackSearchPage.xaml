@@ -1,5 +1,5 @@
 ﻿<phone:PhoneApplicationPage 
-    x:Class="lastfm.albumSearchPage"
+    x:Class="lastfm.trackSearchPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
@@ -14,7 +14,7 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.Resources>
-        <DataTemplate x:Key="albumTemplate">
+        <DataTemplate x:Key="trackTemplate">
             <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
                 <Image Height="126" Width="126" Source="{Binding Path=largeImage, TargetNullValue=/lastfm;component/NoImage.png}"/>
                 <TextBlock Text="{Binding Path=name}" Margin="10,0,0,0" FontSize="25" />
@@ -32,14 +32,14 @@
         <!--TitlePanel contains the name of the application and page title-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
             <TextBlock x:Name="ApplicationTitle" Text="last.fm scrobbler for WP7" Style="{StaticResource PhoneTextNormalStyle}"/>
-            <TextBlock x:Name="PageTitle" Text="album search" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48" />
+            <TextBlock x:Name="PageTitle" Text="track search" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}" FontSize="48"  />
         </StackPanel>
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel>
                 <TextBox InputScope="Search" Name="txtSearchBox" KeyDown="txtSearchBox_KeyDown"/>
-                <ListBox Height="550" VerticalAlignment="Stretch" Name="searchResults" ItemTemplate="{StaticResource albumTemplate}" ItemsSource="{Binding}"/>
+                <ListBox Height="550" VerticalAlignment="Stretch" Name="searchResults" ItemTemplate="{StaticResource trackTemplate}" ItemsSource="{Binding}"/>
             </StackPanel>
         </Grid>
     </Grid>

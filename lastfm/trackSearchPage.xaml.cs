@@ -15,9 +15,9 @@ using Microsoft.Phone.Shell;
 
 namespace lastfm
 {
-    public partial class albumSearchPage : PhoneApplicationPage
+    public partial class trackSearchPage : PhoneApplicationPage
     {
-        ObservableCollection<albumInfo> lstResults = new ObservableCollection<albumInfo>();
+        ObservableCollection<trackInfo> lstResults = new ObservableCollection<trackInfo>();
         ProgressIndicator prog;
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -28,7 +28,7 @@ namespace lastfm
                 getList(searchText);
         }
 
-        public albumSearchPage()
+        public trackSearchPage()
         {
             InitializeComponent();
             this.DataContext = lstResults;
@@ -42,7 +42,7 @@ namespace lastfm
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
-            foreach (albumInfo info in await album.search(searchText))
+            foreach (trackInfo info in await track.search(searchText))
                 lstResults.Add(info);
             prog.IsIndeterminate = false;
             prog.IsVisible = false;

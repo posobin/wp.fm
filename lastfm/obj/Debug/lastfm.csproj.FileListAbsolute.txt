@@ -18,3 +18,5 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\M
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\Microsoft.Phone.Controls.xml
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\artistSearchPage.g.i.cs
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\albumSearchPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\trackSearchPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\tagSearchPage.g.i.cs

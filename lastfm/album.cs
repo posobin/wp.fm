@@ -22,6 +22,8 @@ namespace lastfm
             RequestParameters rParams = new RequestParameters();
             rParams.Add("album", text);
             rParams.Add("method", "album.search");
+            rParams.Add("limit", limit.ToString());
+            rParams.Add("page", page.ToString());
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)
             {

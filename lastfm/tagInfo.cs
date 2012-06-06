@@ -8,12 +8,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace lastfm
 {
     public class tagInfo
     {
-        public string name;
-        public Uri url;
+        public string name { get; set; }
+        public Uri url { get; set; }
+
+        public tagInfo() { }
+        public tagInfo(XElement element)
+        {
+            this.name = element.Element("name").Value.ToString();
+            string url_str = element.Element("url").Value.ToString();
+            if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
+            this.url = new Uri(url_str);
+        }
     }
 }

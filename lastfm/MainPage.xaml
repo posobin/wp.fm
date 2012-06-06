@@ -33,8 +33,8 @@
                     <ListBox HorizontalAlignment="Stretch" Margin="10" Name="lstSearch" VerticalAlignment="Top" Padding="15,10" FontSize="28" SelectedIndex="0">
                         <ListBoxItem Content="album" />
                         <ListBoxItem Content="artist" />
-                        <ListBoxItem Content="radio" />
                         <ListBoxItem Content="tag" />
+                        <ListBoxItem Content="track" />
                     </ListBox>
                     <Button Content="Search" Height="72" Name="btnSearch" Click="btnSearch_Click" />
                 </StackPanel>

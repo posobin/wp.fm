@@ -28,7 +28,9 @@ namespace lastfm
         public albumInfo(XElement element)
         {
             this.name = element.Element("name").Value.ToString();
-            this.url = new Uri(element.Element("url").Value.ToString());
+            string url_str = element.Element("url").Value.ToString();
+            if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
+            this.url = new Uri(url_str);
             try
             { this.smallImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "small" select el.Value.ToString()).First()); }
             catch (UriFormatException) { this.smallImage = null; }

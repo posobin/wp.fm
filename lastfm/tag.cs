@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Xml.Linq;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,28 +8,27 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Xml.Linq;
+using System.Linq;
 
 namespace lastfm
 {
-    public class artist
+    public class tag
     {
-        public static Task<artistInfo> getinfo()
-        {
-            throw new NotImplementedException();
-        }
-
-        public static async Task<List<artistInfo>> search(string text, int page = 0, int limit = 30)
+        public static async Task<List<tagInfo>> search(string text, int page = 0, int limit = 30)
         {
             RequestParameters rParams = new RequestParameters();
-            rParams.Add("artist", text);
-            rParams.Add("method", "artist.search");
+            rParams.Add("tag", text);
+            rParams.Add("method", "tag.search");
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)
             {
-                List<artistInfo> artists = new List<artistInfo>((from item in returnedXml.Descendants("artistmatches").Elements() select new artistInfo(item)));
-                return artists;
+                List<tagInfo> tags = new List<tagInfo>((from item in returnedXml.Descendants("tagmatches").Elements() select new tagInfo(item)));
+                return tags;
             }
             else
                 MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
