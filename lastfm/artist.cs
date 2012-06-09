@@ -22,6 +22,22 @@ namespace lastfm
             throw new NotImplementedException();
         }
 
+        public static async Task<artistInfo> getInfo(string name)
+        {
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("artist", name);
+            rParams.Add("method", "auth.getinfo");
+            XDocument returnedXml = await Request.MakeRequest(rParams);
+            if (Request.CheckStatus(returnedXml) == 0)
+            {
+                artistInfo artist = new artistInfo(returnedXml.Element("lfm").Element("artist"));
+                return artist;
+            }
+            else
+                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+            return null;
+        }
+
         public static async Task<List<artistInfo>> search(string text, int page = 0, int limit = 30)
         {
             RequestParameters rParams = new RequestParameters();

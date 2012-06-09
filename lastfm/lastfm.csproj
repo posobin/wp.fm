@@ -73,6 +73,9 @@
     </Compile>
     <Compile Include="artist.cs" />
     <Compile Include="artistInfo.cs" />
+    <Compile Include="artistInfoPage.xaml.cs">
+      <DependentUpon>artistInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="artistSearchPage.xaml.cs">
       <DependentUpon>artistSearchPage.xaml</DependentUpon>
     </Compile>
@@ -107,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="albumSearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="artistInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -20,3 +20,4 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\a
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\albumSearchPage.g.i.cs
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\trackSearchPage.g.i.cs
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\tagSearchPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\artistInfoPage.g.i.cs
