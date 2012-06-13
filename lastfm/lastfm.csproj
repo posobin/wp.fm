@@ -95,6 +95,9 @@
     <Compile Include="statistics.cs" />
     <Compile Include="tag.cs" />
     <Compile Include="tagInfo.cs" />
+    <Compile Include="tagInfoPage.xaml.cs">
+      <DependentUpon>tagInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="tagSearchPage.xaml.cs">
       <DependentUpon>tagSearchPage.xaml</DependentUpon>
     </Compile>
@@ -103,6 +106,7 @@
     <Compile Include="trackSearchPage.xaml.cs">
       <DependentUpon>trackSearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -126,6 +130,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="tagInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

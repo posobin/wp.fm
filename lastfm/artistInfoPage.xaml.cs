@@ -22,70 +22,30 @@ namespace lastfm
             InitializeComponent();
             this.DataContext = currArtist;
             prog = new ProgressIndicator();
+            SystemTray.SetProgressIndicator(this, prog);
         }
 
         ProgressIndicator prog;
-
         artistInfo currArtist = new artistInfo();
-
-        const string NotifyScript = @"<script type='text/javascript' language='javascript'>
-                                            window.onload = function(){
-                                                var linkArray = document.getElementsByTagName('a');
-                                                for(var i=0; i < linkArray.length; i++){
-                                                    linkArray[i].onclick = function() { 
-                                                        var str = this.href + "" "" + this.getAttribute(""className""); 
-                                                        window.external.Notify(str); }
-                                                }
-                                            }
-                                        </script>";
-
-        private string makeHtml(string str)
-        {
-            string ret;
-            string bgcolor = "#" + ((Color)App.Current.Resources["PhoneBackgroundColor"]).ToString().Substring(3);
-            string fcolor = "#" + ((Color)App.Current.Resources["PhoneForegroundColor"]).ToString().Substring(3);
-            ret = "<html>" + 
-                    "<head>" +
-                        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0\" />" +
-                        NotifyScript +
-                    "</head>" +
-                    "<body " + "bgcolor=" + bgcolor + " style=\"color:" + fcolor + "\"" + ">" +
-                        str +
-                    "</body>" +
-                  "</html>";
-            return ret;
-        }
-
-        private void processLink(string str)
-        {
-            if (str.EndsWith(" "))
-            {
-                WebBrowserTask browser = new WebBrowserTask();
-                browser.Uri = new Uri(str, UriKind.Absolute);
-                browser.Show();
-            }
-            else if (str.EndsWith(" bbcode_artist"))
-            {
-                string navigateTo = str.Remove(str.Length - " bbcode_artist".Length).Split( new char[] {'/'}).Last();
-                NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + navigateTo, UriKind.Relative));
-            }
-            //MessageBox.Show("Not implemented yet.");
-        }
 
         private void ScriptNotify(object sender, NotifyEventArgs e)
         {
-            if (!string.IsNullOrEmpty(e.Value)) processLink(e.Value);
+            if (!string.IsNullOrEmpty(e.Value))
+            {
+                string navigateTo = utilities.processBBcodeLink(e.Value);
+                if (navigateTo != "")
+                    NavigationService.Navigate(new Uri(navigateTo, UriKind.Relative));
+            }
         }
 
         private async void getArtistInfo(string artistName)
         {
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
-            SystemTray.SetProgressIndicator(this, prog);
             prog.Text = "Loading...";
             currArtist = await artist.getInfo(artistName);
             this.DataContext = currArtist;
-            webBrowser1.NavigateToString(makeHtml(currArtist.bio));
+            webBrowser1.NavigateToString(utilities.makeHtmlFromCdata(currArtist.bio));
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }
@@ -94,7 +54,7 @@ namespace lastfm
         {
             base.OnNavigatedTo(e);
             string artistName = "";
-            if (NavigationContext.QueryString.TryGetValue("artistName", out artistName) && string.Equals(panArtist.Title, artistName))
+            if (NavigationContext.QueryString.TryGetValue("artistName", out artistName) && !string.Equals(panArtist.Title, artistName))
             {
                 panArtist.Title = artistName;
                 getArtistInfo(artistName);
@@ -110,6 +70,18 @@ namespace lastfm
         private void webBrowser1_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             ((WebBrowser)sender).Opacity = 1;
+        }
+
+        private void tags_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ListBox)sender).SelectedIndex != -1)
+                NavigationService.Navigate(new Uri("/artistInfoPage.xaml?tagName=" + ((tagInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
+        }
+
+        private void similarArtists_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ListBox)sender).SelectedIndex != -1)
+                NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + ((artistInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
         }
     }
 }

@@ -25,7 +25,7 @@
 
         <DataTemplate x:Key="tagTemplate">
             <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
-                <TextBlock Text="{Binding Path=name}" Margin="10,0,0,0" FontSize="25" />
+                <TextBlock Text="{Binding Path=name}" FontSize="25" />
             </StackPanel>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
@@ -36,21 +36,21 @@
             <!--Первый элемент Panorama-->
             <controls:PanoramaItem Header="bio">
                 <Grid>
-                    <phone:WebBrowser VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,0,0" Name="webBrowser1" Opacity="0" OpacityMask="{x:Null}" Navigating="webBrowser1_Navigating" Navigated="webBrowser1_Navigated" IsScriptEnabled="True" ScriptNotify="ScriptNotify" />
+                    <phone:WebBrowser VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Name="webBrowser1" Opacity="0" OpacityMask="{x:Null}" Navigating="webBrowser1_Navigating" Navigated="webBrowser1_Navigated" IsScriptEnabled="True" ScriptNotify="ScriptNotify" />
                 </Grid>
             </controls:PanoramaItem>
 
             <!--Второй элемент Panorama-->
             <controls:PanoramaItem Header="similar">
                 <Grid>
-                    <ListBox Height="Auto" VerticalAlignment="Top" Name="similarArtists" ItemTemplate="{StaticResource artistTemplate}" ItemsSource="{Binding Path=similar}" />
+                    <ListBox Height="Auto" VerticalAlignment="Top" Name="similarArtists" ItemTemplate="{StaticResource artistTemplate}" ItemsSource="{Binding Path=similar}" SelectionChanged="similarArtists_SelectionChanged" />
                 </Grid>
             </controls:PanoramaItem>
 
             <!--Третий элемент Panorama-->
             <controls:PanoramaItem Header="tags">
                 <Grid>
-                    <ListBox Height="Auto" VerticalAlignment="Top" Name="tags" ItemTemplate="{StaticResource tagTemplate}" ItemsSource="{Binding Path=tags}" />
+                    <ListBox Height="Auto" VerticalAlignment="Top" Name="tags" ItemTemplate="{StaticResource tagTemplate}" ItemsSource="{Binding Path=tags}" SelectionChanged="tags_SelectionChanged" />
                 </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>

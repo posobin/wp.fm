@@ -34,5 +34,21 @@ namespace lastfm
                 MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
             return null;
         }
+        public static async Task<tagInfo> getInfo(string tagName, string lang = "en")
+        {
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("tag", tagName);
+            rParams.Add("method", "tag.getinfo");
+            rParams.Add("lang", lang);
+            XDocument returnedXml = await Request.MakeRequest(rParams);
+            if (Request.CheckStatus(returnedXml) == 0)
+            {
+                tagInfo retTag = new tagInfo(returnedXml.Element("lfm").Element("tag"));
+                return retTag;
+            }
+            else
+                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+            return null;
+        }
     }
 }

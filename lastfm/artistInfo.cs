@@ -34,17 +34,18 @@ namespace lastfm
         public artistInfo(XElement element)
         {
             this.name = element.Element("name").Value.ToString();
+
             string url_str = element.Element("url").Value.ToString();
+            if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
+            this.url = new Uri(url_str);
+
             if (element.Element("bio") != null && element.Element("bio").Element("content") != null)
             {
-                StringBuilder sb = new StringBuilder();
                 XCData cdata = element.Element("bio").Element("content").DescendantNodes().OfType<XCData>().First();
                 this.bio = cdata.Value;
             }
             if (element.Element("mbid") != null)
                 this.mbid = element.Element("mbid").Value.ToString();
-            if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
-            this.url = new Uri(url_str);
             try
             { this.smallImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "small" select el.Value.ToString()).First()); }
             catch (UriFormatException) { this.smallImage = null; }
