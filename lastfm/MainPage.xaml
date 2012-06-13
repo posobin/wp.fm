@@ -39,6 +39,12 @@
                     <Button Content="Search" Height="72" Name="btnSearch" Click="btnSearch_Click" />
                 </StackPanel>
             </controls:PivotItem>
+            
+            <controls:PivotItem Header="test">
+                <Grid>
+                    <phone:WebBrowser VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,0,0" Name="webBrowser1" />
+                </Grid>
+            </controls:PivotItem>
         </controls:Pivot>
     </Grid>
 

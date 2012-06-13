@@ -10,6 +10,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Collections.Generic;
+using System.Text;
 
 namespace lastfm
 {
@@ -18,6 +20,9 @@ namespace lastfm
         public string name { get; set; }
         public string mbid { get; set; }
         public Uri url { get; set; }
+        public string bio { get; set; }
+        public List<artistInfo> similar { get; set; }
+        public List<tagInfo> tags { get; set; }
         public Uri smallImage { get; set; }
         public Uri mediumImage { get; set; }
         public Uri largeImage { get; set; }
@@ -29,8 +34,15 @@ namespace lastfm
         public artistInfo(XElement element)
         {
             this.name = element.Element("name").Value.ToString();
-            this.mbid = element.Element("mbid").Value.ToString();
             string url_str = element.Element("url").Value.ToString();
+            if (element.Element("bio") != null && element.Element("bio").Element("content") != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                XCData cdata = element.Element("bio").Element("content").DescendantNodes().OfType<XCData>().First();
+                this.bio = cdata.Value;
+            }
+            if (element.Element("mbid") != null)
+                this.mbid = element.Element("mbid").Value.ToString();
             if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
             this.url = new Uri(url_str);
             try
@@ -48,6 +60,10 @@ namespace lastfm
             try
             { this.megaImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "mega" select el.Value.ToString()).First()); }
             catch (UriFormatException) { this.megaImage = null; }
+            if (element.Element("tags") != null)
+                this.tags = new List<tagInfo>((from item in element.Element("tags").Elements() select new tagInfo(item)));
+            if (element.Element("similar") != null)
+                this.similar = new List<artistInfo>((from item in element.Element("similar").Elements() select new artistInfo(item)));
         }
     }
 }

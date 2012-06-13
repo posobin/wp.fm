@@ -17,16 +17,11 @@ namespace lastfm
 {
     public class artist
     {
-        public static Task<artistInfo> getinfo()
-        {
-            throw new NotImplementedException();
-        }
-
         public static async Task<artistInfo> getInfo(string name)
         {
             RequestParameters rParams = new RequestParameters();
             rParams.Add("artist", name);
-            rParams.Add("method", "auth.getinfo");
+            rParams.Add("method", "artist.getinfo");
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)
             {

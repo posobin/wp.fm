@@ -21,7 +21,7 @@
             </StackPanel>
         </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
-    
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <Grid.RowDefinitions>
@@ -39,7 +39,9 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel>
                 <TextBox InputScope="Search" Name="txtSearchBox" KeyDown="txtSearchBox_KeyDown"/>
-                <ListBox Height="550" VerticalAlignment="Stretch" Name="searchResults" ItemTemplate="{StaticResource artistTemplate}" ItemsSource="{Binding}" SelectionChanged="searchResults_SelectionChanged" />
+                <Grid>
+                    <ListBox Height="550" VerticalAlignment="Stretch" Name="searchResults" ItemTemplate="{StaticResource artistTemplate}" ItemsSource="{Binding}" SelectionChanged="searchResults_SelectionChanged" />
+                </Grid>
             </StackPanel>
         </Grid>
     </Grid>

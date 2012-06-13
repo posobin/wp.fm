@@ -15,17 +15,43 @@
     shell:SystemTray.IsVisible="False">
 
     <!--LayoutRoot содержит корневую сетку, где размещается все содержимое страницы-->
+    <phone:PhoneApplicationPage.Resources>
+        <DataTemplate x:Key="artistTemplate">
+            <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
+                <Image Width="126" Source="{Binding Path=largeImage, TargetNullValue=/lastfm;component/NoImage.png}"/>
+                <TextBlock Text="{Binding Path=name}" Margin="10,0,0,0" FontSize="25" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="tagTemplate">
+            <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
+                <TextBlock Text="{Binding Path=name}" Margin="10,0,0,0" FontSize="25" />
+            </StackPanel>
+        </DataTemplate>
+    </phone:PhoneApplicationPage.Resources>
+    
     <Grid x:Name="LayoutRoot">
-        <controls:Panorama Title="мое приложение">
+        <controls:Panorama Title="{Binding Path=name}" Name="panArtist">
 
             <!--Первый элемент Panorama-->
-            <controls:PanoramaItem Header="элемент 1">
-                <Grid/>
+            <controls:PanoramaItem Header="bio">
+                <Grid>
+                    <phone:WebBrowser VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,0,0" Name="webBrowser1" Opacity="0" OpacityMask="{x:Null}" Navigating="webBrowser1_Navigating" Navigated="webBrowser1_Navigated" IsScriptEnabled="True" ScriptNotify="ScriptNotify" />
+                </Grid>
             </controls:PanoramaItem>
 
             <!--Второй элемент Panorama-->
-            <controls:PanoramaItem Header="элемент 2">
-                <Grid/>
+            <controls:PanoramaItem Header="similar">
+                <Grid>
+                    <ListBox Height="Auto" VerticalAlignment="Top" Name="similarArtists" ItemTemplate="{StaticResource artistTemplate}" ItemsSource="{Binding Path=similar}" />
+                </Grid>
+            </controls:PanoramaItem>
+
+            <!--Третий элемент Panorama-->
+            <controls:PanoramaItem Header="tags">
+                <Grid>
+                    <ListBox Height="Auto" VerticalAlignment="Top" Name="tags" ItemTemplate="{StaticResource tagTemplate}" ItemsSource="{Binding Path=tags}" />
+                </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>

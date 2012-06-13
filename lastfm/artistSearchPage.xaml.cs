@@ -49,12 +49,16 @@ namespace lastfm
         private void txtSearchBox_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
+            {
+                lstResults.Clear();
                 getList(txtSearchBox.Text);
+            }
         }
 
         private void searchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + ((artistInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
+            if (((ListBox)sender).SelectedIndex != -1)
+                NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + ((artistInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
         }
     }
 }
