@@ -53,5 +53,14 @@ namespace lastfm
             if (e.Key == Key.Enter)
                 getList(txtSearchBox.Text);
         }
+
+        private void searchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ListBox)sender).SelectedIndex != -1)
+            {
+                albumInfo selected = (albumInfo)((ListBox)sender).SelectedItem;
+                this.NavigationService.Navigate(new Uri("/albumInfoPage.xaml?albumName="+ selected.name + "&artistName=" + selected.artistName, UriKind.Relative));
+            }
+        }
     }
 }

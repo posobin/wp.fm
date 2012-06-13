@@ -18,6 +18,8 @@ namespace lastfm
         public string name { get; set; }
         public string artistName { get; set; }
         public string id { get; set; }
+        public int duration { get; set; } //in milliseconds
+        public int position { get; set; } //track number in album
         public Uri url { get; set; }
         public Uri smallImage { get; set; }
         public Uri mediumImage { get; set; }
@@ -30,6 +32,9 @@ namespace lastfm
             this.name = element.Element("name").Value.ToString();
             string url_str = element.Element("url").Value.ToString();
             if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
+            if (element.Element("duration") != null)
+                this.duration = Int32.Parse(element.Element("duration").Value.ToString());
+            else if (element.Attribute("position") != null)
             this.url = new Uri(url_str);
             try
             { this.smallImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "small" select el.Value.ToString()).First()); }

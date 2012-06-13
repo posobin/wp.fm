@@ -12,15 +12,6 @@
     SupportedOrientations="Portrait" Orientation="Portrait"
     mc:Ignorable="d" d:DesignHeight="768" d:DesignWidth="480"
     shell:SystemTray.IsVisible="True">
-
-    <phone:PhoneApplicationPage.Resources>
-        <DataTemplate x:Key="trackTemplate">
-            <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
-                <Image Height="126" Width="126" Source="{Binding Path=largeImage, TargetNullValue=/lastfm;component/NoImage.png}"/>
-                <TextBlock Text="{Binding Path=name}" Margin="10,0,0,0" FontSize="25" />
-            </StackPanel>
-        </DataTemplate>
-    </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">

@@ -75,7 +75,7 @@ namespace lastfm
         private void tags_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (((ListBox)sender).SelectedIndex != -1)
-                NavigationService.Navigate(new Uri("/artistInfoPage.xaml?tagName=" + ((tagInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName=" + ((tagInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
         }
 
         private void similarArtists_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -66,13 +66,13 @@ namespace lastfm
             }
             else if (str.EndsWith(" bbcode_album"))
             {
-                navigateTo = str.Remove(str.Length - " bbcode_tag".Length).Split(new char[] { '/' }).Last();
-                navigateTo = "/albumInfoPage.xaml?tagName=" + navigateTo;
+                string[] lst = str.Remove(str.Length - " bbcode_album".Length).Split(new char[] { '/' });
+                navigateTo = "/albumInfoPage.xaml?albumName=" + lst.Last() + "&artistName=" + lst[lst.Length - 2];
             }
             else if (str.EndsWith(" bbcode_track"))
             {
                 navigateTo = str.Remove(str.Length - " bbcode_track".Length).Split(new char[] { '/' }).Last();
-                navigateTo = "/trackInfoPage.xaml?tagName=" + navigateTo;
+                navigateTo = "/trackInfoPage.xaml?trackName=" + navigateTo;
             }
             return navigateTo;
         }

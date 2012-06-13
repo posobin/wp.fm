@@ -7,6 +7,36 @@
 
     <!--Ресурсы приложения-->
     <Application.Resources>
+        <DataTemplate x:Key="artistTemplate">
+            <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
+                <Image Width="126" Source="{Binding Path=largeImage, TargetNullValue=/lastfm;component/NoImage.png}"/>
+                <TextBlock Text="{Binding Path=name}" Margin="10,0,0,0" FontSize="25" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="tagTemplate">
+            <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
+                <TextBlock Text="{Binding Path=name}" FontSize="25" />
+            </StackPanel>
+        </DataTemplate>
+
+        <DataTemplate x:Key="albumTemplate">
+            <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
+                <Image Height="126" Width="126" Source="{Binding Path=largeImage, TargetNullValue=/lastfm;component/NoImage.png}"/>
+                <TextBlock Text="{Binding Path=name}" Margin="10,0,0,0" FontSize="25" />
+            </StackPanel>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="trackTemplate">
+            <StackPanel Orientation="Horizontal" Margin="0, 5, 0, 5">
+                <Image Height="126" Width="126" Source="{Binding Path=largeImage, TargetNullValue=/lastfm;component/NoImage.png}"/>
+                <TextBlock Text="{Binding Path=name}" Margin="10,0,0,0" FontSize="25" />
+            </StackPanel>
+        </DataTemplate>
+        
+        <DataTemplate x:Key="panoramaTitleSmall">
+            <TextBlock Text="{Binding Content, RelativeSource={RelativeSource TemplatedParent}}" FontSize="100" Margin="0,50,0,0" />
+        </DataTemplate>
     </Application.Resources>
 
     <Application.ApplicationLifetimeObjects>

@@ -65,6 +65,9 @@
   <ItemGroup>
     <Compile Include="album.cs" />
     <Compile Include="albumInfo.cs" />
+    <Compile Include="albumInfoPage.xaml.cs">
+      <DependentUpon>albumInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="albumSearchPage.xaml.cs">
       <DependentUpon>albumSearchPage.xaml</DependentUpon>
     </Compile>
@@ -113,6 +116,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Page Include="albumInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="albumSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -34,5 +34,25 @@ namespace lastfm
                 MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
             return null;
         }
+
+        public static async Task<albumInfo> getInfo(string artistName, string albumName, string username = "", string lang = "en")
+        {
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("artist", artistName);
+            rParams.Add("album", albumName);
+            if (!string.IsNullOrEmpty(username))
+                rParams.Add("username", username);
+            rParams.Add("lang", lang);
+            rParams.Add("method", "album.getinfo");
+            XDocument returnedXml = await Request.MakeRequest(rParams);
+            if (Request.CheckStatus(returnedXml) == 0)
+            {
+                albumInfo album = new albumInfo(returnedXml.Element("lfm").Element("album"));
+                return album;
+            }
+            else
+                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+            return null;
+        }
     }
 }
