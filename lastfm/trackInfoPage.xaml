@@ -1,0 +1,45 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="lastfm.trackInfoPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="False">
+
+    <!--LayoutRoot содержит корневую сетку, где размещается все содержимое страницы-->
+    <Grid x:Name="LayoutRoot">
+        <StackPanel>
+            <HyperlinkButton Height="Auto" Name="ArtistLink" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="28" />
+            <HyperlinkButton Height="Auto" Content="{Binding Path=album.name}" Name="AlbumLink" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="28" />
+        
+        <!--<TextBlock Name="txtArtistName" Height="Auto" Width="Auto" Text="Pink Floyd" HorizontalAlignment="Stretch" Margin="12,5,0,0" FontSize="32" />-->
+        <controls:Panorama TitleTemplate="{StaticResource panoramaTitleSmall}"  Name="albumInfoPanorama">
+
+            <!--Первый элемент Panorama-->
+            <controls:PanoramaItem Header="description">
+                <Grid>
+                    <phone:WebBrowser Name="trackDescription" IsScriptEnabled="True" Opacity="0" Navigating="trackDescription_Navigating" Navigated="trackDescription_Navigated" ScriptNotify="ScriptNotify" />
+                </Grid>
+            </controls:PanoramaItem>
+
+            <!--Второй элемент Panorama-->
+            <controls:PanoramaItem Header="tags">
+                <Grid>
+                    <ListBox Name="tagsLst" ItemsSource="{Binding Path=tags}" ItemTemplate="{StaticResource tagTemplate}" />
+                </Grid>
+            </controls:PanoramaItem>
+        </controls:Panorama>
+        </StackPanel>
+    </Grid>
+
+    <!--Приложения на базе панорамы не должны содержать ApplicationBar-->
+
+</phone:PhoneApplicationPage>

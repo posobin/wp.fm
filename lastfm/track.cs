@@ -17,10 +17,10 @@ namespace lastfm
 {
     public class track
     {
-        public static async Task<List<trackInfo>> search(string text, int page = 0, int limit = 30)
+        public static async Task<List<trackInfo>> search(string trackName, int page = 0, int limit = 30)
         {
             RequestParameters rParams = new RequestParameters();
-            rParams.Add("track", text);
+            rParams.Add("track", HttpUtility.UrlEncode(trackName));
             rParams.Add("method", "track.search");
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
@@ -29,6 +29,25 @@ namespace lastfm
             {
                 List<trackInfo> tracks = new List<trackInfo>((from item in returnedXml.Descendants("trackmatches").Elements() select new trackInfo(item)));
                 return tracks;
+            }
+            else
+                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+            return null;
+        }
+
+        public static async Task<trackInfo> getInfo(string artistName, string trackName, string username = "")
+        {
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("artist", HttpUtility.UrlEncode(artistName));
+            rParams.Add("track", HttpUtility.UrlEncode(trackName));
+            if (!string.IsNullOrEmpty(username))
+                rParams.Add("username", username);
+            rParams.Add("method", "track.getinfo");
+            XDocument returnedXml = await Request.MakeRequest(rParams);
+            if (Request.CheckStatus(returnedXml) == 0)
+            {
+                trackInfo track = new trackInfo(returnedXml.Element("lfm").Element("track"));
+                return track;
             }
             else
                 MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());

@@ -40,6 +40,7 @@ namespace lastfm
 
         private async void getArtistInfo(string artistName)
         {
+            SystemTray.IsVisible = true;
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
@@ -48,6 +49,7 @@ namespace lastfm
             webBrowser1.NavigateToString(utilities.makeHtmlFromCdata(currArtist.bio));
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
+            SystemTray.IsVisible = false;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -75,13 +77,13 @@ namespace lastfm
         private void tags_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (((ListBox)sender).SelectedIndex != -1)
-                NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName=" + ((tagInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
         }
 
         private void similarArtists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (((ListBox)sender).SelectedIndex != -1)
-                NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + ((artistInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
+                NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(((artistInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
         }
     }
 }

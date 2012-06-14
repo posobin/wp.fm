@@ -106,6 +106,9 @@
     </Compile>
     <Compile Include="track.cs" />
     <Compile Include="trackInfo.cs" />
+    <Compile Include="trackInfoPage.xaml.cs">
+      <DependentUpon>trackInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="trackSearchPage.xaml.cs">
       <DependentUpon>trackSearchPage.xaml</DependentUpon>
     </Compile>
@@ -145,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="tagSearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="trackInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.Collections.ObjectModel;
 using Microsoft.Phone.Shell;
+using System.Threading.Tasks;
 
 namespace lastfm
 {
@@ -42,8 +43,17 @@ namespace lastfm
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
-            foreach (tagInfo info in await tag.search(searchText))
+
+            List<tagInfo> lst = new List<tagInfo>();
+            try
+            {
+                lst = new List<tagInfo>(await tag.search(searchText));
+            }
+            catch (TaskCanceledException) { }
+
+            foreach (tagInfo info in lst)
                 lstResults.Add(info);
+
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }
@@ -57,7 +67,7 @@ namespace lastfm
         private void searchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (((ListBox)sender).SelectedIndex != -1)
-                this.NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName="+((tagInfo)((ListBox)sender).SelectedItem).name, UriKind.Relative));
+                this.NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName="+HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
         }
     }
 }

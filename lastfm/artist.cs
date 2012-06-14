@@ -17,10 +17,10 @@ namespace lastfm
 {
     public class artist
     {
-        public static async Task<artistInfo> getInfo(string name)
+        public static async Task<artistInfo> getInfo(string artistName)
         {
             RequestParameters rParams = new RequestParameters();
-            rParams.Add("artist", name);
+            rParams.Add("artist", HttpUtility.UrlEncode(artistName));
             rParams.Add("method", "artist.getinfo");
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)
@@ -33,10 +33,10 @@ namespace lastfm
             return null;
         }
 
-        public static async Task<List<artistInfo>> search(string text, int page = 0, int limit = 30)
+        public static async Task<List<artistInfo>> search(string artistName, int page = 0, int limit = 30)
         {
             RequestParameters rParams = new RequestParameters();
-            rParams.Add("artist", text);
+            rParams.Add("artist", HttpUtility.UrlEncode(artistName));
             rParams.Add("method", "artist.search");
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());

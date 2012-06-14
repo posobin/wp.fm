@@ -33,34 +33,48 @@ namespace lastfm
         public artistInfo() { }
         public artistInfo(XElement element)
         {
-            this.name = element.Element("name").Value.ToString();
+            if (element.Element("name") != null)
+                this.name = element.Element("name").Value.ToString();
+            else
+            {
+                this.name = element.Value.ToString();
+                return;
+            }
 
             string url_str = element.Element("url").Value.ToString();
             if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
             this.url = new Uri(url_str);
 
-            if (element.Element("bio") != null && element.Element("bio").Element("content") != null)
+            if (element.Element("bio") != null && element.Element("bio").Element("content") != null && element.Element("bio").Element("content").DescendantNodes().OfType<XCData>().Count() != 0)
             {
                 XCData cdata = element.Element("bio").Element("content").DescendantNodes().OfType<XCData>().First();
                 this.bio = cdata.Value;
             }
             if (element.Element("mbid") != null)
                 this.mbid = element.Element("mbid").Value.ToString();
-            try
-            { this.smallImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "small" select el.Value.ToString()).First()); }
-            catch (UriFormatException) { this.smallImage = null; }
-            try
-            { this.mediumImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "medium" select el.Value.ToString()).First()); }
-            catch (UriFormatException) { this.mediumImage = null; }
-            try
-            { this.largeImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "large" select el.Value.ToString()).First()); }
-            catch (UriFormatException) { this.largeImage = null; }
-            try
-            { this.extralargeImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "extralarge" select el.Value.ToString()).First()); }
-            catch (UriFormatException) { this.extralargeImage = null; }
-            try
-            { this.megaImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "mega" select el.Value.ToString()).First()); }
-            catch (UriFormatException) { this.megaImage = null; }
+            if (element.Element("image") != null)
+            {
+                try
+                { this.smallImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "small" select el.Value.ToString()).First()); }
+                catch (UriFormatException) { this.smallImage = null; }
+                catch (InvalidOperationException) { this.smallImage = null; }
+                try
+                { this.mediumImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "medium" select el.Value.ToString()).First()); }
+                catch (UriFormatException) { this.mediumImage = null; }
+                catch (InvalidOperationException) { this.mediumImage = null; }
+                try
+                { this.largeImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "large" select el.Value.ToString()).First()); }
+                catch (UriFormatException) { this.largeImage = null; }
+                catch (InvalidOperationException) { this.largeImage = null; }
+                try
+                { this.extralargeImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "extralarge" select el.Value.ToString()).First()); }
+                catch (UriFormatException) { this.extralargeImage = null; }
+                catch (InvalidOperationException) { this.extralargeImage = null; }
+                try
+                { this.megaImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "mega" select el.Value.ToString()).First()); }
+                catch (UriFormatException) { this.megaImage = null; }
+                catch (InvalidOperationException) { this.megaImage = null; }
+            }
             if (element.Element("tags") != null)
                 this.tags = new List<tagInfo>((from item in element.Element("tags").Elements() select new tagInfo(item)));
             if (element.Element("similar") != null)

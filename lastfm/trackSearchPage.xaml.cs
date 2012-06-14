@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.Collections.ObjectModel;
 using Microsoft.Phone.Shell;
+using System.Threading.Tasks;
 
 namespace lastfm
 {
@@ -42,8 +43,17 @@ namespace lastfm
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
-            foreach (trackInfo info in await track.search(searchText))
+
+            List<trackInfo> lst = new List<trackInfo>();
+            try
+            {
+                lst = new List<trackInfo>(await track.search(searchText));
+            }
+            catch (TaskCanceledException) { }
+
+            foreach (trackInfo info in lst)
                 lstResults.Add(info);
+
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }
@@ -52,6 +62,15 @@ namespace lastfm
         {
             if (e.Key == Key.Enter)
                 getList(txtSearchBox.Text);
+        }
+
+        private void searchResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (((ListBox)sender).SelectedIndex != -1)
+            {
+                trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
+                this.NavigationService.Navigate(new Uri("/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
+            }
         }
     }
 }

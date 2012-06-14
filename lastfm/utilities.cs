@@ -39,7 +39,7 @@ namespace lastfm
                         NotifyScript +
                     @"</head>
                     <body " + "bgcolor=" + bgcolor + " style=\"color:" + fcolor + "\"" + ">" +
-                        cdata +
+                            ((string.IsNullOrEmpty(cdata)) ? "Sorry, no description found" : cdata.Replace("\n", "<br>")) +
                     "</body>" +
                   "</html>";
             return ret;
@@ -71,8 +71,8 @@ namespace lastfm
             }
             else if (str.EndsWith(" bbcode_track"))
             {
-                navigateTo = str.Remove(str.Length - " bbcode_track".Length).Split(new char[] { '/' }).Last();
-                navigateTo = "/trackInfoPage.xaml?trackName=" + navigateTo;
+                string[] lst = str.Remove(str.Length - " bbcode_track".Length).Split(new char[] { '/' });
+                navigateTo = "/trackInfoPage.xaml?trackName=" + lst.Last() + "&artistName=" + lst[lst.Length - 3];
             }
             return navigateTo;
         }

@@ -30,7 +30,7 @@
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <StackPanel>
                 <TextBox InputScope="Search" Name="txtSearchBox" KeyDown="txtSearchBox_KeyDown"/>
-                <ListBox Height="550" VerticalAlignment="Stretch" Name="searchResults" ItemTemplate="{StaticResource trackTemplate}" ItemsSource="{Binding}"/>
+                <ListBox Height="550" VerticalAlignment="Stretch" Name="searchResults" ItemTemplate="{StaticResource trackTemplate}" ItemsSource="{Binding}" SelectionChanged="searchResults_SelectionChanged" />
             </StackPanel>
         </Grid>
     </Grid>

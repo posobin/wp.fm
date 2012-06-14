@@ -14,16 +14,16 @@ using Microsoft.Phone.Shell;
 
 namespace lastfm
 {
-    public partial class albumInfoPage : PhoneApplicationPage
+    public partial class trackInfoPage : PhoneApplicationPage
     {
-        public albumInfoPage()
+        public trackInfoPage()
         {
             InitializeComponent();
-            this.DataContext = currAlbum;
+            this.DataContext = currTrack;
             SystemTray.SetProgressIndicator(this, prog);
         }
 
-        albumInfo currAlbum;
+        trackInfo currTrack;
         ProgressIndicator prog = new ProgressIndicator();
 
         private void ScriptNotify(object sender, NotifyEventArgs e)
@@ -36,15 +36,18 @@ namespace lastfm
             }
         }
 
-        private async void getAlbumInfo(string artistName, string albumName)
+        private async void getTrackInfo(string artistName, string trackName)
         {
             SystemTray.IsVisible = true;
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
-            currAlbum = await album.getInfo(artistName, albumName);
-            this.DataContext = currAlbum;
-            albumDescription.NavigateToString(utilities.makeHtmlFromCdata(currAlbum.description));
+            currTrack = await track.getInfo(artistName, trackName);
+            this.DataContext = currTrack;
+            trackDescription.NavigateToString(utilities.makeHtmlFromCdata(currTrack.description));
+            if (currTrack.album != null)
+                AlbumLink.NavigateUri = new Uri("/albumInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(artistName) +
+                                                "&albumName=" + HttpUtility.UrlEncode(currTrack.album.name), UriKind.Relative);
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
             SystemTray.IsVisible = false;
@@ -53,26 +56,26 @@ namespace lastfm
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            string albumName = "";
+            string trackName = "";
             string artistName = "";
-            if (this.NavigationContext.QueryString.TryGetValue("albumName", out albumName) && 
-                this.NavigationContext.QueryString.TryGetValue("artistName", out artistName) && 
-                (!string.Equals(albumInfoPanorama.Title, albumName) || !string.Equals(ArtistLink.Content, artistName)))
+            if (this.NavigationContext.QueryString.TryGetValue("trackName", out trackName) &&
+                this.NavigationContext.QueryString.TryGetValue("artistName", out artistName) &&
+                (!string.Equals(albumInfoPanorama.Title, trackName) || !string.Equals(ArtistLink.Content, artistName)))
             {
                 ArtistLink.NavigateUri = new Uri("/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(artistName), UriKind.Relative);
-                albumInfoPanorama.Title = albumName;
                 ArtistLink.Content = artistName;
-                getAlbumInfo(artistName, albumName);
+                albumInfoPanorama.Title = trackName;
+                getTrackInfo(artistName, trackName);
             }
         }
 
-        private void albumDescription_Navigating(object sender, NavigatingEventArgs e)
+        private void trackDescription_Navigating(object sender, NavigatingEventArgs e)
         {
             if (((WebBrowser)sender).Opacity != 0)
                 e.Cancel = true;
         }
 
-        private void albumDescription_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        private void trackDescription_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             ((WebBrowser)sender).Opacity = 1;
         }
@@ -81,12 +84,6 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
                 this.NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
-        }
-
-        private void tracksLst_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
-            this.NavigationService.Navigate(new Uri("/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
         }
     }
 }

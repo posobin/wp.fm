@@ -10,13 +10,17 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace lastfm
 {
     public class trackInfo
     {
         public string name { get; set; }
-        public string artistName { get; set; }
+        public artistInfo artist { get; set; }
+        public albumInfo album { get; set; }
+        public List<tagInfo> tags { get; set; }
+        public string description { get; set; }
         public string id { get; set; }
         public int duration { get; set; } //in milliseconds
         public int position { get; set; } //track number in album
@@ -31,11 +35,25 @@ namespace lastfm
         {
             this.name = element.Element("name").Value.ToString();
             string url_str = element.Element("url").Value.ToString();
-            if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
+            if (url_str.StartsWith("www.")) url_str = "http://" + url_str;
+            this.url = new Uri(url_str);
             if (element.Element("duration") != null)
                 this.duration = Int32.Parse(element.Element("duration").Value.ToString());
-            else if (element.Attribute("position") != null)
-            this.url = new Uri(url_str);
+            if (element.Element("album") != null)
+            {
+                this.album = new albumInfo(element.Element("album"));
+                if (element.Element("album").Attribute("position") != null)
+                    this.position = Int32.Parse(element.Element("album").Attribute("position").Value);
+            }
+            if (element.Element("artist") != null)
+                this.artist = new artistInfo(element.Element("artist"));
+            if (element.Element("toptags") != null)
+                this.tags = new List<tagInfo>(from el in element.Element("toptags").Elements() select new tagInfo(el));
+            if (element.Element("wiki") != null && element.Element("wiki").Element("content") != null)
+            {
+                XCData cdata = element.Element("wiki").Element("content").DescendantNodes().OfType<XCData>().First();
+                this.description = cdata.Value;
+            }
             try
             { this.smallImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "small" select el.Value.ToString()).First()); }
             catch (UriFormatException) { this.smallImage = null; }

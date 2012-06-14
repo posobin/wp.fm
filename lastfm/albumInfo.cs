@@ -31,7 +31,15 @@ namespace lastfm
         public albumInfo() { }
         public albumInfo(XElement element)
         {
-            this.name = element.Element("name").Value.ToString();
+            if (element.Element("name") != null)
+                this.name = element.Element("name").Value.ToString();
+            else if (element.Element("title") != null)
+                this.name = element.Element("title").Value.ToString();
+            else
+            {
+                MessageBox.Show("Could not read artist info, sorry");
+                return;
+            }
             this.artistName = element.Element("artist").Value.ToString();
             string url_str = element.Element("url").Value.ToString();
             if (url_str.StartsWith("www.")) url_str = @"http://" + url_str;
