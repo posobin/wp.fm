@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:local="clr-namespace:lastfm"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -14,23 +15,36 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True">
 
+    <phone:PhoneApplicationPage.Resources>
+        <shell:ApplicationBar x:Key="appbar_scrobble_nl" IsVisible="True" IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton x:Name="appbar_scrobble_btn_scr_nl" IconUri="/appbar.upload.rest.png" Text="Scrobble"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_login_btn_scr" IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
+        </shell:ApplicationBar>
+
+        <shell:ApplicationBar x:Key="appbar_scrobble_l" IsVisible="True" IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton x:Name="appbar_scrobble_btn_l" IconUri="/appbar.upload.rest.png" Text="Scrobble"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_logout_btn_scr" IconUri="/appbar.door.leave.png" Text="log out"/>
+        </shell:ApplicationBar>
+
+        <shell:ApplicationBar x:Key="appbar_login" IsVisible="True" IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton x:Name="appbar_login_btn" IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
+        </shell:ApplicationBar>
+
+        <shell:ApplicationBar x:Key="appbar_logout" IsVisible="True" IsMenuEnabled="False">
+            <shell:ApplicationBarIconButton x:Name="appbar_logout_btn" IconUri="/appbar.door.leave.png" Text="log out"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.Resources>
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Title="last.fm scrobbler for WP7" Margin="1,0,-1,0">
+        <controls:Pivot Title="last.fm scrobbler for WP7" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged">
             <!--Pivot item one-->
-            <controls:PivotItem Header="item1">
-                <Grid>
-                    <Button Content="Button" Height="72" HorizontalAlignment="Left" Margin="1,2,0,0" Name="button1" VerticalAlignment="Top" Width="160" Click="button1_Click" />
-                </Grid>
-            </controls:PivotItem>
-
-            <!--Pivot item two-->
             <controls:PivotItem Header="search">
                 <StackPanel>
                     <TextBox Height="72" HorizontalAlignment="Stretch" Margin="10" Name="txtSearchText" VerticalAlignment="Top" />
                     <TextBlock Text="search for..." Margin="10" Padding="10,0" FontSize="24" />
-                    <ListBox HorizontalAlignment="Stretch" Margin="10" Name="lstSearch" VerticalAlignment="Top" Padding="15,10" FontSize="28" SelectedIndex="0">
+                    <ListBox local:TiltEffect.IsTiltEnabled="True" HorizontalAlignment="Stretch" Margin="10" Name="lstSearch" VerticalAlignment="Top" Padding="15,10" FontSize="28" SelectedIndex="0">
                         <ListBoxItem Content="album" />
                         <ListBoxItem Content="artist" />
                         <ListBoxItem Content="tag" />
@@ -39,25 +53,23 @@
                     <Button Content="Search" Height="72" Name="btnSearch" Click="btnSearch_Click" />
                 </StackPanel>
             </controls:PivotItem>
-            
-            <controls:PivotItem Header="test">
-                <Grid>
-                    <phone:WebBrowser VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,0,0" Name="webBrowser1" />
-                </Grid>
+
+            <!--Pivot item two-->
+            <controls:PivotItem Header="now playing">
+                <StackPanel>
+                    <Image Name="AlbumCover" Source="/lastfm;component/NoImageBig.png" Height="350" />
+                    <HyperlinkButton Name="SongTitle" FontSize="40" HorizontalContentAlignment="Left" />
+                    <HyperlinkButton Name="AlbumName" FontSize="32" HorizontalContentAlignment="Left" />
+                    <HyperlinkButton Name="ArtistName" HorizontalContentAlignment="Left" />
+                </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>
 
     <!--Sample code showing usage of ApplicationBar-->
-    <!--<phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
-            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Button 1"/>
-            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Button 2"/>
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="MenuItem 1"/>
-                <shell:ApplicationBarMenuItem x:Name="menuItem2" Text="MenuItem 2"/>
-            </shell:ApplicationBar.MenuItems>
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="False" IsMenuEnabled="False">
         </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>-->
+    </phone:PhoneApplicationPage.ApplicationBar>
     
 </phone:PhoneApplicationPage>

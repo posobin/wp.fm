@@ -74,6 +74,13 @@ namespace lastfm
                 string[] lst = str.Remove(str.Length - " bbcode_track".Length).Split(new char[] { '/' });
                 navigateTo = "/trackInfoPage.xaml?trackName=" + lst.Last() + "&artistName=" + lst[lst.Length - 3];
             }
+            else
+            {
+                int index = str.LastIndexOf(" ");
+                WebBrowserTask browser = new WebBrowserTask();
+                browser.Uri = new Uri(str.Substring(0, index), UriKind.Absolute);
+                browser.Show();
+            }
             return navigateTo;
         }
     }

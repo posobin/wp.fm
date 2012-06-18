@@ -24,3 +24,6 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\a
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\tagInfoPage.g.i.cs
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\albumInfoPage.g.i.cs
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\trackInfoPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\appbar.upload.rest.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\appbar.door.enter.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\appbar.door.leave.png
