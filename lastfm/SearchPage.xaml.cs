@@ -58,6 +58,8 @@ namespace lastfm
                         break;
                 }
             }
+            else
+                Dispatcher.BeginInvoke(() => txtSearchBox.Focus());
         }
 
         #region Downloading lists

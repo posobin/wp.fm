@@ -53,5 +53,21 @@ namespace lastfm
                 MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
             return null;
         }
+
+        public static async void scrobble(string artistName, string trackName)
+        {
+            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+                MessageBox.Show("This service requires authentication");
+            int timeStamp = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("artist", artistName);
+            rParams.Add("track", trackName);
+            rParams.Add("timestamp", timeStamp.ToString());
+            rParams.Add("method", "track.scrobble");
+            rParams.Add("sk", Session.CurrentSession.SessionKey);
+            XDocument returnedXml = await Request.MakeRequest(rParams, true);
+            if (Request.CheckStatus(returnedXml) != 0)
+                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+        }
     }
 }

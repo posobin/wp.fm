@@ -44,11 +44,11 @@ namespace lastfm
             if (NowPlaying != null)
             {
                 SongTitle.Content = NowPlaying.Name;
-                SongTitle.NavigateUri = new Uri("/trackSearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Name), UriKind.Relative);
+                SongTitle.NavigateUri = new Uri("/SearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Name) + "&searchType=track", UriKind.Relative);
                 AlbumName.Content = NowPlaying.Album.Name;
-                AlbumName.NavigateUri = new Uri("/albumSearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Album.Name), UriKind.Relative);
+                AlbumName.NavigateUri = new Uri("/SearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Album.Name) + "&searchType=album", UriKind.Relative);
                 ArtistName.Content = NowPlaying.Artist.Name;
-                ArtistName.NavigateUri = new Uri("/artistSearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Artist.Name), UriKind.Relative);
+                ArtistName.NavigateUri = new Uri("/SearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Artist.Name) + "&searchType=artist", UriKind.Relative);
                 if (NowPlaying.Album.HasArt == true)
                 {
                     BitmapImage AlbumImage = new BitmapImage();
@@ -80,7 +80,7 @@ namespace lastfm
         {
             switch (((Pivot)sender).SelectedIndex)
             {
-                case 1:
+                case 0:
                     if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
                         ApplicationBar = this.Resources["appbar_scrobble_l"] as ApplicationBar;
                     else
@@ -99,6 +99,23 @@ namespace lastfm
         private void Search(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/searchPage.xaml", UriKind.Relative));
+        }
+
+        private void Scrobble(object sender, EventArgs e)
+        {
+            Song NowPlaying = MediaPlayer.Queue.ActiveSong;
+            if (NowPlaying != null && Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
+            {
+                SongTitle.Content = NowPlaying.Name;
+                ArtistName.Content = NowPlaying.Artist.Name;
+                track.scrobble(NowPlaying.Artist.Name, NowPlaying.Name);
+            }
+            else if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+                MessageBox.Show("You shold log in first to be able to scrobble");
+            else
+            {
+                MessageBox.Show("Sorry, but nothing is playing now");
+            }
         }
     }
 }
