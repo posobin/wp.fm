@@ -76,28 +76,6 @@ namespace lastfm
             NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
         }
 
-        private void btnSearch_Click(object sender, RoutedEventArgs e)
-        {
-            string selectedItem = ((ListBoxItem) lstSearch.SelectedItem).Content.ToString();
-            switch (selectedItem)
-            {
-                case "artist":
-                    this.NavigationService.Navigate(new Uri("/artistSearchPage.xaml?searchText=" + HttpUtility.UrlEncode(txtSearchText.Text), UriKind.Relative));
-                    break;
-                case "album":
-                    this.NavigationService.Navigate(new Uri("/albumSearchPage.xaml?searchText=" + HttpUtility.UrlEncode(txtSearchText.Text), UriKind.Relative));
-                    break;
-                case "track":
-                    this.NavigationService.Navigate(new Uri("/trackSearchPage.xaml?searchText=" + HttpUtility.UrlEncode(txtSearchText.Text), UriKind.Relative));
-                    break;
-                case "tag":
-                    this.NavigationService.Navigate(new Uri("/tagSearchPage.xaml?searchText=" + HttpUtility.UrlEncode(txtSearchText.Text), UriKind.Relative));
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             switch (((Pivot)sender).SelectedIndex)
@@ -118,7 +96,7 @@ namespace lastfm
             }
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void Search(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/searchPage.xaml", UriKind.Relative));
         }

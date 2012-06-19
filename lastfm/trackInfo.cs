@@ -37,7 +37,7 @@ namespace lastfm
             string url_str = element.Element("url").Value.ToString();
             if (url_str.StartsWith("www.")) url_str = "http://" + url_str;
             this.url = new Uri(url_str);
-            if (element.Element("duration") != null)
+            if (element.Element("duration") != null && !string.IsNullOrEmpty(element.Element("duration").Value))
                 this.duration = Int32.Parse(element.Element("duration").Value.ToString());
             if (element.Element("album") != null)
             {

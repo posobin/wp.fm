@@ -19,19 +19,23 @@
         <shell:ApplicationBar x:Key="appbar_scrobble_nl" IsVisible="True" IsMenuEnabled="False">
             <shell:ApplicationBarIconButton x:Name="appbar_scrobble_btn_scr_nl" IconUri="/appbar.upload.rest.png" Text="Scrobble"/>
             <shell:ApplicationBarIconButton x:Name="appbar_login_btn_scr" IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
+            <shell:ApplicationBarIconButton x:Name="appbar_search_btn_scr_nl" IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
         </shell:ApplicationBar>
 
         <shell:ApplicationBar x:Key="appbar_scrobble_l" IsVisible="True" IsMenuEnabled="False">
             <shell:ApplicationBarIconButton x:Name="appbar_scrobble_btn_l" IconUri="/appbar.upload.rest.png" Text="Scrobble"/>
             <shell:ApplicationBarIconButton x:Name="appbar_logout_btn_scr" IconUri="/appbar.door.leave.png" Text="log out"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_search_btn_scr_l" IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
         </shell:ApplicationBar>
 
         <shell:ApplicationBar x:Key="appbar_login" IsVisible="True" IsMenuEnabled="False">
             <shell:ApplicationBarIconButton x:Name="appbar_login_btn" IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
+            <shell:ApplicationBarIconButton x:Name="appbar_search_nl" IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
         </shell:ApplicationBar>
 
         <shell:ApplicationBar x:Key="appbar_logout" IsVisible="True" IsMenuEnabled="False">
             <shell:ApplicationBarIconButton x:Name="appbar_logout_btn" IconUri="/appbar.door.leave.png" Text="log out"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_search_l" IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.Resources>
     
@@ -40,22 +44,6 @@
         <!--Pivot Control-->
         <controls:Pivot Title="last.fm scrobbler for WP7" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged">
             <!--Pivot item one-->
-            <controls:PivotItem Header="search">
-                <StackPanel>
-                    <TextBox Height="72" HorizontalAlignment="Stretch" Margin="10" Name="txtSearchText" VerticalAlignment="Top" />
-                    <TextBlock Text="search for..." Margin="10" Padding="10,0" FontSize="24" />
-                    <ListBox local:TiltEffect.IsTiltEnabled="True" HorizontalAlignment="Stretch" Margin="10" Name="lstSearch" VerticalAlignment="Top" Padding="15,10" FontSize="28" SelectedIndex="0">
-                        <ListBoxItem Content="album" />
-                        <ListBoxItem Content="artist" />
-                        <ListBoxItem Content="tag" />
-                        <ListBoxItem Content="track" />
-                    </ListBox>
-                    <Button Content="Search" Height="72" Name="btnSearch" Click="btnSearch_Click" />
-                    <Button Content="Button" Height="72" Name="button1" Width="160" Click="button1_Click" />
-                </StackPanel>
-            </controls:PivotItem>
-
-            <!--Pivot item two-->
             <controls:PivotItem Header="now playing">
                 <StackPanel>
                     <Image Name="AlbumCover" Source="/lastfm;component/NoImageBig.png" Height="350" />
