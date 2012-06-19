@@ -117,5 +117,10 @@ namespace lastfm
                     break;
             }
         }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/searchPage.xaml", UriKind.Relative));
+        }
     }
 }

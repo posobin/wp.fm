@@ -51,6 +51,7 @@
                         <ListBoxItem Content="track" />
                     </ListBox>
                     <Button Content="Search" Height="72" Name="btnSearch" Click="btnSearch_Click" />
+                    <Button Content="Button" Height="72" Name="button1" Width="160" Click="button1_Click" />
                 </StackPanel>
             </controls:PivotItem>
 

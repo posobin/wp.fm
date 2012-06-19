@@ -1,0 +1,58 @@
+﻿<phone:PhoneApplicationPage 
+    x:Class="lastfm.SearchPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="768"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait"  Orientation="Portrait"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot представляет корневую сетку, где размещается все содержимое страницы-->
+    <Grid x:Name="LayoutRoot" Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBox Grid.Row="0" Name="txtSearchBox" InputScope="Search" KeyDown="txtSearchBox_KeyDown" />
+        <!--Элемент управления Pivot-->
+        <controls:Pivot Name="SearchPivot" Grid.Row="1" SelectionChanged="SearchPivot_SelectionChanged">
+            <!--Первый элемент Pivot-->
+            <controls:PivotItem Header="artists">
+                <ListBox Name="artistResults" ItemsSource="{Binding}" ItemTemplate="{StaticResource artistTemplate}" SelectionChanged="artistResults_SelectionChanged" />
+            </controls:PivotItem>
+
+            <!--Второй элемент Pivot-->
+            <controls:PivotItem Header="albums">
+                <ListBox Name="albumResults" ItemsSource="{Binding}" ItemTemplate="{StaticResource albumTemplate}" SelectionChanged="albumResults_SelectionChanged" />
+            </controls:PivotItem>
+
+            <controls:PivotItem Header="tracks">
+                <ListBox Name="trackResults" ItemsSource="{Binding}" ItemTemplate="{StaticResource trackTemplate}" SelectionChanged="trackResults_SelectionChanged" />
+            </controls:PivotItem>
+            
+            <controls:PivotItem Header="tags">
+                <ListBox Name="tagResults" ItemsSource="{Binding}" ItemTemplate="{StaticResource artistTemplate}" SelectionChanged="tagResults_SelectionChanged" />
+            </controls:PivotItem>
+        </controls:Pivot>
+    </Grid>
+
+    <!--Пример кода, иллюстрирующий использование ApplicationBar-->
+    <!--<phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True">
+            <shell:ApplicationBarIconButton x:Name="appbar_button1" IconUri="/Images/appbar_button1.png" Text="Кнопка 1"/>
+            <shell:ApplicationBarIconButton x:Name="appbar_button2" IconUri="/Images/appbar_button2.png" Text="Кнопка 2"/>
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem x:Name="menuItem1" Text="Элемент меню 1"/>
+                <shell:ApplicationBarMenuItem x:Name="menuItem2" Text="Элемент меню 2"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>-->
+    
+</phone:PhoneApplicationPage>

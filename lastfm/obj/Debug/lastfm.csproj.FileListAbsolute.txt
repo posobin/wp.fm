@@ -27,3 +27,4 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\t
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\appbar.upload.rest.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\appbar.door.enter.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\appbar.door.leave.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\SearchPage.g.i.cs
