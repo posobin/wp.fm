@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.Threading.Tasks;
 
 namespace lastfm
 {
@@ -40,7 +41,10 @@ namespace lastfm
         {
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
-            currTag = await tag.getInfo(tagName);
+
+            try { currTag = await tag.getInfo(tagName); }
+            catch (TaskCanceledException) { }
+            
             webBrowser1.NavigateToString(utilities.makeHtmlFromCdata(currTag.wiki));
             this.DataContext = currTag;
             prog.IsVisible = false;

@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Phone.Shell;
+using System.Threading.Tasks;
 
 namespace lastfm
 {
@@ -24,7 +25,7 @@ namespace lastfm
         public MainPage()
         {
             InitializeComponent();
-
+            
             DispatcherTimer dt = new DispatcherTimer();
             dt.Interval = TimeSpan.FromMilliseconds(33);
             dt.Tick += delegate { try { FrameworkDispatcher.Update(); } catch { } };
@@ -33,11 +34,23 @@ namespace lastfm
             MediaPlayer.MediaStateChanged += new EventHandler<EventArgs>(MediaPlayer_MediaStateChanged);
         }
 
+        /// <summary>
+        /// Event being fired when track is being changed, stoped, etc.
+        /// </summary>
         void MediaPlayer_MediaStateChanged(object sender, EventArgs e)
         {
             UpdateNowPlaying();
+            if (Session.LastSong != MediaPlayer.Queue.ActiveSong)
+            {
+                Session.LastSong = MediaPlayer.Queue.ActiveSong;
+                if (Session.AutoScrobbling == true)
+                    ScrobbleNowPlaying();
+            }
         }
 
+        /// <summary>
+        /// Shows up info about currently playing song
+        /// </summary>
         private void UpdateNowPlaying()
         {
             Song NowPlaying = MediaPlayer.Queue.ActiveSong;
@@ -68,17 +81,41 @@ namespace lastfm
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
+            UpdateAppBar();
             UpdateNowPlaying();
         }
 
+        /// <summary>
+        /// Sends user to the login page
+        /// </summary>
         private void Login(object sender, EventArgs e)
         {
             NavigationService.Navigate(new Uri("/LoginPage.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Deletes info about last session
+        /// </summary>
+        private void Logout(object sender, EventArgs e)
+        {
+            Session.CurrentSession = null;
+            UpdateAppBar();
+        }
+
+        /// <summary>
+        /// Event for handling different AppBars for each PivotItem
+        /// </summary>
         private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (((Pivot)sender).SelectedIndex)
+            UpdateAppBar();
+        }
+
+        /// <summary>
+        /// Updates AppBar so as it is appropriate for the current PivotItem
+        /// </summary>
+        private void UpdateAppBar()
+        {
+            switch (((Pivot)MainPivot).SelectedIndex)
             {
                 case 0:
                     if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
@@ -96,26 +133,53 @@ namespace lastfm
             }
         }
 
+        /// <summary>
+        /// Navigates user to the SearchPage
+        /// </summary>
         private void Search(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/searchPage.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Calls ScrobbleNowPlaying
+        /// </summary>
         private void Scrobble(object sender, EventArgs e)
         {
+            ScrobbleNowPlaying();
+        }
+
+        /// <summary>
+        /// Scrobbles song currently being played
+        /// </summary>
+        private void ScrobbleNowPlaying()
+        {
+            prog.IsIndeterminate = true;
+            prog.IsVisible = true;
+            prog.Text = "Scrobbling...";
+            SystemTray.ProgressIndicator = prog;
             Song NowPlaying = MediaPlayer.Queue.ActiveSong;
             if (NowPlaying != null && Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
             {
                 SongTitle.Content = NowPlaying.Name;
                 ArtistName.Content = NowPlaying.Artist.Name;
-                track.scrobble(NowPlaying.Artist.Name, NowPlaying.Name);
+                try { track.scrobble(NowPlaying.Artist.Name, NowPlaying.Name); }
+                catch (TaskCanceledException) { }
             }
-            else if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
-                MessageBox.Show("You shold log in first to be able to scrobble");
-            else
-            {
+            else if (NowPlaying == null)
                 MessageBox.Show("Sorry, but nothing is playing now");
-            }
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
         }
+
+        /// <summary>
+        /// Navigates user to the settings page
+        /// </summary>
+        private void LaunchSettingsPage(object sender, EventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+        }
+
+        ProgressIndicator prog = new ProgressIndicator();
     }
 }

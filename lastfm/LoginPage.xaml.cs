@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using System.IO;
 using Microsoft.Phone.Shell;
+using System.Threading.Tasks;
 
 namespace lastfm
 {
@@ -28,11 +29,14 @@ namespace lastfm
         {
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
-            prog.Text = "Loading...";
+            prog.Text = "Logging in...";
             SystemTray.SetProgressIndicator(this, prog);
-            Session.CurrentSession = await auth.authorize(txtUsername.Text, txtPassword.Text);
+
+            try { Session.CurrentSession = await auth.authorize(txtUsername.Text, txtPassword.Text); }
+            catch (TaskCanceledException) { }
+
             if (Session.CurrentSession != null)
-                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
+                NavigationService.GoBack();
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }

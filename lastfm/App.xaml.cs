@@ -81,6 +81,8 @@ namespace lastfm
         // Этот код не будет выполняться при деактивации приложения
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            if (!Session.RememberSession)
+                Session.CurrentSession = null;
         }
 
         // Код для выполнения в случае ошибки навигации

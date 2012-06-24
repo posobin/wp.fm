@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
+using System.Threading.Tasks;
 
 namespace lastfm
 {
@@ -44,7 +45,10 @@ namespace lastfm
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
-            currArtist = await artist.getInfo(artistName);
+
+            try { currArtist = await artist.getInfo(artistName); }
+            catch (TaskCanceledException) { }
+
             this.DataContext = currArtist;
             webBrowser1.NavigateToString(utilities.makeHtmlFromCdata(currArtist.bio));
             prog.IsIndeterminate = false;

@@ -11,6 +11,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
+using System.Threading.Tasks;
 
 namespace lastfm
 {
@@ -42,7 +43,10 @@ namespace lastfm
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
-            currTrack = await track.getInfo(artistName, trackName);
+
+            try { currTrack = await track.getInfo(artistName, trackName); }
+            catch (TaskCanceledException) { }
+
             this.DataContext = currTrack;
             trackDescription.NavigateToString(utilities.makeHtmlFromCdata(currTrack.description));
             if (currTrack.album != null)

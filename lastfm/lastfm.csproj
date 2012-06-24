@@ -53,8 +53,10 @@
     </Reference>
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Phone.Controls.Toolkit, Version=7.0.0.0, Culture=neutral, PublicKeyToken=b772ad94eb9ca604, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
     <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Windows" />
     <Reference Include="system" />
     <Reference Include="System.Core" />
@@ -69,9 +71,6 @@
     <Compile Include="albumInfoPage.xaml.cs">
       <DependentUpon>albumInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="albumSearchPage.xaml.cs">
-      <DependentUpon>albumSearchPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
@@ -79,9 +78,6 @@
     <Compile Include="artistInfo.cs" />
     <Compile Include="artistInfoPage.xaml.cs">
       <DependentUpon>artistInfoPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="artistSearchPage.xaml.cs">
-      <DependentUpon>artistSearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="auth.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -99,23 +95,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Request.cs" />
     <Compile Include="RequestParameters.cs" />
+    <Compile Include="SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="statistics.cs" />
     <Compile Include="tag.cs" />
     <Compile Include="tagInfo.cs" />
     <Compile Include="tagInfoPage.xaml.cs">
       <DependentUpon>tagInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="tagSearchPage.xaml.cs">
-      <DependentUpon>tagSearchPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="TiltEffect.cs" />
     <Compile Include="track.cs" />
     <Compile Include="trackInfo.cs" />
     <Compile Include="trackInfoPage.xaml.cs">
       <DependentUpon>trackInfoPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="trackSearchPage.xaml.cs">
-      <DependentUpon>trackSearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="utilities.cs" />
   </ItemGroup>
@@ -128,15 +121,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="albumSearchPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="artistInfoPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="artistSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -152,19 +137,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="SettingsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="tagInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="tagSearchPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="trackInfoPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="trackSearchPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

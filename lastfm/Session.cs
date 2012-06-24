@@ -8,30 +8,100 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
+using System.Runtime.Serialization;
+using Microsoft.Xna.Framework.Media;
 
 namespace lastfm
 {
+    [DataContract]
     public class Session
     {
-        //session key returned after authorization
-        public static Session CurrentSession = null;
-
-        private string _sk;
-        private string _UserName;
-
-        public string UserName
-        {
-            get { return _UserName; }
+        /// <summary>
+        /// Property saves to the IsolatedStorageSettings session
+        /// </summary>
+        public static Session CurrentSession
+        { 
+            get
+            {
+                if (System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("Session"))
+                    return (Session)System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["Session"];
+                else
+                    return null;
+            }
+            set
+            {
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["Session"] = value;
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Save();
+            }
         }
 
-        public string SessionKey
+        /// <summary>
+        /// Property saves to the IsolatedStorageSettings whether to save user info on exit or not
+        /// </summary>
+        public static bool RememberSession 
         {
-            get { return _sk; }
+            get 
+            {
+                if (!System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("RememberSession"))
+                    System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["RememberSession"] = true;
+                return (bool)System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["RememberSession"];
+            }
+            set 
+            {
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["RememberSession"] = value;
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Save();
+            }
         }
+
+        /// <summary>
+        /// Property saves to the IsolatedStorageSettings whether to scrobble new song after the song change or not
+        /// </summary>
+        public static bool AutoScrobbling 
+        { 
+            get
+            {
+                if (!System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("AutoScrobbling"))
+                    System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["AutoScrobbling"] = true;
+                return (bool)System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["AutoScrobbling"];
+            }
+            set
+            {
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["AutoScrobbling"] = value;
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Save();
+            }
+        }
+
+        /// <summary>
+        /// Last song played
+        /// </summary>
+        public static Song LastSong 
+        {
+            get
+            {
+                if (!System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("LastSong"))
+                    System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["LastSong"] = null;
+                return (Song)System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["LastSong"];
+            }
+            set
+            {
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["LastSong"] = value;
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Save();
+            }
+        }
+
+        [DataMember]
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// session key returned after authorization
+        /// </summary>
+        [DataMember]
+        public string SessionKey { get; set; }
+
         public Session(string skey, string userName)
         {
-            _sk = skey;
-            _UserName = userName;
+            SessionKey = skey;
+            UserName = userName;
         }
     }
 }

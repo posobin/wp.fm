@@ -44,17 +44,33 @@ namespace lastfm
                 switch (searchType)
                 {
                     case "album":
-                        getAlbumList(searchText);
+                        if (lstAlbumResults.Count == 0 || searchText != txtSearchBox.Text)
+                        {
+                            SearchPivot.SelectedIndex = 1;
+                            getAlbumList(searchText);
+                        }
                         break;
                     case "track":
-                        getTrackList(searchText);
+                        if (lstTrackResults.Count == 0 || searchText != txtSearchBox.Text)
+                        {
+                            SearchPivot.SelectedIndex = 2;
+                            getTrackList(searchText);
+                        }
                         break;
                     case "tag":
-                        getTagList(searchText);
+                        if (lstTagResults.Count == 0 || searchText != txtSearchBox.Text)
+                        {
+                            SearchPivot.SelectedIndex = 3;
+                            getTagList(searchText);
+                        }
                         break;
                     case "artist":
                     default:
-                        getArtistList(searchText);
+                        if (lstTrackResults.Count == 0 || searchText != txtSearchBox.Text)
+                        {
+                            SearchPivot.SelectedIndex = 0;
+                            getArtistList(searchText);
+                        }
                         break;
                 }
             }

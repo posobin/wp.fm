@@ -16,33 +16,44 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.Resources>
-        <shell:ApplicationBar x:Key="appbar_scrobble_nl" IsVisible="True" IsMenuEnabled="False">
-            <shell:ApplicationBarIconButton x:Name="appbar_scrobble_btn_scr_nl" IconUri="/appbar.upload.rest.png" Text="Scrobble"/>
-            <shell:ApplicationBarIconButton x:Name="appbar_login_btn_scr" IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
-            <shell:ApplicationBarIconButton x:Name="appbar_search_btn_scr_nl" IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+        <shell:ApplicationBar x:Key="appbar_scrobble_nl" IsVisible="True">
+            <shell:ApplicationBarIconButton IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
+            <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
 
-        <shell:ApplicationBar x:Key="appbar_scrobble_l" IsVisible="True" IsMenuEnabled="False">
-            <shell:ApplicationBarIconButton x:Name="appbar_scrobble_btn_l" IconUri="/appbar.upload.rest.png" Text="Scrobble" Click="Scrobble" />
-            <shell:ApplicationBarIconButton x:Name="appbar_logout_btn_scr" IconUri="/appbar.door.leave.png" Text="log out"/>
-            <shell:ApplicationBarIconButton x:Name="appbar_search_btn_scr_l" IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+        <shell:ApplicationBar x:Key="appbar_scrobble_l" IsVisible="True">
+            <shell:ApplicationBarIconButton IconUri="/appbar.upload.rest.png" Text="Scrobble" Click="Scrobble" />
+            <shell:ApplicationBarIconButton IconUri="/appbar.door.leave.png" Text="log out" Click="Logout"/>
+            <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
 
-        <shell:ApplicationBar x:Key="appbar_login" IsVisible="True" IsMenuEnabled="False">
-            <shell:ApplicationBarIconButton x:Name="appbar_login_btn" IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
-            <shell:ApplicationBarIconButton x:Name="appbar_search_nl" IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+        <shell:ApplicationBar x:Key="appbar_login" IsVisible="True">
+            <shell:ApplicationBarIconButton IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
+            <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
 
-        <shell:ApplicationBar x:Key="appbar_logout" IsVisible="True" IsMenuEnabled="False">
-            <shell:ApplicationBarIconButton x:Name="appbar_logout_btn" IconUri="/appbar.door.leave.png" Text="log out"/>
-            <shell:ApplicationBarIconButton x:Name="appbar_search_l" IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+        <shell:ApplicationBar x:Key="appbar_logout" IsVisible="True">
+            <shell:ApplicationBarIconButton IconUri="/appbar.door.leave.png" Text="log out" Click="Logout"/>
+            <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+            </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.Resources>
     
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Title="last.fm scrobbler for WP7" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged">
+        <controls:Pivot Title="last.fm scrobbler for WP7" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged" Name="MainPivot">
             <!--Pivot item one-->
             <controls:PivotItem Header="now playing">
                 <StackPanel>
