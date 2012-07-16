@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using Microsoft.Xna.Framework;
 using Microsoft.Phone.Shell;
 using System.Threading.Tasks;
+using Microsoft.Phone.Net.NetworkInformation;
 
 namespace lastfm
 {
@@ -42,9 +43,12 @@ namespace lastfm
             UpdateNowPlaying();
             if (Session.LastSong != MediaPlayer.Queue.ActiveSong)
             {
-                Session.LastSong = MediaPlayer.Queue.ActiveSong;
-                if (Session.AutoScrobbling == true)
-                    ScrobbleNowPlaying();
+                if (NetworkInterface.GetIsNetworkAvailable())
+                {
+                    Session.LastSong = MediaPlayer.Queue.ActiveSong;
+                    if (Session.AutoScrobbling == true)
+                        ScrobbleNowPlaying();
+                }
             }
         }
 
@@ -81,8 +85,13 @@ namespace lastfm
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            UpdateAppBar();
-            UpdateNowPlaying();
+            if (NetworkInterface.GetIsNetworkAvailable())
+            {
+                UpdateAppBar();
+                UpdateNowPlaying();
+            }
+            else
+                MessageBox.Show("No internet connection is available");
         }
 
         /// <summary>
@@ -115,22 +124,27 @@ namespace lastfm
         /// </summary>
         private void UpdateAppBar()
         {
-            switch (((Pivot)MainPivot).SelectedIndex)
+            if (NetworkInterface.GetIsNetworkAvailable())
             {
-                case 0:
-                    if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
-                        ApplicationBar = this.Resources["appbar_scrobble_l"] as ApplicationBar;
-                    else
-                        ApplicationBar = this.Resources["appbar_scrobble_nl"] as ApplicationBar;
-                    ApplicationBar.IsVisible = true;
-                    break;
-                default:
-                    if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
-                        ApplicationBar = this.Resources["appbar_logout"] as ApplicationBar;
-                    else
-                        ApplicationBar = this.Resources["appbar_login"] as ApplicationBar;
-                    break;
+                switch (((Pivot)MainPivot).SelectedIndex)
+                {
+                    case 0:
+                        if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
+                            ApplicationBar = this.Resources["appbar_scrobble_l"] as ApplicationBar;
+                        else
+                            ApplicationBar = this.Resources["appbar_scrobble_nl"] as ApplicationBar;
+                        ApplicationBar.IsVisible = true;
+                        break;
+                    default:
+                        if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
+                            ApplicationBar = this.Resources["appbar_logout"] as ApplicationBar;
+                        else
+                            ApplicationBar = this.Resources["appbar_login"] as ApplicationBar;
+                        break;
+                }
             }
+            else
+                ApplicationBar = this.Resources["appbar_empty"] as ApplicationBar;
         }
 
         /// <summary>

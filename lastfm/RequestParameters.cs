@@ -13,6 +13,9 @@ using System.Text;
 
 namespace lastfm
 {
+    /// <summary>
+    /// Dictionary<string,string> wrapper with overriden methods so as to be able to get info from last.fm servers
+    /// </summary>
     public class RequestParameters : Dictionary<string, string>
     {
         public override string ToString()

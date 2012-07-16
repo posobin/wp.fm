@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Xml;
 using System.Xml.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -27,6 +28,11 @@ namespace lastfm
         private const string root_url = "http://ws.audioscrobbler.com/2.0/";
         public delegate void MethodToCallAfter(KeyValuePair<int, string> response);
 
+        /// <summary>
+        /// Returns response status, contained in the lfm tag attribute
+        /// </summary>
+        /// <param name="xml">XDocument object to be checked</param>
+        /// <returns>Status of the response</returns>
         public static int CheckStatus(XDocument xml)
         {
             IEnumerable<XElement> lfm = from el in xml.Descendants("lfm") select el;
@@ -40,6 +46,12 @@ namespace lastfm
             }
         }
 
+        /// <summary>
+        /// Compiles all the arguments in one request, sends it to the last.fm and returns response xml
+        /// </summary>
+        /// <param name="rParams">List of parameters</param>
+        /// <param name="toSign">Indicates, whether request should be signed or not</param>
+        /// <returns>XDocument, containing the whole response from the server</returns>
         public async static Task<XDocument> MakeRequest(RequestParameters rParams, bool toSign = false)
         {
             rParams.Add("api_key", api_key);
@@ -74,7 +86,12 @@ namespace lastfm
             {
                 toReadFrom = ((HttpWebResponse)ex.Response).GetResponseStream();
             }
-            return XDocument.Load(toReadFrom);
+            try { return XDocument.Load(toReadFrom); }
+            catch (XmlException)
+            { 
+                MessageBox.Show("Sorry, we couldn't get requested info");
+                return XDocument.Parse("<lfm status=\"100\"><error code=\"100\"/></lfm>");
+            }
         }
     }
 }

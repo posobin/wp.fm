@@ -13,21 +13,93 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using Microsoft.Phone.Tasks;
 using System.Threading.Tasks;
+using System.Windows.Controls.Primitives;
+using System.Collections;
 
 namespace lastfm
 {
     public partial class artistInfoPage : PhoneApplicationPage
     {
+        ProgressIndicator prog;
+        artistInfo currArtist = new artistInfo();
+        private ScrollViewer scrollViewer;
+        bool alreadyHookedScrollEvents = false;
+        private ScrollBar sb = null;
+        private ScrollViewer sv = null;
+
         public artistInfoPage()
         {
             InitializeComponent();
             this.DataContext = currArtist;
             prog = new ProgressIndicator();
             SystemTray.SetProgressIndicator(this, prog);
+            this.Loaded += new RoutedEventHandler(artistInfoPage_Loaded);
         }
 
-        ProgressIndicator prog;
-        artistInfo currArtist = new artistInfo();
+        #region Methods for infinite scroll
+        //taken from http://blogs.msdn.com/b/slmperf/archive/2011/06/30/windows-phone-mango-change-listbox-how-to-detect-compression-end-of-scroll-states.aspx
+        private void artistInfoPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (alreadyHookedScrollEvents)
+                return;
+
+            alreadyHookedScrollEvents = true;
+            sb = (ScrollBar)FindElementRecursive(similarArtists, typeof(ScrollBar));
+            sv = (ScrollViewer)FindElementRecursive(similarArtists, typeof(ScrollViewer));
+
+            if (sv != null)
+            {
+                FrameworkElement element = VisualTreeHelper.GetChild(sv, 0) as FrameworkElement;
+                if (element != null)
+                {
+                    VisualStateGroup vgroup = FindVisualState(element, "VerticalCompression");
+                    if (vgroup != null)
+                        vgroup.CurrentStateChanging += new EventHandler<VisualStateChangedEventArgs>(vgroup_CurrentStateChanging);
+                }
+            }
+        }
+
+        private UIElement FindElementRecursive(FrameworkElement parent, Type targetType)
+        {
+            int childCount = VisualTreeHelper.GetChildrenCount(parent);
+            UIElement returnElement = null;
+            if (childCount > 0)
+            {
+                for (int i = 0; i < childCount; ++i)
+                {
+                    Object element = VisualTreeHelper.GetChild(parent, i);
+                    if (element.GetType() == targetType)
+                        return element as UIElement;
+                    else
+                        returnElement = FindElementRecursive(VisualTreeHelper.GetChild(parent, i) as FrameworkElement, targetType);
+                }
+            }
+            return returnElement;
+        }
+
+        private VisualStateGroup FindVisualState(FrameworkElement element, string name)
+        {
+            if (element == null)
+                return null;
+
+            IList groups = VisualStateManager.GetVisualStateGroups(element);
+            foreach (VisualStateGroup group in groups)
+                if (group.Name == name)
+                    return group;
+
+            return null;
+        }
+
+        private void vgroup_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            if (e.NewState.Name == "CompressionBottom")
+            {
+                MessageBox.Show(sender.ToString());
+                //Load more items to the list
+            }
+        }
+
+        #endregion
 
         private void ScriptNotify(object sender, NotifyEventArgs e)
         {
@@ -65,6 +137,10 @@ namespace lastfm
                 panArtist.Title = artistName;
                 getArtistInfo(artistName);
             }
+            
+            ListBoxItem li = new ListBoxItem();
+            li.Content = "Hello world!";
+            similarArtists.Items.Add(li);
         }
 
         private void webBrowser1_Navigating(object sender, NavigatingEventArgs e)
@@ -81,13 +157,19 @@ namespace lastfm
         private void tags_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (((ListBox)sender).SelectedIndex != -1)
+            {
                 NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                ((ListBox)sender).SelectedIndex = -1;
+            }
         }
 
         private void similarArtists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (((ListBox)sender).SelectedIndex != -1)
+            {
                 NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(((artistInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                ((ListBox)sender).SelectedIndex = -1;
+            }
         }
     }
 }

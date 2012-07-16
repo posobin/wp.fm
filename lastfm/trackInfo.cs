@@ -39,6 +39,8 @@ namespace lastfm
             this.url = new Uri(url_str);
             if (element.Element("duration") != null && !string.IsNullOrEmpty(element.Element("duration").Value))
                 this.duration = Int32.Parse(element.Element("duration").Value.ToString());
+            if (element.Attribute("rank") != null)
+                this.position = Int32.Parse(element.Attribute("rank").Value);
             if (element.Element("album") != null)
             {
                 this.album = new albumInfo(element.Element("album"));

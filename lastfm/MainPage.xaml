@@ -16,6 +16,12 @@
     shell:SystemTray.IsVisible="True">
 
     <phone:PhoneApplicationPage.Resources>
+        <shell:ApplicationBar x:Key="appbar_empty" IsVisible="True">
+            <shell:ApplicationBar.MenuItems>
+                <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+            </shell:ApplicationBar.MenuItems>
+        </shell:ApplicationBar>
+        
         <shell:ApplicationBar x:Key="appbar_scrobble_nl" IsVisible="True">
             <shell:ApplicationBarIconButton IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
             <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />

@@ -79,6 +79,9 @@
     <Compile Include="artistInfoPage.xaml.cs">
       <DependentUpon>artistInfoPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="artistTopAlbumsPage.xaml.cs">
+      <DependentUpon>artistTopAlbumsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="auth.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -122,6 +125,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="artistInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="artistTopAlbumsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

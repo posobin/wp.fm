@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -30,13 +31,13 @@
             <!--Второй элемент Panorama-->
             <controls:PanoramaItem Header="tracks">
                 <Grid>
-                    <ListBox Name="tracksLst" ItemsSource="{Binding Path=tracks}" ItemTemplate="{StaticResource trackTemplate}" SelectionChanged="tracksLst_SelectionChanged" />
+                    <ListBox Name="tracksLst" toolkit:TiltEffect.IsTiltEnabled="True" ItemsSource="{Binding Path=tracks}" ItemTemplate="{StaticResource trackWithPositionTemplate}" SelectionChanged="tracksLst_SelectionChanged" />
                 </Grid>
             </controls:PanoramaItem>
 
             <controls:PanoramaItem Header="tags">
                 <Grid>
-                    <ListBox Name="tagsLst" ItemsSource="{Binding Path=tags}" ItemTemplate="{StaticResource tagTemplate}" SelectionChanged="tagsLst_SelectionChanged" />
+                    <ListBox Name="tagsLst" toolkit:TiltEffect.IsTiltEnabled="True" ItemsSource="{Binding Path=tags}" ItemTemplate="{StaticResource tagTemplate}" SelectionChanged="tagsLst_SelectionChanged" />
                 </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>

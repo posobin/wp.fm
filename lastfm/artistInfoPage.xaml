@@ -7,6 +7,7 @@
     xmlns:controls="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+    xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
     mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
@@ -18,26 +19,30 @@
     
     <Grid x:Name="LayoutRoot">
         <controls:Panorama Title="{Binding Path=name}" Name="panArtist">
-
-            <!--Первый элемент Panorama-->
             <controls:PanoramaItem Header="bio">
                 <Grid>
                     <phone:WebBrowser Name="webBrowser1" Opacity="0" Navigating="webBrowser1_Navigating" Navigated="webBrowser1_Navigated" IsScriptEnabled="True" ScriptNotify="ScriptNotify" />
                 </Grid>
             </controls:PanoramaItem>
 
-            <!--Второй элемент Panorama-->
             <controls:PanoramaItem Header="similar">
                 <Grid>
-                    <ListBox Height="Auto" VerticalAlignment="Top" Name="similarArtists" ItemTemplate="{StaticResource artistTemplate}" ItemsSource="{Binding Path=similar}" SelectionChanged="similarArtists_SelectionChanged" />
+                    <ListBox Height="Auto" toolkit:TiltEffect.IsTiltEnabled="True" VerticalAlignment="Top" Name="similarArtists" ItemTemplate="{StaticResource artistTemplate}" ItemsSource="{Binding Path=similar}" SelectionChanged="similarArtists_SelectionChanged" />
                 </Grid>
             </controls:PanoramaItem>
 
-            <!--Третий элемент Panorama-->
             <controls:PanoramaItem Header="tags">
                 <Grid>
-                    <ListBox Height="Auto" VerticalAlignment="Top" Name="tags" ItemTemplate="{StaticResource tagTemplate}" ItemsSource="{Binding Path=tags}" SelectionChanged="tags_SelectionChanged" />
+                    <ListBox Height="Auto" toolkit:TiltEffect.IsTiltEnabled="True" VerticalAlignment="Top" Name="tags" ItemTemplate="{StaticResource tagTemplate}" ItemsSource="{Binding Path=tags}" SelectionChanged="tags_SelectionChanged" />
                 </Grid>
+            </controls:PanoramaItem>
+            
+            <controls:PanoramaItem Header="other">
+                <StackPanel Orientation="Vertical">
+                    <HyperlinkButton Content="top albums" FontSize="70" HorizontalAlignment="Left" FontFamily="Segoe WP SemiLight" />
+                    <HyperlinkButton Content="top songs" FontSize="70" HorizontalAlignment="Left" FontFamily="Segoe WP SemiLight" />
+                    <HyperlinkButton Content="top tags" FontSize="70" HorizontalAlignment="Left" FontFamily="Segoe WP SemiLight" />
+                </StackPanel>
             </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>
