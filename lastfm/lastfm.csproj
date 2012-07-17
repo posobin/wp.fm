@@ -83,6 +83,7 @@
       <DependentUpon>artistTopAlbumsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="auth.cs" />
+    <Compile Include="LastFmAPIException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

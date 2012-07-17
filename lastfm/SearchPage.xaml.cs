@@ -241,6 +241,7 @@ namespace lastfm
             try
             { lst = await artist.search(lastArtistString, artistNums.PageNumber++); }
             catch (TaskCanceledException) { artistNums.PageNumber--; }
+            catch (IndexOutOfRangeException) { prog.Text = "No more results"; }
 
             foreach (artistInfo info in lst)
                 lstArtistResults.Add(info);

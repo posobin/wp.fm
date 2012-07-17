@@ -17,6 +17,11 @@ namespace lastfm
 {
     public class artist
     {
+        /// <summary>
+        /// artist.getInfo last.fm api function
+        /// </summary>
+        /// <param name="artistName">Artist name</param>
+        /// <returns>Artist info object, containing artist desription</returns>
         public static async Task<artistInfo> getInfo(string artistName)
         {
             RequestParameters rParams = new RequestParameters();
@@ -29,12 +34,11 @@ namespace lastfm
                 return artist;
             }
             else
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
-            return null;
+                throw new LastFmAPIException(Request.GetErrorMessage(returnedXml), Request.CheckStatus(returnedXml));
         }
 
         /// <summary>
-        /// Function that requests top albums for an artist
+        /// artist.getTopAlbums last.fm api function
         /// </summary>
         /// <param name="artistName">Name of the artist to find top albums for</param>
         /// <returns>List of top albums</returns>
@@ -52,10 +56,16 @@ namespace lastfm
                 return albums;
             }
             else
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
-            return null;
+                throw new LastFmAPIException(Request.GetErrorMessage(returnedXml), Request.CheckStatus(returnedXml));
         }
 
+        /// <summary>
+        /// astist.search last.fm api function
+        /// </summary>
+        /// <param name="artistName">Artist name</param>
+        /// <param name="page">Number of page to download</param>
+        /// <param name="limit">Number of entries per one page</param>
+        /// <returns>List of artistInfos with returned artists data</returns>
         public static async Task<List<artistInfo>> search(string artistName, int page = 0, int limit = 30)
         {
             RequestParameters rParams = new RequestParameters();
@@ -67,11 +77,19 @@ namespace lastfm
             if (Request.CheckStatus(returnedXml) == 0)
             {
                 List<artistInfo> artists = new List<artistInfo>((from item in returnedXml.Descendants("artistmatches").Elements() select new artistInfo(item)));
+                XNamespace opensearch = @"http://a9.com/-/spec/opensearch/1.1/";
+                IEnumerable<XElement> opensearch_ = from el in returnedXml.Element("lfm").Element("results").Elements()
+                                                   where el.Name.Namespace == opensearch
+                                                   select el;
+                int totalResults = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "totalResults" select el.Value).First());
+                int startIndex = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "startIndex" select el.Value).First());
+                int itemsPerPage = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "itemsPerPage" select el.Value).First());
+                if (totalResults - startIndex <= 0)
+                    throw new IndexOutOfRangeException("Page being shown is the first page");
                 return artists;
             }
             else
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
-            return null;
+                throw new LastFmAPIException(Request.GetErrorMessage(returnedXml), Request.CheckStatus(returnedXml));
         }
     }
 }

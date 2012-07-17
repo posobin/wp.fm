@@ -35,15 +35,31 @@ namespace lastfm
         /// <returns>Status of the response</returns>
         public static int CheckStatus(XDocument xml)
         {
-            IEnumerable<XElement> lfm = from el in xml.Descendants("lfm") select el;
-            string status = lfm.First().Attribute("status").Value.ToString();
-            if (status.ToLower() == "ok")
-                return 0;
-            else
+            try 
             {
-                string code = lfm.First().Element("error").Attribute("code").Value.ToString();
-                return Int32.Parse(code);
+                string status = xml.Element("lfm").Attribute("status").Value; 
+                if (status.ToLower() == "ok")
+                    return 0;
+                else
+                {
+                    string code = xml.Element("lfm").Element("error").Attribute("code").Value;
+                    return Int32.Parse(code);
+                }
             }
+            catch (NullReferenceException ex) { throw new ArgumentException("Wrong XML tree. Can't parse.", ex); }
+        }
+
+        /// <summary>
+        /// Gets the error message contained in each screwed xml returned by the last.fm server
+        /// </summary>
+        /// <param name="xml">xml to find error message in</param>
+        /// <returns>Error message text</returns>
+        public static string GetErrorMessage(XDocument xml)
+        {
+            if (Request.CheckStatus(xml) != 0)
+                return xml.Element("lfm").Element("error").Value;
+            else
+                throw new ArgumentException("XML has no errors");
         }
 
         /// <summary>
