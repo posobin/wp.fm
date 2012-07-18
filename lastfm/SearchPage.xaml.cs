@@ -47,6 +47,11 @@ namespace lastfm
         private pair<int, int> trackNums = new pair<int, int>(0, 1);
         private pair<int, int> tagNums = new pair<int, int>(0, 1);
 
+        bool HookedArtistScrolling = false;
+        bool HookedAlbumScrolling = false;
+        bool HookedTrackScrolling = false;
+        bool HookedTagScrolling = false;
+
         public SearchPage()
         {
             InitializeComponent();
@@ -56,7 +61,10 @@ namespace lastfm
             tagResults.DataContext = lstTagResults;
             prog = new ProgressIndicator();
             SystemTray.SetProgressIndicator(this, prog);
-            this.Loaded += new RoutedEventHandler(SearchPage_Loaded);
+            artistResults.Loaded += new RoutedEventHandler(artistResults_Loaded);
+            albumResults.Loaded += new RoutedEventHandler(albumResults_Loaded);
+            trackResults.Loaded += new RoutedEventHandler(trackResults_Loaded);
+            tagResults.Loaded += new RoutedEventHandler(tagResults_Loaded);
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -105,17 +113,17 @@ namespace lastfm
         }
 
         #region Methods for infinite scroll
-        //taken from http://blogs.msdn.com/b/slmperf/archive/2011/06/30/windows-phone-mango-change-listbox-how-to-detect-compression-end-of-scroll-states.aspx
-        private void SearchPage_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (alreadyHookedScrollEvents)
-                return;
 
-            alreadyHookedScrollEvents = true;
+        #region Loaded events
+
+        //taken from http://blogs.msdn.com/b/slmperf/archive/2011/06/30/windows-phone-mango-change-listbox-how-to-detect-compression-end-of-scroll-states.aspx
+        void artistResults_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (HookedArtistScrolling)
+                return;
+            HookedArtistScrolling = true;
+
             ScrollViewer sv_artists = (ScrollViewer)FindElementRecursive(artistResults, typeof(ScrollViewer));
-            ScrollViewer sv_albums = (ScrollViewer)FindElementRecursive(albumResults, typeof(ScrollViewer));
-            ScrollViewer sv_tracks = (ScrollViewer)FindElementRecursive(trackResults, typeof(ScrollViewer));
-            ScrollViewer sv_tags = (ScrollViewer)FindElementRecursive(tagResults, typeof(ScrollViewer));
 
             if (sv_artists != null)
             {
@@ -127,6 +135,16 @@ namespace lastfm
                         vgroup.CurrentStateChanging += new EventHandler<VisualStateChangedEventArgs>(vgroupArtists_CurrentStateChanging);
                 }
             }
+        }
+
+        void albumResults_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (HookedAlbumScrolling)
+                return;
+            HookedAlbumScrolling = true;
+
+            ScrollViewer sv_albums = (ScrollViewer)FindElementRecursive(albumResults, typeof(ScrollViewer));
+
             if (sv_albums != null)
             {
                 FrameworkElement element = VisualTreeHelper.GetChild(sv_albums, 0) as FrameworkElement;
@@ -137,6 +155,16 @@ namespace lastfm
                         vgroup.CurrentStateChanging += new EventHandler<VisualStateChangedEventArgs>(vgroupAlbums_CurrentStateChanging);
                 }
             }
+        }
+
+        void trackResults_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (HookedTrackScrolling)
+                return;
+            HookedTrackScrolling = true;
+
+            ScrollViewer sv_tracks = (ScrollViewer)FindElementRecursive(trackResults, typeof(ScrollViewer));
+
             if (sv_tracks != null)
             {
                 FrameworkElement element = VisualTreeHelper.GetChild(sv_tracks, 0) as FrameworkElement;
@@ -147,7 +175,18 @@ namespace lastfm
                         vgroup.CurrentStateChanging += new EventHandler<VisualStateChangedEventArgs>(vgroupTracks_CurrentStateChanging);
                 }
             }
-            if (sv_tags!= null)
+        }
+
+        void tagResults_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (HookedTagScrolling)
+                return;
+
+            HookedTagScrolling = true;
+
+            ScrollViewer sv_tags = (ScrollViewer)FindElementRecursive(tagResults, typeof(ScrollViewer));
+
+            if (sv_tags != null)
             {
                 FrameworkElement element = VisualTreeHelper.GetChild(sv_tags, 0) as FrameworkElement;
                 if (element != null)
@@ -158,6 +197,46 @@ namespace lastfm
                 }
             }
         }
+
+        #endregion
+        #region *CurrentStateChanging
+
+        private void vgroupArtists_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            if (e.NewState.Name == "CompressionBottom")
+            {
+                //Load more items to the artist list
+                loadMoreArtists();
+            }
+        }
+
+        private void vgroupAlbums_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            if (e.NewState.Name == "CompressionBottom")
+            {
+                //Load more items to the album list
+                loadMoreAlbums();
+            }
+        }
+
+        private void vgroupTracks_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            if (e.NewState.Name == "CompressionBottom")
+            {
+                //Load more items to the track list
+                loadMoreTracks();
+            }
+        }
+
+        private void vgroupTags_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
+        {
+            if (e.NewState.Name == "CompressionBottom")
+            {
+                //Load more items to the tag list
+                loadMoreTags();
+            }
+        }
+        #endregion
 
         private UIElement FindElementRecursive(FrameworkElement parent, Type targetType)
         {
@@ -190,41 +269,104 @@ namespace lastfm
             return null;
         }
 
-        private void vgroupArtists_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
-        {
-            if (e.NewState.Name == "CompressionBottom")
-            {
-                //Load more items to the artist list
-                loadMoreArtists();
-            }
-        }
 
-        private void vgroupAlbums_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
-        {
-            if (e.NewState.Name == "CompressionBottom")
-            {
-                //Load more items to the album list
-            }
-        }
-
-        private void vgroupTracks_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
-        {
-            if (e.NewState.Name == "CompressionBottom")
-            {
-                //Load more items to the track list
-            }
-        }
-
-        private void vgroupTags_CurrentStateChanging(object sender, VisualStateChangedEventArgs e)
-        {
-            if (e.NewState.Name == "CompressionBottom")
-            {
-                //Load more items to the tag list
-            }
-        }
         #endregion
 
         #region Downloading lists
+
+        #region List downloaders
+
+        private async void getArtistList(string searchText)
+        {
+            if (string.IsNullOrEmpty(searchText))
+                return;
+            txtSearchBox.Text = searchText;
+            prog.IsVisible = true;
+            prog.IsIndeterminate = true;
+            prog.Text = "Searching for artists...";
+            List<artistInfo> lst = new List<artistInfo>();
+            try
+            { lst = await artist.search(searchText); }
+            catch (TaskCanceledException) { }
+
+            foreach (artistInfo info in lst)
+                lstArtistResults.Add(info);
+
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
+            lastArtistString = searchText;
+            artistNums.PageNumber++;
+        }
+
+        private async void getAlbumList(string searchText)
+        {
+            if (string.IsNullOrEmpty(searchText))
+                return;
+            txtSearchBox.Text = searchText;
+            prog.IsVisible = true;
+            prog.IsIndeterminate = true;
+            prog.Text = "Searching for albums...";
+
+            List<albumInfo> lst = new List<albumInfo>();
+            try
+            { lst = new List<albumInfo>(await album.search(searchText)); }
+            catch (TaskCanceledException) { }
+
+            foreach (albumInfo info in lst)
+                lstAlbumResults.Add(info);
+
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
+            lastAlbumString = searchText;
+            albumNums.PageNumber++;
+        }
+
+        private async void getTrackList(string searchText)
+        {
+            if (string.IsNullOrEmpty(searchText))
+                return;
+            txtSearchBox.Text = searchText;
+            prog.IsVisible = true;
+            prog.IsIndeterminate = true;
+            prog.Text = "Searching for tracks...";
+
+            List<trackInfo> lst = new List<trackInfo>();
+            try
+            { lst = new List<trackInfo>(await track.search(searchText)); }
+            catch (TaskCanceledException) { }
+
+            foreach (trackInfo info in lst)
+                lstTrackResults.Add(info);
+
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
+            lastTrackString = searchText;
+            trackNums.PageNumber++;
+        }
+
+        private async void getTagList(string searchText)
+        {
+            if (string.IsNullOrEmpty(searchText))
+                return;
+            txtSearchBox.Text = searchText;
+            prog.IsVisible = true;
+            prog.IsIndeterminate = true;
+            prog.Text = "Searching for tags...";
+
+            List<tagInfo> lst = new List<tagInfo>();
+            try
+            { lst = new List<tagInfo>(await tag.search(searchText)); }
+            catch (TaskCanceledException) { }
+
+            foreach (tagInfo info in lst)
+                lstTagResults.Add(info);
+
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
+            lastTagString = searchText;
+            tagNums.PageNumber++;
+        }
+        #endregion
 
         #region Load more...
 
@@ -315,101 +457,6 @@ namespace lastfm
         }
 
         #endregion
-
-        private async void getArtistList(string searchText)
-        {
-            if (string.IsNullOrEmpty(searchText))
-                return;
-            txtSearchBox.Text = searchText;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Searching for artists...";
-            List<artistInfo> lst = new List<artistInfo>();
-            try
-            {
-                lst = await artist.search(searchText);
-            }
-            catch (TaskCanceledException) { }
-
-            foreach (artistInfo info in lst)
-                lstArtistResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
-            lastArtistString = searchText;
-            artistNums.PageNumber++;
-        }
-
-        private async void getAlbumList(string searchText)
-        {
-            if (string.IsNullOrEmpty(searchText))
-                return;
-            txtSearchBox.Text = searchText;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Searching for albums...";
-
-            List<albumInfo> lst = new List<albumInfo>();
-            try
-            { lst = new List<albumInfo>(await album.search(searchText)); }
-            catch (TaskCanceledException) { }
-
-            foreach (albumInfo info in lst)
-                lstAlbumResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
-            lastAlbumString = searchText;
-            albumNums.PageNumber++;
-        }
-
-        private async void getTrackList(string searchText)
-        {
-            if (string.IsNullOrEmpty(searchText))
-                return;
-            txtSearchBox.Text = searchText;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Loading...";
-
-            List<trackInfo> lst = new List<trackInfo>();
-            try
-            {
-                lst = new List<trackInfo>(await track.search(searchText));
-            }
-            catch (TaskCanceledException) { }
-
-            foreach (trackInfo info in lst)
-                lstTrackResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
-            lastTrackString = searchText;
-        }
-
-        private async void getTagList(string searchText)
-        {
-            if (string.IsNullOrEmpty(searchText))
-                return;
-            txtSearchBox.Text = searchText;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Loading...";
-
-            List<tagInfo> lst = new List<tagInfo>();
-            try
-            {
-                lst = new List<tagInfo>(await tag.search(searchText));
-            }
-            catch (TaskCanceledException) { }
-
-            foreach (tagInfo info in lst)
-                lstTagResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
-            lastTagString = searchText;
-        }
 
         /// <summary>
         /// Chooses which list (artist, track, album or tag) to download, depending on currently selected pivot page

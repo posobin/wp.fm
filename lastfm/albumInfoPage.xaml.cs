@@ -92,9 +92,12 @@ namespace lastfm
 
         private void tracksLst_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
-            ((ListBox)sender).SelectedIndex = -1;
-            this.NavigationService.Navigate(new Uri("/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
+            if (((ListBox)sender).SelectedIndex != -1)
+            {
+                trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
+                ((ListBox)sender).SelectedIndex = -1;
+                this.NavigationService.Navigate(new Uri("/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
+            }
         }
     }
 }

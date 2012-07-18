@@ -115,6 +115,7 @@
       <DependentUpon>trackInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="utilities.cs" />
+    <Compile Include="xmlsanitizingstream.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

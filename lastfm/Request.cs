@@ -102,8 +102,7 @@ namespace lastfm
             {
                 toReadFrom = ((HttpWebResponse)ex.Response).GetResponseStream();
             }
-            using (XmlReader reader = XmlReader.Create(toReadFrom, new XmlReaderSettings { CheckCharacters = false }))
-                return XDocument.Load(reader); 
+            return XDocument.Load(new XmlSanitizingStream(toReadFrom)); 
         }
     }
 }

@@ -17,12 +17,15 @@
 
     <!--LayoutRoot содержит корневую сетку, где размещается все содержимое страницы-->
     <Grid x:Name="LayoutRoot">
-        <StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0">
             <HyperlinkButton Height="Auto" Name="ArtistLink" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="28" />
             <HyperlinkButton Height="Auto" Content="{Binding Path=album.name}" Name="AlbumLink" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="28" />
-        
-        <!--<TextBlock Name="txtArtistName" Height="Auto" Width="Auto" Text="Pink Floyd" HorizontalAlignment="Stretch" Margin="12,5,0,0" FontSize="32" />-->
-        <controls:Panorama TitleTemplate="{StaticResource panoramaTitleSmall}"  Name="albumInfoPanorama">
+        </StackPanel>
+        <controls:Panorama Grid.Row="1" TitleTemplate="{StaticResource panoramaTitleSmall}"  Name="albumInfoPanorama">
 
             <!--Первый элемент Panorama-->
             <controls:PanoramaItem Header="description">
@@ -38,7 +41,6 @@
                 </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>
-        </StackPanel>
     </Grid>
 
     <!--Приложения на базе панорамы не должны содержать ApplicationBar-->
