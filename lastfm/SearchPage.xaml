@@ -36,7 +36,7 @@
             </controls:PivotItem>
             
             <controls:PivotItem Header="tags">
-                <ListBox Name="tagResults" toolkit:TiltEffect.IsTiltEnabled="True" ItemsSource="{Binding}" ItemTemplate="{StaticResource artistTemplate}" SelectionChanged="tagResults_SelectionChanged" />
+                <ListBox Name="tagResults" toolkit:TiltEffect.IsTiltEnabled="True" ItemsSource="{Binding}" ItemTemplate="{StaticResource tagTemplate}" SelectionChanged="tagResults_SelectionChanged" />
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

@@ -102,12 +102,8 @@ namespace lastfm
             {
                 toReadFrom = ((HttpWebResponse)ex.Response).GetResponseStream();
             }
-            try { return XDocument.Load(toReadFrom); }
-            catch (XmlException)
-            { 
-                MessageBox.Show("Sorry, we couldn't get requested info");
-                return XDocument.Parse("<lfm status=\"100\"><error code=\"100\"/></lfm>");
-            }
+            using (XmlReader reader = XmlReader.Create(toReadFrom, new XmlReaderSettings { CheckCharacters = false }))
+                return XDocument.Load(reader); 
         }
     }
 }

@@ -263,6 +263,7 @@ namespace lastfm
             try
             { lst = new List<albumInfo>(await album.search(lastAlbumString, albumNums.PageNumber++)); }
             catch (TaskCanceledException) { albumNums.PageNumber--; }
+            catch (IndexOutOfRangeException) { prog.Text = "No more results"; }
 
             foreach (albumInfo info in lst)
                 lstAlbumResults.Add(info);
@@ -283,6 +284,7 @@ namespace lastfm
             try
             { lst = new List<trackInfo>(await track.search(lastTrackString, trackNums.PageNumber++)); }
             catch (TaskCanceledException) { trackNums.PageNumber--; }
+            catch (IndexOutOfRangeException) { prog.Text = "No more results"; }
 
             foreach (trackInfo info in lst)
                 lstTrackResults.Add(info);
@@ -303,6 +305,7 @@ namespace lastfm
             try
             { lst = new List<tagInfo>(await tag.search(lastTagString, tagNums.PageNumber++)); }
             catch (TaskCanceledException) { tagNums.PageNumber--; }
+            catch (IndexOutOfRangeException) { prog.Text = "No more results"; }
 
             foreach (tagInfo info in lst)
                 lstTagResults.Add(info);
