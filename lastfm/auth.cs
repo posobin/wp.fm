@@ -28,7 +28,6 @@ namespace lastfm
             rParams.Add("username", username);
             rParams.Add("authToken", authToken);
             rParams.Add("method", "auth.getMobileSession");
-            AutoResetEvent wh = new AutoResetEvent(false);
             XDocument ReturnedXML = await Request.MakeRequest(rParams, true);
 
             if (Request.CheckStatus(ReturnedXML) == 0)

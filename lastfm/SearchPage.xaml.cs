@@ -35,7 +35,6 @@ namespace lastfm
         ObservableCollection<trackInfo> lstTrackResults = new ObservableCollection<trackInfo>();
         ObservableCollection<tagInfo> lstTagResults = new ObservableCollection<tagInfo>();
         ProgressIndicator prog;
-        private bool alreadyHookedScrollEvents = false;
         //last string searched for
         private string lastArtistString;
         private string lastAlbumString;

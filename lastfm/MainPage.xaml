@@ -59,8 +59,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot Title="last.fm scrobbler for WP7" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged" Name="MainPivot">
-            <!--Pivot item one-->
+        <controls:Pivot x:Name="MainPivot" Title="last.fm scrobbler for WP7" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged">
             <controls:PivotItem Header="now playing">
                 <StackPanel>
                     <Image Name="AlbumCover" Source="/lastfm;component/NoImageBig.png" Height="350" />
@@ -68,6 +67,10 @@
                     <HyperlinkButton Name="AlbumName" FontSize="32" HorizontalContentAlignment="Left" />
                     <HyperlinkButton Name="ArtistName" HorizontalContentAlignment="Left" />
                 </StackPanel>
+            </controls:PivotItem>
+            
+            <controls:PivotItem x:Name="UserInfoPivotItem" Header="user info">
+                
             </controls:PivotItem>
         </controls:Pivot>
     </Grid>

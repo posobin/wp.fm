@@ -92,6 +92,14 @@ namespace lastfm
             }
             else
                 MessageBox.Show("No internet connection is available");
+            if (Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.UserName))
+            {
+                if (!MainPivot.Items.Contains(UserInfoPivotItem))
+                    MainPivot.Items.Add(UserInfoPivotItem);
+            }
+            else
+                if (MainPivot.Items.Contains(UserInfoPivotItem))
+                    MainPivot.Items.Remove(UserInfoPivotItem);
         }
 
         /// <summary>
