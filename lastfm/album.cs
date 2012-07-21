@@ -42,7 +42,7 @@ namespace lastfm
                 int totalResults = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "totalResults" select el.Value).First());
                 int startIndex = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "startIndex" select el.Value).First());
                 int itemsPerPage = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "itemsPerPage" select el.Value).First());
-                if (totalResults - startIndex <= 0)
+                if (totalResults - startIndex < 0)
                     throw new IndexOutOfRangeException("Page being shown is the first page");
                 return albums;
             }
