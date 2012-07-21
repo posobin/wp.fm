@@ -88,7 +88,10 @@ namespace lastfm
                 System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Save();
             }
         }
-
+        
+        /// <summary>
+        /// Username used for authorization
+        /// </summary>
         [DataMember]
         public string UserName { get; set; }
 
