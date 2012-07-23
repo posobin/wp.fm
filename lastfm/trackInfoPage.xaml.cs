@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Threading.Tasks;
+using System.IO;
+using System.IO.IsolatedStorage;
 
 namespace lastfm
 {
@@ -48,7 +50,16 @@ namespace lastfm
             catch (TaskCanceledException) { }
 
             this.DataContext = currTrack;
-            trackDescription.NavigateToString(utilities.makeHtmlFromCdata(currTrack.description));
+
+            //NavigateToString method works bad with encodings, that's why I am using this stuff
+            var store = IsolatedStorageFile.GetUserStoreForApplication();
+            using (var stream = new IsolatedStorageFileStream("track.html", FileMode.Create, FileAccess.Write, store))
+            {
+                using (var sw = new StreamWriter(stream))
+                    sw.Write(utilities.makeHtmlFromCdata(currTrack.description));
+            }
+            trackDescription.Navigate(new Uri("track.html", UriKind.Relative));
+
             if (currTrack.album != null)
                 AlbumLink.NavigateUri = new Uri("/albumInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(artistName) +
                                                 "&albumName=" + HttpUtility.UrlEncode(currTrack.album.name), UriKind.Relative);

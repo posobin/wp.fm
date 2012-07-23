@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Threading.Tasks;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace lastfm
 {
@@ -48,7 +50,16 @@ namespace lastfm
             catch (TaskCanceledException) { }
 
             this.DataContext = currAlbum;
-            albumDescription.NavigateToString(utilities.makeHtmlFromCdata(currAlbum.description));
+
+            //NavigateToString method works bad with encodings, that's why I am using this stuff
+            var store = IsolatedStorageFile.GetUserStoreForApplication();
+            using (var stream = new IsolatedStorageFileStream("album.html", FileMode.Create, FileAccess.Write, store))
+            {
+                using (var sw = new StreamWriter(stream))
+                    sw.Write(utilities.makeHtmlFromCdata(currAlbum.description));
+            }
+            albumDescription.Navigate(new Uri("album.html", UriKind.Relative));
+
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
             SystemTray.IsVisible = false;

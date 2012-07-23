@@ -28,7 +28,7 @@
 
         <!--ContentPanel – поместите здесь дополнительное содержимое-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <phone:WebBrowser Name="webBrowser1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Navigating="webBrowser1_Navigating" Navigated="webBrowser1_Navigated" Opacity="0" IsScriptEnabled="True" ScriptNotify="ScriptNotify" />
+            <phone:WebBrowser Name="tagDescription" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Opacity="0" IsScriptEnabled="True" ScriptNotify="ScriptNotify" Navigated="tagDescription_Navigated" Navigating="tagDescription_Navigating" />
         </Grid>
     </Grid>
  

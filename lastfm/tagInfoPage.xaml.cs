@@ -12,6 +12,8 @@ using System.Windows.Shapes;
 using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using System.Threading.Tasks;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace lastfm
 {
@@ -44,8 +46,16 @@ namespace lastfm
 
             try { currTag = await tag.getInfo(tagName); }
             catch (TaskCanceledException) { }
-            
-            webBrowser1.NavigateToString(utilities.makeHtmlFromCdata(currTag.wiki));
+
+            //NavigateToString method works bad with encodings, that's why I am using this stuff
+            var store = IsolatedStorageFile.GetUserStoreForApplication();
+            using (var stream = new IsolatedStorageFileStream("tag.html", FileMode.Create, FileAccess.Write, store))
+            {
+                using (var sw = new StreamWriter(stream))
+                    sw.Write(utilities.makeHtmlFromCdata(currTag.description));
+            }
+            tagDescription.Navigate(new Uri("tag.html", UriKind.Relative));
+
             this.DataContext = currTag;
             prog.IsVisible = false;
             prog.IsIndeterminate = false;
@@ -61,15 +71,15 @@ namespace lastfm
             }
         }
 
-        private void webBrowser1_Navigating(object sender, NavigatingEventArgs e)
+        private void tagDescription_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        {
+            ((WebBrowser)sender).Opacity = 1;
+        }
+
+        private void tagDescription_Navigating(object sender, NavigatingEventArgs e)
         {
             if (((WebBrowser)sender).Opacity != 0)
                 e.Cancel = true;
-        }
-
-        private void webBrowser1_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
-        {
-            ((WebBrowser)sender).Opacity = 1;
         }
     }
 }

@@ -18,7 +18,7 @@ namespace lastfm
     {
         public string name { get; set; }
         public Uri url { get; set; }
-        public string wiki { get; set; }
+        public string description { get; set; }
 
         public tagInfo() { }
         public tagInfo(XElement element)
@@ -30,7 +30,7 @@ namespace lastfm
             if (element.Element("wiki") != null && element.Element("wiki").Element("content") != null)
             {
                 XCData cdata = element.Element("wiki").Element("content").DescendantNodes().OfType<XCData>().First();
-                this.wiki = cdata.Value;
+                this.description = cdata.Value;
             }
         }
     }

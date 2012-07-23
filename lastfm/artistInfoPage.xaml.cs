@@ -15,6 +15,8 @@ using Microsoft.Phone.Tasks;
 using System.Threading.Tasks;
 using System.Windows.Controls.Primitives;
 using System.Collections;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace lastfm
 {
@@ -22,7 +24,6 @@ namespace lastfm
     {
         ProgressIndicator prog;
         artistInfo currArtist = new artistInfo();
-        private ScrollViewer scrollViewer;
         bool alreadyHookedScrollEvents = false;
         private ScrollBar sb = null;
         private ScrollViewer sv = null;
@@ -122,7 +123,16 @@ namespace lastfm
             catch (TaskCanceledException) { }
 
             this.DataContext = currArtist;
-            webBrowser1.NavigateToString(utilities.makeHtmlFromCdata(currArtist.bio));
+
+            //NavigateToString method works bad with encodings, that's why I am using this stuff
+            var store = IsolatedStorageFile.GetUserStoreForApplication();
+            using (var stream = new IsolatedStorageFileStream("artist.html", FileMode.Create, FileAccess.Write, store))
+            {
+                using (var sw = new StreamWriter(stream))
+                    sw.Write(utilities.makeHtmlFromCdata(currArtist.bio));
+            }
+            artistDescription.Navigate(new Uri("artist.html", UriKind.Relative));
+
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
             SystemTray.IsVisible = false;
@@ -137,19 +147,15 @@ namespace lastfm
                 panArtist.Title = artistName;
                 getArtistInfo(artistName);
             }
-            
-            ListBoxItem li = new ListBoxItem();
-            li.Content = "Hello world!";
-            similarArtists.Items.Add(li);
         }
 
-        private void webBrowser1_Navigating(object sender, NavigatingEventArgs e)
+        private void artistDescription_Navigating(object sender, NavigatingEventArgs e)
         {
             if (((WebBrowser)sender).Opacity != 0)
                 e.Cancel = true;
         }
 
-        private void webBrowser1_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
+        private void artistDescription_Navigated(object sender, System.Windows.Navigation.NavigationEventArgs e)
         {
             ((WebBrowser)sender).Opacity = 1;
         }

@@ -185,6 +185,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="NoImage.svg" />
+    <Content Include="ToDo.txt" />
     <Resource Include="NoImageBig.png" />
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>

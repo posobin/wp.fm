@@ -1,8 +1,8 @@
-﻿<xapCache source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\lastfm.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="7/23/2012 1:10:09 PM">
+﻿<xapCache source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\lastfm.xap" wasSigned="False" certificateThumbprint="" TimeStampUrl="" lastWriteTime="7/23/2012 11:28:25 PM">
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\WMAppManifest.xml" archivePath="WMAppManifest.xml" lastWriteTime="5/27/2012 10:36:00 PM" />
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Background.png" archivePath="Background.png" lastWriteTime="5/13/2012 4:57:14 PM" />
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\ApplicationIcon.png" archivePath="ApplicationIcon.png" lastWriteTime="5/13/2012 4:57:14 PM" />
-  <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\lastfm.dll" archivePath="lastfm.dll" lastWriteTime="7/23/2012 1:10:08 PM" />
+  <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\lastfm.dll" archivePath="lastfm.dll" lastWriteTime="7/23/2012 11:28:22 PM" />
   <file source="C:\Users\passick\Documents\Microsoft Visual Studio Async CTP\Samples\AsyncCtpLibrary_Phone.dll" archivePath="AsyncCtpLibrary_Phone.dll" lastWriteTime="10/17/2011 8:48:02 PM" />
   <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Libraries\Silverlight\Microsoft.Phone.Controls.dll" archivePath="Microsoft.Phone.Controls.dll" lastWriteTime="9/15/2011 3:36:26 PM" />
   <file source="C:\Program Files (x86)\Microsoft SDKs\Windows Phone\v7.1\Toolkit\Oct11\Bin\Microsoft.Phone.Controls.Toolkit.dll" archivePath="Microsoft.Phone.Controls.Toolkit.dll" lastWriteTime="10/6/2011 11:33:14 AM" />
@@ -11,6 +11,7 @@
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\appbar.feature.search.rest.png" archivePath="appbar.feature.search.rest.png" lastWriteTime="6/19/2012 9:46:44 PM" />
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\appbar.upload.rest.png" archivePath="appbar.upload.rest.png" lastWriteTime="6/18/2012 9:09:11 PM" />
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\NoImage.svg" archivePath="NoImage.svg" lastWriteTime="6/5/2012 10:20:05 PM" />
+  <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\ToDo.txt" archivePath="ToDo.txt" lastWriteTime="7/23/2012 8:17:21 PM" />
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\SplashScreenImage.jpg" archivePath="SplashScreenImage.jpg" lastWriteTime="5/13/2012 4:57:14 PM" />
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\AppManifest.xaml" archivePath="AppManifest.xaml" lastWriteTime="6/22/2012 3:33:37 PM" />
   <file source="C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\appbar.door.enter.png" archivePath="appbar.door.enter.png" lastWriteTime="6/18/2012 11:42:31 PM" />

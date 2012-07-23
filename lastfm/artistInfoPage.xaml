@@ -21,7 +21,7 @@
         <controls:Panorama Title="{Binding Path=name}" Name="panArtist">
             <controls:PanoramaItem Header="bio">
                 <Grid>
-                    <phone:WebBrowser Name="webBrowser1" Opacity="0" Navigating="webBrowser1_Navigating" Navigated="webBrowser1_Navigated" IsScriptEnabled="True" ScriptNotify="ScriptNotify" />
+                    <phone:WebBrowser Name="artistDescription" Opacity="0" Navigating="artistDescription_Navigating" Navigated="artistDescription_Navigated" IsScriptEnabled="True" ScriptNotify="ScriptNotify" />
                 </Grid>
             </controls:PanoramaItem>
 
