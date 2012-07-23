@@ -15,14 +15,14 @@ namespace lastfm
 {
     public class user
     {
-        public static async Task<userInfo> getInfo(string user)
+        public static async Task<UserInfo> getInfo(string user)
         {
             RequestParameters rParams = new RequestParameters();
             rParams.Add("method", "user.getInfo");
             rParams.Add("user", user);
             XDocument ReturnedXML = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(ReturnedXML) == 0)
-                return new userInfo(ReturnedXML.Element("user"));
+                return new UserInfo(ReturnedXML.Element("lfm").Element("user"));
             else
                 throw new LastFmAPIException(Request.GetErrorMessage(ReturnedXML), Request.CheckStatus(ReturnedXML));
         }

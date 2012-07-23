@@ -23,6 +23,9 @@ namespace lastfm
 {
     public partial class MainPage : PhoneApplicationPage
     {
+        ProgressIndicator prog = new ProgressIndicator();
+        UserInfo currentUser = null;
+
         public MainPage()
         {
             InitializeComponent();
@@ -96,10 +99,18 @@ namespace lastfm
             {
                 if (!MainPivot.Items.Contains(UserInfoPivotItem))
                     MainPivot.Items.Add(UserInfoPivotItem);
+                UpdateCurrentUser();
             }
             else
                 if (MainPivot.Items.Contains(UserInfoPivotItem))
                     MainPivot.Items.Remove(UserInfoPivotItem);
+        }
+
+        private async void UpdateCurrentUser()
+        {
+            currentUser = await user.getInfo(Session.CurrentSession.UserName);
+            if (currentUser == null) MessageBox.Show("Hello");
+            UserInfoPivotItem.DataContext = currentUser;
         }
 
         /// <summary>
@@ -201,7 +212,5 @@ namespace lastfm
         {
             this.NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
         }
-
-        ProgressIndicator prog = new ProgressIndicator();
     }
 }

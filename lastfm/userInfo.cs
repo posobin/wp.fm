@@ -9,10 +9,11 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using System.Linq;
 
 namespace lastfm
 {
-    public class userInfo
+    public class UserInfo
     {
         public int id { get; set; }
         public int PlayCount { get; set; }
@@ -22,22 +23,37 @@ namespace lastfm
         public string Type { get; set; }
         public char Gender { get; set; }
         public Uri url { get; set; }
-        public Uri Image { get; set; }
+        public Uri SmallImage { get; set; }
+        public Uri MediumImage { get; set; }
+        public Uri LargeImage { get; set; }
+        public Uri ExtraLargeImage { get; set; }
         public DateTime Registered { get; set; }
 
-        public userInfo() { }
-        public userInfo(XElement element)
+        public UserInfo() { }
+        public UserInfo(XElement element)
         {
             this.Name = element.Element("name").Value;
             this.id = Int32.Parse(element.Element("id").Value);
             this.url = new Uri(element.Element("url").Value);
 
-            if (element.Element("realname") != null)
+            if (element.Element("realname") != null && element.Element("realname").Value != null)
                 this.RealName = element.Element("realname").Value;
-            if (element.Element("age") != null)
+            if (element.Element("age") != null && !String.IsNullOrEmpty(element.Element("age").Value))
                 this.Age = Int32.Parse(element.Element("age").Value);
             if (element.Element("playcount") != null)
                 this.PlayCount = Int32.Parse(element.Element("playcount").Value);
+            try
+            { this.SmallImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "small" select el.Value.ToString()).First()); }
+            catch (UriFormatException) { this.SmallImage = null; }
+            try
+            { this.MediumImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "medium" select el.Value.ToString()).First()); }
+            catch (UriFormatException) { this.MediumImage = null; }
+            try
+            { this.LargeImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "large" select el.Value.ToString()).First()); }
+            catch (UriFormatException) { this.LargeImage = null; }
+            try
+            { this.ExtraLargeImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "extralarge" select el.Value.ToString()).First()); }
+            catch (UriFormatException) { this.ExtraLargeImage = null; }
         }
     }
 }
