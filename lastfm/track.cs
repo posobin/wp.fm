@@ -63,17 +63,37 @@ namespace lastfm
             return null;
         }
 
-        public static async void scrobble(string artistName, string trackName)
+        public static async void scrobble(string artistName, string trackName, DateTime timestamp = default(DateTime))
         {
             if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
                 MessageBox.Show("This service requires authentication");
-            int timeStamp = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
+            int timeStamp;
+            if (timestamp != default(DateTime))
+               timeStamp  = (int)(timestamp - new DateTime(1970, 1, 1)).TotalSeconds;
+            else
+                timeStamp = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
             RequestParameters rParams = new RequestParameters();
             rParams.Add("artist", artistName);
             rParams.Add("track", trackName);
             rParams.Add("timestamp", timeStamp.ToString());
             rParams.Add("method", "track.scrobble");
             rParams.Add("sk", Session.CurrentSession.SessionKey);
+            XDocument returnedXml = await Request.MakeRequest(rParams, true);
+            if (Request.CheckStatus(returnedXml) != 0)
+                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+        }
+
+        public static async void updateNowPlaying(string artistName, string trackName, string albumName = null)
+        {
+            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+                MessageBox.Show("This service requires authentication");
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("method", "track.updateNowPlaying");
+            rParams.Add("artist", artistName);
+            rParams.Add("track", trackName);
+            rParams.Add("sk", Session.CurrentSession.SessionKey);
+            if (!String.IsNullOrEmpty(albumName))
+                rParams.Add("album", albumName);
             XDocument returnedXml = await Request.MakeRequest(rParams, true);
             if (Request.CheckStatus(returnedXml) != 0)
                 MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());

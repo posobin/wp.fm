@@ -1,1 +1,4 @@
-﻿
+﻿- Add offline scrobbling
+- Add user info page
+- Add love button
+- Add exception handling

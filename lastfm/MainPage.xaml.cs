@@ -25,6 +25,8 @@ namespace lastfm
     {
         ProgressIndicator prog = new ProgressIndicator();
         UserInfo currentUser = null;
+        Song LastSong = null;
+        DateTime LastSongBegan = default(DateTime);
 
         public MainPage()
         {
@@ -36,6 +38,7 @@ namespace lastfm
             dt.Start();
 
             MediaPlayer.MediaStateChanged += new EventHandler<EventArgs>(MediaPlayer_MediaStateChanged);
+            MediaPlayer.ActiveSongChanged += new EventHandler<EventArgs>(MediaPlayer_MediaStateChanged);
         }
 
         /// <summary>
@@ -44,13 +47,13 @@ namespace lastfm
         void MediaPlayer_MediaStateChanged(object sender, EventArgs e)
         {
             UpdateNowPlaying();
-            if (Session.LastSong != MediaPlayer.Queue.ActiveSong)
+            if (LastSong != MediaPlayer.Queue.ActiveSong)
             {
                 if (NetworkInterface.GetIsNetworkAvailable())
                 {
-                    Session.LastSong = MediaPlayer.Queue.ActiveSong;
                     if (Session.AutoScrobbling == true)
                         ScrobbleNowPlaying();
+                    LastSong = MediaPlayer.Queue.ActiveSong;
                 }
             }
         }
@@ -192,15 +195,21 @@ namespace lastfm
             prog.Text = "Scrobbling...";
             SystemTray.ProgressIndicator = prog;
             Song NowPlaying = MediaPlayer.Queue.ActiveSong;
-            if (NowPlaying != null && Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
+            if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
             {
-                SongTitle.Content = NowPlaying.Name;
-                ArtistName.Content = NowPlaying.Artist.Name;
-                try { track.scrobble(NowPlaying.Artist.Name, NowPlaying.Name); }
-                catch (TaskCanceledException) { }
+                if (LastSong != null && LastSong != NowPlaying && (LastSongBegan + new TimeSpan(0,0,10) >= DateTime.Now - new TimeSpan(LastSong.Duration.Seconds)))
+                {
+                    try { track.scrobble(LastSong.Artist.Name, LastSong.Name, LastSongBegan.ToUniversalTime()); }
+                    catch (TaskCanceledException) { }
+                }
+                if (NowPlaying != null)
+                {
+                    try { track.updateNowPlaying(NowPlaying.Artist.Name, NowPlaying.Name, NowPlaying.Album.Name); }
+                    catch (TaskCanceledException) { }
+                }
             }
-            else if (NowPlaying == null)
-                MessageBox.Show("Sorry, but nothing is playing now");
+            else
+                MessageBox.Show("Login to be able to use scrobbling");
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }
