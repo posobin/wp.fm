@@ -27,6 +27,7 @@ namespace lastfm
         UserInfo currentUser = null;
         Song LastSong = null;
         DateTime LastSongBegan = default(DateTime);
+        private Song LastScrobbled;
 
         public MainPage()
         {
@@ -37,31 +38,53 @@ namespace lastfm
             dt.Tick += delegate { try { FrameworkDispatcher.Update(); } catch { } };
             dt.Start();
 
-            MediaPlayer.MediaStateChanged += new EventHandler<EventArgs>(MediaPlayer_MediaStateChanged);
-            MediaPlayer.ActiveSongChanged += new EventHandler<EventArgs>(MediaPlayer_MediaStateChanged);
+            MediaPlayer.MediaStateChanged += new EventHandler<EventArgs>(MediaStateChanged);
+            MediaPlayer.ActiveSongChanged += new EventHandler<EventArgs>(ActiveSongChanged);
+        }
+
+        #region Scrobbling
+
+        /// <summary>
+        /// Event being fired when track was changed
+        /// </summary>
+        void ActiveSongChanged(object sender, EventArgs e)
+        {
+            UpdateNowPlayingPivot();
+            if (NetworkInterface.GetIsNetworkAvailable())
+                if (Session.AutoScrobbling == true)
+                {
+                    if (LastSong != null)
+                    {
+                        Scrobble(LastSong, LastSongBegan);
+                        LastSong = MediaPlayer.Queue.ActiveSong;
+                        LastSongBegan = DateTime.Now;
+                    }
+                    UpdateNowPlaying();
+                }
         }
 
         /// <summary>
-        /// Event being fired when track is being changed, stoped, etc.
+        /// Event being fired when track is being flash-forwarded, stoped, etc.
         /// </summary>
-        void MediaPlayer_MediaStateChanged(object sender, EventArgs e)
+        void MediaStateChanged(object sender, EventArgs e)
         {
-            UpdateNowPlaying();
-            if (LastSong != MediaPlayer.Queue.ActiveSong)
-            {
+            UpdateNowPlayingPivot();
+            // ActiveSongChanged is not being fired when application launches and the song starts playing
+            Song NowPlaying = MediaPlayer.Queue.ActiveSong;
+            if (NowPlaying != null && LastSong == null)
                 if (NetworkInterface.GetIsNetworkAvailable())
-                {
                     if (Session.AutoScrobbling == true)
-                        ScrobbleNowPlaying();
-                    LastSong = MediaPlayer.Queue.ActiveSong;
-                }
-            }
+                    {
+                        UpdateNowPlaying();
+                        LastSong = MediaPlayer.Queue.ActiveSong;
+                        LastSongBegan = DateTime.Now;
+                    }
         }
 
         /// <summary>
         /// Shows up info about currently playing song
         /// </summary>
-        private void UpdateNowPlaying()
+        private void UpdateNowPlayingPivot()
         {
             Song NowPlaying = MediaPlayer.Queue.ActiveSong;
             if (NowPlaying != null)
@@ -88,13 +111,70 @@ namespace lastfm
             }
         }
 
+        /// <summary>
+        /// Calls ScrobbleNowPlaying
+        /// </summary>
+        private void ScrobbleClick(object sender, EventArgs e)
+        {
+            Scrobble(MediaPlayer.Queue.ActiveSong, DateTime.Now);
+        }
+
+        /// <summary>
+        /// Scrobbles song currently being played
+        /// </summary>
+        private void Scrobble(Song song, DateTime songBegan)
+        {
+            if (song == null)
+                throw new ArgumentNullException("song");
+            if (songBegan == null)
+                throw new ArgumentNullException("songBegan");
+            prog.IsIndeterminate = true;
+            prog.IsVisible = true;
+            prog.Text = "Scrobbling...";
+            SystemTray.ProgressIndicator = prog;
+            if (Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.SessionKey))
+                if (LastScrobbled != song && (songBegan + new TimeSpan(0, 0, 10) >= DateTime.Now - new TimeSpan(0,0,song.Duration.Seconds)))
+                {
+                    try { track.scrobble(song.Artist.Name, song.Name, songBegan.ToUniversalTime()); }
+                    catch (TaskCanceledException) { }
+
+                    LastScrobbled = song;
+                }
+            else
+                MessageBox.Show("Login to be able to use scrobbling");
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
+        }
+
+        /// <summary>
+        /// Updates Now Playing track on the server
+        /// </summary>
+        private void UpdateNowPlaying()
+        {
+            Song NowPlaying = MediaPlayer.Queue.ActiveSong;
+            prog.IsIndeterminate = true;
+            prog.IsVisible = true;
+            prog.Text = "Updating now playing...";
+            SystemTray.ProgressIndicator = prog;
+            if (Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.SessionKey))
+                if (NowPlaying != null)
+                {
+                    try { track.updateNowPlaying(NowPlaying.Artist.Name, NowPlaying.Name, NowPlaying.Album.Name); }
+                    catch (TaskCanceledException) { }
+                }
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
+        }
+
+        #endregion
+
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
             if (NetworkInterface.GetIsNetworkAvailable())
             {
                 UpdateAppBar();
-                UpdateNowPlaying();
+                UpdateNowPlayingPivot();
             }
             else
                 MessageBox.Show("No internet connection is available");
@@ -175,43 +255,6 @@ namespace lastfm
         private void Search(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/searchPage.xaml", UriKind.Relative));
-        }
-
-        /// <summary>
-        /// Calls ScrobbleNowPlaying
-        /// </summary>
-        private void Scrobble(object sender, EventArgs e)
-        {
-            ScrobbleNowPlaying();
-        }
-
-        /// <summary>
-        /// Scrobbles song currently being played
-        /// </summary>
-        private void ScrobbleNowPlaying()
-        {
-            prog.IsIndeterminate = true;
-            prog.IsVisible = true;
-            prog.Text = "Scrobbling...";
-            SystemTray.ProgressIndicator = prog;
-            Song NowPlaying = MediaPlayer.Queue.ActiveSong;
-            if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
-            {
-                if (LastSong != null && LastSong != NowPlaying && (LastSongBegan + new TimeSpan(0,0,10) >= DateTime.Now - new TimeSpan(LastSong.Duration.Seconds)))
-                {
-                    try { track.scrobble(LastSong.Artist.Name, LastSong.Name, LastSongBegan.ToUniversalTime()); }
-                    catch (TaskCanceledException) { }
-                }
-                if (NowPlaying != null)
-                {
-                    try { track.updateNowPlaying(NowPlaying.Artist.Name, NowPlaying.Name, NowPlaying.Album.Name); }
-                    catch (TaskCanceledException) { }
-                }
-            }
-            else
-                MessageBox.Show("Login to be able to use scrobbling");
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
         }
 
         /// <summary>
