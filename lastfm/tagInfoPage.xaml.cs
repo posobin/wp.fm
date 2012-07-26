@@ -23,10 +23,13 @@ namespace lastfm
         {
             InitializeComponent();
             SystemTray.SetProgressIndicator(this, prog);
+            wbh = new WebBrowserHelper(tagDescription);
+            wbh.ScrollDisabled = false;
         }
 
         tagInfo currTag;
         ProgressIndicator prog = new ProgressIndicator();
+        WebBrowserHelper wbh = null;
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
         {

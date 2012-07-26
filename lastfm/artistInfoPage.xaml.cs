@@ -27,6 +27,7 @@ namespace lastfm
         bool alreadyHookedScrollEvents = false;
         private ScrollBar sb = null;
         private ScrollViewer sv = null;
+        WebBrowserHelper wbh = null;
 
         public artistInfoPage()
         {
@@ -35,6 +36,8 @@ namespace lastfm
             prog = new ProgressIndicator();
             SystemTray.SetProgressIndicator(this, prog);
             this.Loaded += new RoutedEventHandler(artistInfoPage_Loaded);
+            wbh = new WebBrowserHelper(artistDescription);
+            wbh.ScrollDisabled = false;
         }
 
         #region Methods for infinite scroll

@@ -24,10 +24,13 @@ namespace lastfm
             InitializeComponent();
             this.DataContext = currAlbum;
             SystemTray.SetProgressIndicator(this, prog);
+            wbh = new WebBrowserHelper(albumDescription);
+            wbh.ScrollDisabled = false;
         }
 
         albumInfo currAlbum;
         ProgressIndicator prog = new ProgressIndicator();
+        WebBrowserHelper wbh = null;
 
         private void ScriptNotify(object sender, NotifyEventArgs e)
         {
