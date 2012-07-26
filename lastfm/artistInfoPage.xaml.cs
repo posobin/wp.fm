@@ -129,7 +129,7 @@ namespace lastfm
             using (var stream = new IsolatedStorageFileStream("artist.html", FileMode.Create, FileAccess.Write, store))
             {
                 using (var sw = new StreamWriter(stream))
-                    sw.Write(utilities.makeHtmlFromCdata(currArtist.bio));
+                        sw.Write(utilities.makeHtmlFromCdata(currArtist.bio, currArtist.extralargeImage));
             }
             artistDescription.Navigate(new Uri("artist.html", UriKind.Relative));
 

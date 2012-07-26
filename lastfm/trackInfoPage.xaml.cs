@@ -56,7 +56,7 @@ namespace lastfm
             using (var stream = new IsolatedStorageFileStream("track.html", FileMode.Create, FileAccess.Write, store))
             {
                 using (var sw = new StreamWriter(stream))
-                    sw.Write(utilities.makeHtmlFromCdata(currTrack.description));
+                    sw.Write(utilities.makeHtmlFromCdata(currTrack.description, currTrack.extralargeImage));
             }
             trackDescription.Navigate(new Uri("track.html", UriKind.Relative));
 

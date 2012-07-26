@@ -83,6 +83,7 @@
       <DependentUpon>artistTopAlbumsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="auth.cs" />
+    <Compile Include="LinqToVisualTree.cs" />
     <Compile Include="LastFmAPIException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -117,6 +118,7 @@
     <Compile Include="user.cs" />
     <Compile Include="UserInfo.cs" />
     <Compile Include="utilities.cs" />
+    <Compile Include="WebBrowserHelper.cs" />
     <Compile Include="xmlsanitizingstream.cs" />
   </ItemGroup>
   <ItemGroup>

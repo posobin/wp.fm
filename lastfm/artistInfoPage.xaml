@@ -21,7 +21,7 @@
         <controls:Panorama Title="{Binding Path=name}" Name="panArtist">
             <controls:PanoramaItem Header="bio">
                 <Grid>
-                    <phone:WebBrowser Name="artistDescription" Opacity="0" Navigating="artistDescription_Navigating" Navigated="artistDescription_Navigated" IsScriptEnabled="True" ScriptNotify="ScriptNotify" />
+                    <phone:WebBrowser Name="artistDescription" Opacity="0" Navigating="artistDescription_Navigating" Navigated="artistDescription_Navigated" IsScriptEnabled="True" ScriptNotify="ScriptNotify" TabNavigation="Once" />
                 </Grid>
             </controls:PanoramaItem>
 
@@ -35,14 +35,6 @@
                 <Grid>
                     <ListBox Height="Auto" toolkit:TiltEffect.IsTiltEnabled="True" VerticalAlignment="Top" Name="tags" ItemTemplate="{StaticResource tagTemplate}" ItemsSource="{Binding Path=tags}" SelectionChanged="tags_SelectionChanged" />
                 </Grid>
-            </controls:PanoramaItem>
-            
-            <controls:PanoramaItem Header="other">
-                <StackPanel Orientation="Vertical">
-                    <HyperlinkButton Content="top albums" FontSize="70" HorizontalAlignment="Left" FontFamily="Segoe WP SemiLight" />
-                    <HyperlinkButton Content="top songs" FontSize="70" HorizontalAlignment="Left" FontFamily="Segoe WP SemiLight" />
-                    <HyperlinkButton Content="top tags" FontSize="70" HorizontalAlignment="Left" FontFamily="Segoe WP SemiLight" />
-                </StackPanel>
             </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>

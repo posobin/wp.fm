@@ -2,3 +2,5 @@
 - Add user info page
 - Add love button
 - Add exception handling
+- Create folders in the project and sort files
+- Add exception mechanism in api classes

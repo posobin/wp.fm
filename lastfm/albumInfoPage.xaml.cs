@@ -56,7 +56,7 @@ namespace lastfm
             using (var stream = new IsolatedStorageFileStream("album.html", FileMode.Create, FileAccess.Write, store))
             {
                 using (var sw = new StreamWriter(stream))
-                    sw.Write(utilities.makeHtmlFromCdata(currAlbum.description));
+                        sw.Write(utilities.makeHtmlFromCdata(currAlbum.description, currAlbum.extralargeImage));
             }
             albumDescription.Navigate(new Uri("album.html", UriKind.Relative));
 

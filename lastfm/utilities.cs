@@ -28,7 +28,7 @@ namespace lastfm
                                             }
                                         </script>";
 
-        public static string makeHtmlFromCdata(string cdata)
+        public static string makeHtmlFromCdata(string cdata, Uri image = null)
         {
             string ret;
             string bgcolor = "#" + ((Color)App.Current.Resources["PhoneBackgroundColor"]).ToString().Substring(3);
@@ -39,8 +39,9 @@ namespace lastfm
                         <meta name=""viewport"" content=""width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"" />" +
                         NotifyScript +
                     @"</head>
-                    <body " + "bgcolor=" + bgcolor + " style=\"color:" + fcolor + "\"" + ">" +
-                            ((string.IsNullOrEmpty(cdata)) ? "Sorry, no description found" : cdata.Replace("\n", "<br>")) +
+                    <body " + "bgcolor=" + bgcolor + " style=\"color:" + fcolor + "\"" + ">";
+            if (image != null) ret += String.Format("<p align=\"center\"><img src=\"{0}\" style=\"margin:auto;display:block;\" /></p>", image.ToString());
+            ret +=      ((string.IsNullOrEmpty(cdata)) ? "Sorry, no description found" : cdata.Replace("\n", "<br>")) +
                     "</body>" +
                   "</html>";
             return ret;
