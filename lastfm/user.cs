@@ -10,6 +10,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace lastfm
 {
@@ -23,6 +25,34 @@ namespace lastfm
             XDocument ReturnedXML = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(ReturnedXML) == 0)
                 return new UserInfo(ReturnedXML.Element("lfm").Element("user"));
+            else
+                throw new LastFmAPIException(Request.GetErrorMessage(ReturnedXML), Request.CheckStatus(ReturnedXML));
+        }
+
+        public static async Task<List<trackInfo>> getRecentTracks(String user, int limit = 50, int page = 1)
+        {
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("method", "user.getRecentTracks");
+            rParams.Add("user", user);
+            rParams.Add("limit", limit.ToString());
+            rParams.Add("page", page.ToString());
+            XDocument ReturnedXML = await Request.MakeRequest(rParams);
+            MessageBox.Show(ReturnedXML.ToString());
+            if (Request.CheckStatus(ReturnedXML) == 0)
+            {
+                List<trackInfo> tracks = new List<trackInfo>((from item in ReturnedXML.Element("lfm").Element("recenttracks").Elements() select new trackInfo(item)));
+                /*
+                XNamespace opensearch = @"http://a9.com/-/spec/opensearch/1.1/";
+                IEnumerable<XElement> opensearch_ = from el in ReturnedXML.Element("lfm").Element("results").Elements()
+                                                    where el.Name.Namespace == opensearch
+                                                    select el;
+                int totalResults = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "totalResults" select el.Value).First());
+                int startIndex = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "startIndex" select el.Value).First());
+                int itemsPerPage = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "itemsPerPage" select el.Value).First());
+                if (totalResults - startIndex < 0)
+                    throw new IndexOutOfRangeException("Page being shown is the first page"); */
+                return tracks;
+            }
             else
                 throw new LastFmAPIException(Request.GetErrorMessage(ReturnedXML), Request.CheckStatus(ReturnedXML));
         }

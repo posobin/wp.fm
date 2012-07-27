@@ -18,7 +18,6 @@
     <!--LayoutRoot содержит корневую сетку, где размещается все содержимое страницы-->
     <Grid x:Name="LayoutRoot">
         <HyperlinkButton Height="Auto" Name="ArtistLink" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="28" />
-        <!--<TextBlock Name="txtArtistName" Height="Auto" Width="Auto" Text="Pink Floyd" HorizontalAlignment="Stretch" Margin="12,5,0,0" FontSize="32" />-->
         <controls:Panorama TitleTemplate="{StaticResource panoramaTitleSmall}" Margin="0,50,0,0" Name="albumInfoPanorama">
 
             <!--Первый элемент Panorama-->

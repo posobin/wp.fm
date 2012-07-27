@@ -308,7 +308,7 @@ namespace lastfm
 
             List<albumInfo> lst = new List<albumInfo>();
             try
-            { lst = new List<albumInfo>(await album.search(searchText)); }
+            { lst = (await album.search(searchText)); }
             catch (TaskCanceledException) { }
 
             foreach (albumInfo info in lst)
@@ -331,7 +331,7 @@ namespace lastfm
 
             List<trackInfo> lst = new List<trackInfo>();
             try
-            { lst = new List<trackInfo>(await track.search(searchText)); }
+            { lst = await track.search(searchText); }
             catch (TaskCanceledException) { }
 
             foreach (trackInfo info in lst)
@@ -354,7 +354,7 @@ namespace lastfm
 
             List<tagInfo> lst = new List<tagInfo>();
             try
-            { lst = new List<tagInfo>(await tag.search(searchText)); }
+            { lst = await tag.search(searchText); }
             catch (TaskCanceledException) { }
 
             foreach (tagInfo info in lst)

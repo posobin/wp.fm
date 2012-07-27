@@ -29,7 +29,6 @@ namespace lastfm
         public Uri ExtraLargeImage { get; set; }
         public DateTime Registered { get; set; }
 
-        public UserInfo() { }
         public UserInfo(XElement element)
         {
             this.Name = element.Element("name").Value;

@@ -37,7 +37,7 @@ namespace lastfm
                 this.name = element.Element("title").Value.ToString();
             else
             {
-                MessageBox.Show("Could not read artist info, sorry");
+                this.name = element.Value;
                 return;
             }
             this.artistName = element.Element("artist").Value.ToString();

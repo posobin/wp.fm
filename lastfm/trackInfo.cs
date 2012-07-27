@@ -29,6 +29,7 @@ namespace lastfm
         public Uri mediumImage { get; set; }
         public Uri largeImage { get; set; }
         public Uri extralargeImage { get; set; }
+        public DateTime date { get; set; }
 
         public trackInfo() { }
         public trackInfo(XElement element)
@@ -55,6 +56,11 @@ namespace lastfm
             {
                 XCData cdata = element.Element("wiki").Element("content").DescendantNodes().OfType<XCData>().First();
                 this.description = cdata.Value;
+            }
+            if (element.Element("date") != null)
+            {
+                TimeSpan sinceNull = new DateTime(1970, 1, 1) + new TimeSpan(0, 0, Int32.Parse(element.Element("date").Attribute("uts").Value)) - new DateTime(0);
+                this.date = (new DateTime(sinceNull.Ticks, DateTimeKind.Utc)).ToLocalTime();
             }
             try
             { this.smallImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "small" select el.Value.ToString()).First()); }

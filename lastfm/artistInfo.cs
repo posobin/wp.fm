@@ -37,7 +37,7 @@ namespace lastfm
                 this.name = element.Element("name").Value.ToString();
             else
             {
-                this.name = element.Value.ToString();
+                this.name = element.Value;
                 return;
             }
 

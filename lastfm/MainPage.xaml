@@ -73,6 +73,7 @@
                 <StackPanel>
                     <Image Height="252" Width="252" HorizontalAlignment="Left" Stretch="UniformToFill" Source="/lastfm;component/NoImage.png" />
                     <TextBlock Text="{Binding Path=Name}"/>
+                    <HyperlinkButton Content="HyperlinkButton" Height="30" Name="hyperlinkButton1" Width="200" NavigateUri="/UserInfoPage.xaml" />
                 </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>

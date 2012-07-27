@@ -192,7 +192,6 @@ namespace lastfm
         private async void UpdateCurrentUser()
         {
             currentUser = await user.getInfo(Session.CurrentSession.UserName);
-            if (currentUser == null) MessageBox.Show("Hello");
             UserInfoPivotItem.DataContext = currentUser;
         }
 
