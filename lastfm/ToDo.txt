@@ -4,3 +4,6 @@
 - Add exception handling
 - Create folders in the project and sort files
 - Add exception mechanism in api classes
+- Remove bug with selecting tag on trackInfoPage
+- Add infinite scrolling on info pages
+- Add limit on the userinfopage for scrolling

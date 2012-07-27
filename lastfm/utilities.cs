@@ -12,6 +12,7 @@ using Microsoft.Phone.Tasks;
 using System.Windows.Navigation;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 namespace lastfm
 {
@@ -84,6 +85,37 @@ namespace lastfm
                 browser.Show();
             }
             return navigateTo;
+        }
+
+        public static UIElement FindElementRecursive(FrameworkElement parent, Type targetType)
+        {
+            int childCount = VisualTreeHelper.GetChildrenCount(parent);
+            UIElement returnElement = null;
+            if (childCount > 0)
+            {
+                for (int i = 0; i < childCount; ++i)
+                {
+                    Object element = VisualTreeHelper.GetChild(parent, i);
+                    if (element.GetType() == targetType)
+                        return element as UIElement;
+                    else
+                        returnElement = FindElementRecursive(VisualTreeHelper.GetChild(parent, i) as FrameworkElement, targetType);
+                }
+            }
+            return returnElement;
+        }
+
+        public static VisualStateGroup FindVisualState(FrameworkElement element, string name)
+        {
+            if (element == null)
+                return null;
+
+            IList groups = VisualStateManager.GetVisualStateGroups(element);
+            foreach (VisualStateGroup group in groups)
+                if (group.Name == name)
+                    return group;
+
+            return null;
         }
     }
 }

@@ -37,7 +37,7 @@
             <!--Второй элемент Panorama-->
             <controls:PanoramaItem Header="tags">
                 <Grid>
-                    <ListBox Name="tagsLst" toolkit:TiltEffect.IsTiltEnabled="True" ItemsSource="{Binding Path=tags}" ItemTemplate="{StaticResource tagTemplate}" />
+                    <ListBox Name="tagsLst" toolkit:TiltEffect.IsTiltEnabled="True" ItemsSource="{Binding Path=tags}" ItemTemplate="{StaticResource tagTemplate}" SelectionChanged="tagsLst_SelectionChanged" />
                 </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>

@@ -122,14 +122,14 @@ namespace lastfm
                 return;
             HookedArtistScrolling = true;
 
-            ScrollViewer sv_artists = (ScrollViewer)FindElementRecursive(artistResults, typeof(ScrollViewer));
+            ScrollViewer sv_artists = (ScrollViewer)utilities.FindElementRecursive(artistResults, typeof(ScrollViewer));
 
             if (sv_artists != null)
             {
                 FrameworkElement element = VisualTreeHelper.GetChild(sv_artists, 0) as FrameworkElement;
                 if (element != null)
                 {
-                    VisualStateGroup vgroup = FindVisualState(element, "VerticalCompression");
+                    VisualStateGroup vgroup = utilities.FindVisualState(element, "VerticalCompression");
                     if (vgroup != null)
                         vgroup.CurrentStateChanging += new EventHandler<VisualStateChangedEventArgs>(vgroupArtists_CurrentStateChanging);
                 }
@@ -142,14 +142,14 @@ namespace lastfm
                 return;
             HookedAlbumScrolling = true;
 
-            ScrollViewer sv_albums = (ScrollViewer)FindElementRecursive(albumResults, typeof(ScrollViewer));
+            ScrollViewer sv_albums = (ScrollViewer)utilities.FindElementRecursive(albumResults, typeof(ScrollViewer));
 
             if (sv_albums != null)
             {
                 FrameworkElement element = VisualTreeHelper.GetChild(sv_albums, 0) as FrameworkElement;
                 if (element != null)
                 {
-                    VisualStateGroup vgroup = FindVisualState(element, "VerticalCompression");
+                    VisualStateGroup vgroup = utilities.FindVisualState(element, "VerticalCompression");
                     if (vgroup != null)
                         vgroup.CurrentStateChanging += new EventHandler<VisualStateChangedEventArgs>(vgroupAlbums_CurrentStateChanging);
                 }
@@ -162,14 +162,14 @@ namespace lastfm
                 return;
             HookedTrackScrolling = true;
 
-            ScrollViewer sv_tracks = (ScrollViewer)FindElementRecursive(trackResults, typeof(ScrollViewer));
+            ScrollViewer sv_tracks = (ScrollViewer)utilities.FindElementRecursive(trackResults, typeof(ScrollViewer));
 
             if (sv_tracks != null)
             {
                 FrameworkElement element = VisualTreeHelper.GetChild(sv_tracks, 0) as FrameworkElement;
                 if (element != null)
                 {
-                    VisualStateGroup vgroup = FindVisualState(element, "VerticalCompression");
+                    VisualStateGroup vgroup = utilities.FindVisualState(element, "VerticalCompression");
                     if (vgroup != null)
                         vgroup.CurrentStateChanging += new EventHandler<VisualStateChangedEventArgs>(vgroupTracks_CurrentStateChanging);
                 }
@@ -183,14 +183,14 @@ namespace lastfm
 
             HookedTagScrolling = true;
 
-            ScrollViewer sv_tags = (ScrollViewer)FindElementRecursive(tagResults, typeof(ScrollViewer));
+            ScrollViewer sv_tags = (ScrollViewer)utilities.FindElementRecursive(tagResults, typeof(ScrollViewer));
 
             if (sv_tags != null)
             {
                 FrameworkElement element = VisualTreeHelper.GetChild(sv_tags, 0) as FrameworkElement;
                 if (element != null)
                 {
-                    VisualStateGroup vgroup = FindVisualState(element, "VerticalCompression");
+                    VisualStateGroup vgroup = utilities.FindVisualState(element, "VerticalCompression");
                     if (vgroup != null)
                         vgroup.CurrentStateChanging += new EventHandler<VisualStateChangedEventArgs>(vgroupTags_CurrentStateChanging);
                 }
@@ -236,38 +236,6 @@ namespace lastfm
             }
         }
         #endregion
-
-        private UIElement FindElementRecursive(FrameworkElement parent, Type targetType)
-        {
-            int childCount = VisualTreeHelper.GetChildrenCount(parent);
-            UIElement returnElement = null;
-            if (childCount > 0)
-            {
-                for (int i = 0; i < childCount; ++i)
-                {
-                    Object element = VisualTreeHelper.GetChild(parent, i);
-                    if (element.GetType() == targetType)
-                        return element as UIElement;
-                    else
-                        returnElement = FindElementRecursive(VisualTreeHelper.GetChild(parent, i) as FrameworkElement, targetType);
-                }
-            }
-            return returnElement;
-        }
-
-        private VisualStateGroup FindVisualState(FrameworkElement element, string name)
-        {
-            if (element == null)
-                return null;
-
-            IList groups = VisualStateManager.GetVisualStateGroups(element);
-            foreach (VisualStateGroup group in groups)
-                if (group.Name == name)
-                    return group;
-
-            return null;
-        }
-
 
         #endregion
 

@@ -37,20 +37,9 @@ namespace lastfm
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
             XDocument ReturnedXML = await Request.MakeRequest(rParams);
-            MessageBox.Show(ReturnedXML.ToString());
             if (Request.CheckStatus(ReturnedXML) == 0)
             {
                 List<trackInfo> tracks = new List<trackInfo>((from item in ReturnedXML.Element("lfm").Element("recenttracks").Elements() select new trackInfo(item)));
-                /*
-                XNamespace opensearch = @"http://a9.com/-/spec/opensearch/1.1/";
-                IEnumerable<XElement> opensearch_ = from el in ReturnedXML.Element("lfm").Element("results").Elements()
-                                                    where el.Name.Namespace == opensearch
-                                                    select el;
-                int totalResults = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "totalResults" select el.Value).First());
-                int startIndex = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "startIndex" select el.Value).First());
-                int itemsPerPage = Int32.Parse((from el in opensearch_ where el.Name.LocalName == "itemsPerPage" select el.Value).First());
-                if (totalResults - startIndex < 0)
-                    throw new IndexOutOfRangeException("Page being shown is the first page"); */
                 return tracks;
             }
             else
