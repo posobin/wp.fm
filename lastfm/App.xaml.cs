@@ -57,6 +57,7 @@ namespace lastfm
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
+            Session.Scrobbles.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Scrobbling.Scrobbles_CollectionChanged);
         }
 
         // Код для выполнения при запуске приложения (например, из меню "Пуск")

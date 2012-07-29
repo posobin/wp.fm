@@ -11,6 +11,7 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Media;
 
 namespace lastfm
 {
@@ -45,7 +46,7 @@ namespace lastfm
             if (element.Element("album") != null)
             {
                 this.album = new albumInfo(element.Element("album"));
-                if (element.Element("album").Attribute("position") != null)
+                if (element.Element("album").Attribute("position") != null && !String.IsNullOrEmpty(element.Element("album").Attribute("position").Value))
                     this.position = Int32.Parse(element.Element("album").Attribute("position").Value);
             }
             if (element.Element("artist") != null)
@@ -78,6 +79,18 @@ namespace lastfm
             { this.extralargeImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "extralarge" select el.Value.ToString()).First()); }
             catch (UriFormatException) { this.extralargeImage = null; }
             catch (InvalidOperationException) { this.extralargeImage = null; }
+        }
+
+        public trackInfo(Song song)
+        {
+            this.name = song.Name;
+            this.artist = new artistInfo(song.Artist);
+            this.album = new albumInfo(song.Album);
+        }
+        public trackInfo(Song song, DateTime timeStamp)
+            : this(song)
+        {
+            this.date = timeStamp;
         }
     }
 }

@@ -28,6 +28,7 @@ namespace lastfm
         Song LastSong = null;
         DateTime LastSongBegan = default(DateTime);
         private Song LastScrobbled;
+        List<trackInfo> OfflineScrobble = new List<trackInfo>();
 
         public MainPage()
         {
@@ -50,8 +51,9 @@ namespace lastfm
         void ActiveSongChanged(object sender, EventArgs e)
         {
             UpdateNowPlayingPivot();
-            if (NetworkInterface.GetIsNetworkAvailable())
-                if (Session.AutoScrobbling == true)
+            if (Session.AutoScrobbling == true)
+            {
+                if (NetworkInterface.GetIsNetworkAvailable())
                 {
                     if (LastSong != null)
                     {
@@ -61,6 +63,16 @@ namespace lastfm
                     }
                     UpdateNowPlaying();
                 }
+                else
+                {
+                    // Offline scrobbling
+                    trackInfo track = new trackInfo(MediaPlayer.Queue.ActiveSong, DateTime.Now);
+                    if (Session.Scrobbles.Contains(track))
+                        Scrobbling.Scrobble();
+                    else
+                        Session.Scrobbles.Add(new trackInfo(MediaPlayer.Queue.ActiveSong, DateTime.Now));
+                }
+            }
         }
 
         /// <summary>
@@ -133,13 +145,13 @@ namespace lastfm
             prog.Text = "Scrobbling...";
             SystemTray.ProgressIndicator = prog;
             if (Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.SessionKey))
-                if (LastScrobbled != song && (songBegan + new TimeSpan(0, 0, 10) >= DateTime.Now - new TimeSpan(0,0,song.Duration.Seconds)))
+            {
+                if (LastScrobbled != song && (songBegan + new TimeSpan(0, 0, 10) >= DateTime.Now - new TimeSpan(0, 0, song.Duration.Seconds)))
                 {
-                    try { track.scrobble(song.Artist.Name, song.Name, songBegan.ToUniversalTime()); }
-                    catch (TaskCanceledException) { }
-
+                    Session.Scrobbles.Add(new trackInfo(song, songBegan));
                     LastScrobbled = song;
                 }
+            }
             else
                 MessageBox.Show("Login to be able to use scrobbling");
             prog.IsIndeterminate = false;
@@ -178,7 +190,7 @@ namespace lastfm
             }
             else
                 MessageBox.Show("No internet connection is available");
-            if (Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.UserName))
+            if (NetworkInterface.GetIsNetworkAvailable() && Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.UserName))
             {
                 if (!MainPivot.Items.Contains(UserInfoPivotItem))
                     MainPivot.Items.Add(UserInfoPivotItem);

@@ -63,13 +63,19 @@ namespace lastfm
             return null;
         }
 
+        /// <summary>
+        /// Sends scrobble request to the server
+        /// </summary>
+        /// <param name="artistName"> Artist who plays the track </param>
+        /// <param name="trackName"> Name of the track </param>
+        /// <param name="timestamp"> DateTime object representing when track was played </param>
         public static async void scrobble(string artistName, string trackName, DateTime timestamp = default(DateTime))
         {
             if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
                 MessageBox.Show("This service requires authentication");
             int timeStamp;
-            if (timestamp != default(DateTime))
-               timeStamp  = (int)(timestamp - new DateTime(1970, 1, 1)).TotalSeconds;
+            if (timestamp != default(DateTime) && timestamp != null)
+                timeStamp = (int)(timestamp.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
             else
                 timeStamp = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
             RequestParameters rParams = new RequestParameters();
@@ -78,6 +84,31 @@ namespace lastfm
             rParams.Add("timestamp", timeStamp.ToString());
             rParams.Add("method", "track.scrobble");
             rParams.Add("sk", Session.CurrentSession.SessionKey);
+            XDocument returnedXml = await Request.MakeRequest(rParams, true);
+            if (Request.CheckStatus(returnedXml) != 0)
+                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+        }
+
+        public static async void scrobble(List<trackInfo> tracks)
+        {
+            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+                MessageBox.Show("This service requires authentication");
+            if (tracks.Count > 50)
+                throw new ArgumentOutOfRangeException("tracks", "Number of elements in the list must ot exceed 50");
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("method", "track.scrobble");
+            rParams.Add("sk", Session.CurrentSession.SessionKey);
+            for (int i = 0; i < tracks.Count; ++i)
+            {
+                trackInfo track = tracks[i];
+                if (track != null && track.name != null && track.album != null && track.date != null)
+                {
+                    rParams.Add("artist[" + i + "]", track.artist.name);
+                    rParams.Add("track[" + i + "]", track.name);
+                    int timestamp = (int)(track.date.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
+                    rParams.Add("timestamp[" + i + "]", timestamp.ToString());
+                }
+            }
             XDocument returnedXml = await Request.MakeRequest(rParams, true);
             if (Request.CheckStatus(returnedXml) != 0)
                 MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());

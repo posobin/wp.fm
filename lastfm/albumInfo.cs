@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
+using Microsoft.Xna.Framework.Media;
 
 namespace lastfm
 {
@@ -65,6 +66,10 @@ namespace lastfm
             try
             { this.extralargeImage = new Uri((from el in element.Elements("image") where el.Attribute("size").Value.ToString() == "extralarge" select el.Value.ToString()).First()); }
             catch (UriFormatException) { this.extralargeImage = null; }
+        }
+        public albumInfo(Album album)
+        {
+            this.name = album.Name;
         }
     }
 }

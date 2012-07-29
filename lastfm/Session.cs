@@ -10,6 +10,8 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Runtime.Serialization;
 using Microsoft.Xna.Framework.Media;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace lastfm
 {
@@ -67,6 +69,24 @@ namespace lastfm
             set
             {
                 System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["AutoScrobbling"] = value;
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Save();
+            }
+        }
+
+        /// <summary>
+        /// List of all scrobbles that were not comleted. On each add/remove tracks in list are being scrobbled
+        /// </summary>
+        public static ObservableCollection<trackInfo> Scrobbles
+        {
+            get
+            {
+                if (!System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Contains("Scrobbles"))
+                    System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["Scrobbles"] = new ObservableCollection<trackInfo>();
+                return (ObservableCollection<trackInfo>)System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["Scrobbles"];
+            }
+            set
+            {
+                System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings["Scrobbles"] = value;
                 System.IO.IsolatedStorage.IsolatedStorageSettings.ApplicationSettings.Save();
             }
         }

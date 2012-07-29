@@ -12,6 +12,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Shapes;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Xna.Framework.Media;
 
 namespace lastfm
 {
@@ -79,6 +80,11 @@ namespace lastfm
                 this.tags = new List<tagInfo>((from item in element.Element("tags").Elements() select new tagInfo(item)));
             if (element.Element("similar") != null)
                 this.similar = new List<artistInfo>((from item in element.Element("similar").Elements() select new artistInfo(item)));
+        }
+
+        public artistInfo(Artist artist)
+        {
+            this.name = artist.Name;
         }
     }
 }
