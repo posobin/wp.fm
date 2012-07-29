@@ -40,8 +40,7 @@ namespace lastfm
                 return tags;
             }
             else
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
-            return null;
+                throw new LastFmAPIException(returnedXml);
         }
         public static async Task<tagInfo> getInfo(string tagName, string lang = "en")
         {
@@ -56,8 +55,7 @@ namespace lastfm
                 return retTag;
             }
             else
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
-            return null;
+                throw new LastFmAPIException(returnedXml);
         }
     }
 }

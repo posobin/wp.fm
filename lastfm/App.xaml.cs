@@ -104,6 +104,14 @@ namespace lastfm
                 // Произошло необработанное исключение; перейти в отладчик
                 System.Diagnostics.Debugger.Break();
             }
+
+            if (e.ExceptionObject is LastFmAPIException)
+            {
+                MessageBox.Show(String.Format("Exception occured: {0}", (e.ExceptionObject as LastFmAPIException).ToShortString()));
+                e.Handled = true;
+                return;
+            }
+            e.Handled = true;
         }
 
         #region Инициализация приложения телефона

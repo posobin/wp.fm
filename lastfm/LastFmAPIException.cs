@@ -28,7 +28,12 @@ namespace lastfm
 
         public override string ToString()
         {
-            return base.ToString() + " Server error number: " + ErrorNumber.ToString();
+            return base.ToString() + " Server error number: " + this.ErrorNumber.ToString();
+        }
+
+        public string ToShortString()
+        {
+            return this.Message + " Server error number: " + this.ErrorNumber.ToString();
         }
     }
 }

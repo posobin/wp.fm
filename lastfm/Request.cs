@@ -70,7 +70,8 @@ namespace lastfm
         /// <returns>XDocument, containing the whole response from the server</returns>
         public async static Task<XDocument> MakeRequest(RequestParameters rParams, bool toSign = false)
         {
-            rParams.Add("api_key", api_key);
+            try { rParams.Add("api_key", api_key); }
+            catch (ArgumentException) { }
             if (toSign == true)
             {
                 StringBuilder sb = new StringBuilder();

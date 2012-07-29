@@ -40,8 +40,7 @@ namespace lastfm
                 return tracks;
             }
             else
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
-            return null;
+                throw new LastFmAPIException(returnedXml);
         }
 
         public static async Task<trackInfo> getInfo(string artistName, string trackName, string username = "")
@@ -58,9 +57,21 @@ namespace lastfm
                 trackInfo track = new trackInfo(returnedXml.Element("lfm").Element("track"));
                 return track;
             }
+            else if (Request.CheckStatus(returnedXml) == 6) // Track not found
+            {
+                // Trying with autocorrect
+                rParams.Add("autocorrect", "1");
+                returnedXml = await Request.MakeRequest(rParams);
+                if (Request.CheckStatus(returnedXml) == 0)
+                {
+                    trackInfo track = new trackInfo(returnedXml.Element("lfm").Element("track"));
+                    return track;
+                }
+                else
+                    throw new LastFmAPIException(returnedXml);
+            }
             else
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
-            return null;
+                throw new LastFmAPIException(returnedXml);
         }
 
         /// <summary>
@@ -86,7 +97,7 @@ namespace lastfm
             rParams.Add("sk", Session.CurrentSession.SessionKey);
             XDocument returnedXml = await Request.MakeRequest(rParams, true);
             if (Request.CheckStatus(returnedXml) != 0)
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+                throw new LastFmAPIException(returnedXml);
         }
 
         public static async void scrobble(List<trackInfo> tracks)
@@ -111,7 +122,7 @@ namespace lastfm
             }
             XDocument returnedXml = await Request.MakeRequest(rParams, true);
             if (Request.CheckStatus(returnedXml) != 0)
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+                throw new LastFmAPIException(returnedXml);
         }
 
         public static async void updateNowPlaying(string artistName, string trackName, string albumName = null)
@@ -127,7 +138,7 @@ namespace lastfm
                 rParams.Add("album", albumName);
             XDocument returnedXml = await Request.MakeRequest(rParams, true);
             if (Request.CheckStatus(returnedXml) != 0)
-                MessageBox.Show("Sorry, there was some error while executing your request. " + Request.CheckStatus(returnedXml).ToString());
+                throw new LastFmAPIException(returnedXml);
         }
     }
 }

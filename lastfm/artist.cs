@@ -34,7 +34,7 @@ namespace lastfm
                 return artist;
             }
             else
-                throw new LastFmAPIException(Request.GetErrorMessage(returnedXml), Request.CheckStatus(returnedXml));
+                throw new LastFmAPIException(returnedXml);
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace lastfm
                 return albums;
             }
             else
-                throw new LastFmAPIException(Request.GetErrorMessage(returnedXml), Request.CheckStatus(returnedXml));
+                throw new LastFmAPIException(returnedXml);
         }
 
         /// <summary>
@@ -89,7 +89,7 @@ namespace lastfm
                 return artists;
             }
             else
-                throw new LastFmAPIException(Request.GetErrorMessage(returnedXml), Request.CheckStatus(returnedXml));
+                throw new LastFmAPIException(returnedXml);
         }
     }
 }
