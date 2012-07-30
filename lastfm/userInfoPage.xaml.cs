@@ -62,7 +62,7 @@ namespace lastfm
             recomArtistsLoading.VerticalAlignment = VerticalAlignment.Bottom;
             recomArtistsLoading.Visibility = Visibility.Visible;
             List<artistInfo> lst = new List<artistInfo>();
-            try { lst = await user.getRecommendedArtists(NextTracksPage++, 50); }
+            try { lst = await user.getRecommendedArtists(NextArtistsPage++, 50); }
             catch (ArgumentOutOfRangeException) { }
             catch (TaskCanceledException) { }
 

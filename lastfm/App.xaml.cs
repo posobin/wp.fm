@@ -54,7 +54,8 @@ namespace lastfm
                 // объекта PhoneApplicationService приложения значение Disabled.
                 // Внимание! Используйте только в режиме отладки. Приложение, в котором отключено обнаружение бездействия пользователя, будет продолжать работать
                 // и потреблять энергию батареи, когда телефон не будет использоваться.
-                PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Enabled;
+                PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
+                PhoneApplicationService.Current.ApplicationIdleDetectionMode = IdleDetectionMode.Disabled;
             }
 
             Session.Scrobbles.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Scrobbling.Scrobbles_CollectionChanged);

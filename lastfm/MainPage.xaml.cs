@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Phone.Shell;
 using System.Threading.Tasks;
 using Microsoft.Phone.Net.NetworkInformation;
+using System.Windows.Controls.Primitives;
 
 namespace lastfm
 {
@@ -32,7 +33,7 @@ namespace lastfm
         public MainPage()
         {
             InitializeComponent();
-            
+
             DispatcherTimer dt = new DispatcherTimer();
             dt.Interval = TimeSpan.FromMilliseconds(33);
             dt.Tick += delegate { try { FrameworkDispatcher.Update(); } catch { } };

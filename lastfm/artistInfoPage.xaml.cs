@@ -98,7 +98,6 @@ namespace lastfm
         {
             if (e.NewState.Name == "CompressionBottom")
             {
-                MessageBox.Show(sender.ToString());
                 //Load more items to the list
             }
         }
