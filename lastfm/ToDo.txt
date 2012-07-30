@@ -5,3 +5,6 @@
 - Remove bug with selecting tag on trackInfoPage
 - Add infinite scrolling on info pages
 - Add limit on the userinfopage for scrolling
+- Add cool icons and splash screen
+- Add cool animations and transitions
+-- Handle case when scrobbling nothing on the main page

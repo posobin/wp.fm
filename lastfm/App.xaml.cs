@@ -127,7 +127,7 @@ namespace lastfm
 
             // Создайте кадр, но не задавайте для него значение RootVisual; это позволит
             // экрану-заставке оставаться активным, пока приложение не будет готово для визуализации.
-            RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Обработка сбоев навигации
