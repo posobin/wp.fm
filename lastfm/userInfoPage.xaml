@@ -63,6 +63,13 @@
                     <ListBox Name="recentTrackslb" toolkit:TiltEffect.IsTiltEnabled="True" ItemTemplate="{StaticResource trackWithDateTemplate}" ItemsSource="{Binding}" SelectionChanged="recentTrackslb_SelectionChanged" Margin="0,0,0,10"/>
                 </Grid>
             </controls:PanoramaItem>
+            
+            <controls:PanoramaItem Header="suggestions">
+                <Grid>
+                    <ProgressBar Name="recomArtistsLoading" IsIndeterminate="True" HorizontalAlignment="Stretch" Visibility="Collapsed"/>
+                    <ListBox Name="recomArtistslb" toolkit:TiltEffect.IsTiltEnabled="True" ItemTemplate="{StaticResource artistTemplate}" ItemsSource="{Binding}" SelectionChanged="recomArtistslb_SelectionChanged" Margin="0,0,0,10"/>
+                </Grid>
+            </controls:PanoramaItem>
         </controls:Panorama>
     </Grid>
 

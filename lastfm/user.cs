@@ -42,11 +42,31 @@ namespace lastfm
                 int totalPagesAttr = Int32.Parse(returnedXml.Element("lfm").Element("recenttracks").Attribute("totalPages").Value);
                 if (page > totalPagesAttr)
                     throw new ArgumentOutOfRangeException("page", "Page number is greater than total amount of pages");
-                List<trackInfo> tracks = new List<trackInfo>((from item in returnedXml.Element("lfm").Element("recenttracks").Elements() select new trackInfo(item)));
+                List<trackInfo> tracks = new List<trackInfo>(from item in returnedXml.Element("lfm").Element("recenttracks").Elements() select new trackInfo(item));
                 return tracks;
             }
             else
                 throw new LastFmAPIException(Request.GetErrorMessage(returnedXml), Request.CheckStatus(returnedXml));
+        }
+
+        public static async Task<List<artistInfo>> getRecommendedArtists(int page = 1, int limit = 50)
+        {
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("method", "user.getRecommendedArtists");
+            rParams.Add("limit", limit.ToString());
+            rParams.Add("page", page.ToString());
+            rParams.Add("sk", Session.CurrentSession.SessionKey);
+            XDocument returnedXml = await Request.MakeRequest(rParams, true);
+            if (Request.CheckStatus(returnedXml) == 0)
+            {
+                int totalPagesAttr = Int32.Parse(returnedXml.Element("lfm").Element("recommendations").Attribute("totalPages").Value);
+                if (page > totalPagesAttr)
+                    throw new ArgumentOutOfRangeException("page", "Page number is greater than total amount of pages");
+                List<artistInfo> artists = new List<artistInfo>(from item in returnedXml.Element("lfm").Element("recommendations").Elements() select new artistInfo(item));
+                return artists;
+            }
+            else
+                throw new LastFmAPIException(returnedXml);
         }
     }
 }
