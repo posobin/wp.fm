@@ -58,10 +58,11 @@ namespace lastfm
 
         private async void loadMoreTracks()
         {
-            tracksLoading.VerticalAlignment = VerticalAlignment.Top;
+            tracksLoading.VerticalAlignment = VerticalAlignment.Bottom;
             tracksLoading.Visibility = Visibility.Visible;
             List<trackInfo> lst = new List<trackInfo>();
             try { lst = await user.getRecentTracks(Session.CurrentSession.UserName, 50, NextTracksPage++); }
+            catch (ArgumentOutOfRangeException) { }
             catch (TaskCanceledException) { }
 
             foreach (trackInfo item in lst)
@@ -90,6 +91,7 @@ namespace lastfm
             RecentTracks = new ObservableCollection<trackInfo>();
             try { currUser = await user.getInfo(Session.CurrentSession.UserName); }
             catch (TaskCanceledException) { }
+            this.DataContext = currUser;
             InfoGrid.DataContext = currUser;
             InfoProg.Visibility = Visibility.Collapsed;
             InfoGrid.Visibility = Visibility.Visible;

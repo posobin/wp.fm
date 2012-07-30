@@ -48,19 +48,19 @@
             			<TextBlock Grid.Column="0" Grid.Row="1" Text="Username" Style="{StaticResource PhoneTextTitle2Style}"/>
             			<TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding Name}" Style="{StaticResource PhoneTextTitle2Style}"/>
             			<TextBlock Grid.Column="0" Grid.Row="2" Text="Real Name" Style="{StaticResource PhoneTextTitle2Style}"/>
-            			<TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding RealName, TargetNullValue='Not Specified'}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                        <TextBlock Grid.Column="1" Grid.Row="2" Text="{Binding RealName, TargetNullValue='Not Specified'}" Style="{StaticResource PhoneTextTitle2Style}"/>
             			<TextBlock Grid.Column="0" Grid.Row="3" Text="Age" Style="{StaticResource PhoneTextTitle2Style}"/>
-            			<TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Age, TargetNullValue='Not Specified'}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                        <TextBlock Grid.Column="1" Grid.Row="3" Text="{Binding Age, TargetNullValue='Not Specified'}" Style="{StaticResource PhoneTextTitle2Style}"/>
             			<TextBlock Grid.Column="0" Grid.Row="4" Text="Play count" Style="{StaticResource PhoneTextTitle2Style}"/>
-            			<TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding PlayCount}" Style="{StaticResource PhoneTextTitle2Style}"/>
+                        <TextBlock Grid.Column="1" Grid.Row="4" Text="{Binding PlayCount}" Style="{StaticResource PhoneTextTitle2Style}"/>
             		</Grid>
             	</Grid>
             </controls:PanoramaItem>
             
             <controls:PanoramaItem Header="recent tracks">
                 <Grid>
-                    <ProgressBar Name="tracksLoading" IsIndeterminate="True" Visibility="Collapsed"/>
-                    <ListBox Name="recentTrackslb" toolkit:TiltEffect.IsTiltEnabled="True" ItemTemplate="{StaticResource trackWithDateTemplate}" ItemsSource="{Binding}" SelectionChanged="recentTrackslb_SelectionChanged" />
+                    <ProgressBar Name="tracksLoading" IsIndeterminate="True" HorizontalAlignment="Stretch" Visibility="Collapsed"/>
+                    <ListBox Name="recentTrackslb" toolkit:TiltEffect.IsTiltEnabled="True" ItemTemplate="{StaticResource trackWithDateTemplate}" ItemsSource="{Binding}" SelectionChanged="recentTrackslb_SelectionChanged" Margin="0,0,0,10"/>
                 </Grid>
             </controls:PanoramaItem>
         </controls:Panorama>

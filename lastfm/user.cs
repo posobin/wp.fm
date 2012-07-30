@@ -36,14 +36,17 @@ namespace lastfm
             rParams.Add("user", user);
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
-            XDocument ReturnedXML = await Request.MakeRequest(rParams);
-            if (Request.CheckStatus(ReturnedXML) == 0)
+            XDocument returnedXml = await Request.MakeRequest(rParams);
+            if (Request.CheckStatus(returnedXml) == 0)
             {
-                List<trackInfo> tracks = new List<trackInfo>((from item in ReturnedXML.Element("lfm").Element("recenttracks").Elements() select new trackInfo(item)));
+                int totalPagesAttr = Int32.Parse(returnedXml.Element("lfm").Element("recenttracks").Attribute("totalPages").Value);
+                if (page > totalPagesAttr)
+                    throw new ArgumentOutOfRangeException("page", "Page number is greater than total amount of pages");
+                List<trackInfo> tracks = new List<trackInfo>((from item in returnedXml.Element("lfm").Element("recenttracks").Elements() select new trackInfo(item)));
                 return tracks;
             }
             else
-                throw new LastFmAPIException(Request.GetErrorMessage(ReturnedXML), Request.CheckStatus(ReturnedXML));
+                throw new LastFmAPIException(Request.GetErrorMessage(returnedXml), Request.CheckStatus(returnedXml));
         }
     }
 }

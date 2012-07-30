@@ -105,7 +105,7 @@ namespace lastfm
             if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
                 MessageBox.Show("This service requires authentication");
             if (tracks.Count > 50)
-                throw new ArgumentOutOfRangeException("tracks", "Number of elements in the list must ot exceed 50");
+                throw new ArgumentOutOfRangeException("tracks", "Number of elements in the list must not exceed 50");
             RequestParameters rParams = new RequestParameters();
             rParams.Add("method", "track.scrobble");
             rParams.Add("sk", Session.CurrentSession.SessionKey);

@@ -24,7 +24,6 @@ namespace lastfm
     public partial class MainPage : PhoneApplicationPage
     {
         ProgressIndicator prog = new ProgressIndicator();
-        UserInfo currentUser = null;
         Song LastSong = null;
         DateTime LastSongBegan = default(DateTime);
         private Song LastScrobbled;
@@ -128,7 +127,8 @@ namespace lastfm
         /// </summary>
         private void ScrobbleClick(object sender, EventArgs e)
         {
-            Scrobble(MediaPlayer.Queue.ActiveSong, DateTime.Now);
+            try { Scrobble(MediaPlayer.Queue.ActiveSong, DateTime.Now); }
+            catch (ArgumentException) { MessageBox.Show("Nothing is playing"); }
         }
 
         /// <summary>
@@ -190,21 +190,6 @@ namespace lastfm
             }
             else
                 MessageBox.Show("No internet connection is available");
-            if (NetworkInterface.GetIsNetworkAvailable() && Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.UserName))
-            {
-                if (!MainPivot.Items.Contains(UserInfoPivotItem))
-                    MainPivot.Items.Add(UserInfoPivotItem);
-                UpdateCurrentUser();
-            }
-            else
-                if (MainPivot.Items.Contains(UserInfoPivotItem))
-                    MainPivot.Items.Remove(UserInfoPivotItem);
-        }
-
-        private async void UpdateCurrentUser()
-        {
-            currentUser = await user.getInfo(Session.CurrentSession.UserName);
-            UserInfoPivotItem.DataContext = currentUser;
         }
 
         /// <summary>
@@ -243,9 +228,9 @@ namespace lastfm
                 {
                     case 0:
                         if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
-                            ApplicationBar = this.Resources["appbar_scrobble_l"] as ApplicationBar;
+                            ApplicationBar = this.Resources["appbar_scrobble"] as ApplicationBar;
                         else
-                            ApplicationBar = this.Resources["appbar_scrobble_nl"] as ApplicationBar;
+                            ApplicationBar = this.Resources["appbar_login"] as ApplicationBar;
                         ApplicationBar.IsVisible = true;
                         break;
                     default:
@@ -274,6 +259,11 @@ namespace lastfm
         private void LaunchSettingsPage(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
+        }
+
+        private void UserInfo(object sender, EventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/userInfoPage.xaml", UriKind.Relative));
         }
     }
 }

@@ -18,24 +18,17 @@
     Style="{StaticResource TransitionPageStyle}">
     
     <phone:PhoneApplicationPage.Resources>
-        <shell:ApplicationBar x:Key="appbar_empty" IsVisible="True">
+        <shell:ApplicationBar x:Key="appbar_empty" IsVisible="True" Mode="Minimized">
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
         
-        <shell:ApplicationBar x:Key="appbar_scrobble_nl" IsVisible="True">
-            <shell:ApplicationBarIconButton IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
-            <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
-            <shell:ApplicationBar.MenuItems>
-                <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
-            </shell:ApplicationBar.MenuItems>
-        </shell:ApplicationBar>
-
-        <shell:ApplicationBar x:Key="appbar_scrobble_l" IsVisible="True">
+        <shell:ApplicationBar x:Key="appbar_scrobble" IsVisible="True">
             <shell:ApplicationBarIconButton IconUri="/appbar.upload.rest.png" Text="Scrobble" Click="ScrobbleClick" />
             <shell:ApplicationBarIconButton IconUri="/appbar.door.leave.png" Text="log out" Click="Logout"/>
             <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBarIconButton IconUri="/appbar.user.png" Text="profile" Click="UserInfo" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
             </shell:ApplicationBar.MenuItems>
@@ -52,6 +45,7 @@
         <shell:ApplicationBar x:Key="appbar_logout" IsVisible="True">
             <shell:ApplicationBarIconButton IconUri="/appbar.door.leave.png" Text="log out" Click="Logout"/>
             <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBarIconButton IconUri="/appbar.user.png" Text="profile" Click="UserInfo" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
             </shell:ApplicationBar.MenuItems>
@@ -68,14 +62,6 @@
                     <HyperlinkButton Name="SongTitle" FontSize="40" HorizontalContentAlignment="Left" />
                     <HyperlinkButton Name="AlbumName" FontSize="32" HorizontalContentAlignment="Left" />
                     <HyperlinkButton Name="ArtistName" HorizontalContentAlignment="Left" />
-                </StackPanel>
-            </controls:PivotItem>
-            
-            <controls:PivotItem x:Name="UserInfoPivotItem" Header="user info">
-                <StackPanel>
-                    <Image Height="252" Width="252" HorizontalAlignment="Left" Stretch="UniformToFill" Source="/lastfm;component/NoImage.png" />
-                    <TextBlock Text="{Binding Path=Name}"/>
-                    <HyperlinkButton Content="HyperlinkButton" Height="30" Name="hyperlinkButton1" Width="200" NavigateUri="/UserInfoPage.xaml" />
                 </StackPanel>
             </controls:PivotItem>
         </controls:Pivot>
