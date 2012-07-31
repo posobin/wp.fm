@@ -21,12 +21,9 @@ using JeffWilcox.Utilities.Silverlight;
 
 namespace lastfm
 {
-    public class Request
+    public class Request : secret_data
     {
-        private const string api_key = "85fc9119f3928f1a2c2c547b0247eb6d";
-        private const string secret = "b0158e565140df0529a9a1f4ce15d9b5";
         private const string root_url = "http://ws.audioscrobbler.com/2.0/";
-        public delegate void MethodToCallAfter(KeyValuePair<int, string> response);
 
         /// <summary>
         /// Returns response status, contained in the lfm tag attribute
@@ -70,7 +67,7 @@ namespace lastfm
         /// <returns>XDocument, containing the whole response from the server</returns>
         public async static Task<XDocument> MakeRequest(RequestParameters rParams, bool toSign = false)
         {
-            try { rParams.Add("api_key", api_key); }
+            try { rParams.Add("api_key", secret_data.api_key); }
             catch (ArgumentException) { }
             if (toSign == true)
             {
@@ -82,7 +79,7 @@ namespace lastfm
                 foreach (string key in sortedList)
                     sb.Append(key.ToString() + rParams[key]);
 
-                sb.Append(secret);
+                sb.Append(secret_data.secret);
                 rParams.Add("api_sig", MD5CryptoServiceProvider.GetMd5String(sb.ToString()));
             }
             string request_string = rParams.ToString();

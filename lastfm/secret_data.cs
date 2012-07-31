@@ -15,10 +15,9 @@ using JeffWilcox.Utilities.Silverlight;
 
 namespace lastfm
 {
-    public class lastfm
+    private class secret_data
     {
-        private const string api_key = "85fc9119f3928f1a2c2c547b0247eb6d";
-        private const string secret = "b0158e565140df0529a9a1f4ce15d9b5";
-        private const string root_url = "http://ws.audioscrobbler.com/2.0/";
+        protected const string api_key = "";
+        protected const string secret = "";
     }
 }

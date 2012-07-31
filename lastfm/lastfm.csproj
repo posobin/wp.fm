@@ -98,7 +98,7 @@
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Session.cs" />
-    <Compile Include="lastfm.cs" />
+    <Compile Include="secret_data.cs" />
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
