@@ -15,8 +15,9 @@ using JeffWilcox.Utilities.Silverlight;
 
 namespace lastfm
 {
-    private class secret_data
+    public class secret_data
     {
+        // This file is used for using with open source
         protected const string api_key = "85fc9119f3928f1a2c2c547b0247eb6d";
         protected const string secret = "b0158e565140df0529a9a1f4ce15d9b5";
     }
