@@ -23,16 +23,18 @@
 
         <!--TitlePanel содержит имя приложения и заголовок страницы-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="last.fm scrobbler for WP7" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="wp.fm" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="log in" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
 
         <!--ContentPanel – поместите здесь дополнительное содержимое-->
-        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <TextBox Height="72" HorizontalAlignment="Left" Margin="0,84,0,0" Name="txtPassword" Text="password" VerticalAlignment="Top" Width="460" />
-            <TextBox Height="72" HorizontalAlignment="Left" Margin="0,6,0,0" Name="txtUsername" Text="username" VerticalAlignment="Top" Width="460" />
-            <Button Content="Log in" Height="72" Margin="12,162,6,0" Name="button1" VerticalAlignment="Top" Click="button1_Click" />
-        </Grid>
+        <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+            <TextBlock Text="Username" Style="{StaticResource PhoneTextTitle2Style}"/>
+            <TextBox Height="72" HorizontalAlignment="Stretch" Name="txtUsername" VerticalAlignment="Top" />
+            <TextBlock Text="Password" Style="{StaticResource PhoneTextTitle2Style}"/>
+            <PasswordBox Height="72" HorizontalAlignment="Stretch" Margin="0,5,0,0" Name="txtPassword" VerticalAlignment="Top" KeyDown="txtPassword_KeyDown" />
+            <Button Content="Log in" Height="72" Margin="0,5,0,0" Name="button1" VerticalAlignment="Top" Click="button1_Click" />
+        </StackPanel>
     </Grid>
  
     <!--Пример кода, иллюстрирующий использование ApplicationBar-->

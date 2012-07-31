@@ -1,9 +1,6 @@
 <MarketplaceDetails>
-  <SmallAppTile>
-  </SmallAppTile>
-  <LargeAppTile>
-  </LargeAppTile>
-  <PCAppTile>
-  </PCAppTile>
-  <ScreenShots>;;;;;;;;</ScreenShots>
+  <SmallAppTile>wp.fm.99.png</SmallAppTile>
+  <LargeAppTile>wp.fm.tile.png</LargeAppTile>
+  <PCAppTile>wp.fm.marketplace.png</PCAppTile>
+  <ScreenShots>info-night-at-the-opera.png;info-night-at-the-opera-tracks.png;info-pink-floyd.png;search-pink.png;user-info-recent-tracks.png;user-info-suggestions.png;;;</ScreenShots>
 </MarketplaceDetails>

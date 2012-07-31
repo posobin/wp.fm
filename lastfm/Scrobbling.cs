@@ -20,6 +20,7 @@ namespace lastfm
         public static void Scrobbles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             Scrobble();
+            Session.Scrobbles.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Scrobbling.Scrobbles_CollectionChanged);
         }
         public static void Scrobble()
         {

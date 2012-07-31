@@ -57,7 +57,6 @@ namespace lastfm
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
                 PhoneApplicationService.Current.ApplicationIdleDetectionMode = IdleDetectionMode.Disabled;
             }
-
             Session.Scrobbles.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Scrobbling.Scrobbles_CollectionChanged);
         }
 

@@ -25,20 +25,31 @@ namespace lastfm
             prog = new ProgressIndicator();
         }
 
-        private async void button1_Click(object sender, RoutedEventArgs e)
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            login();
+        }
+
+        private async void login()
         {
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Logging in...";
             SystemTray.SetProgressIndicator(this, prog);
 
-            try { Session.CurrentSession = await auth.authorize(txtUsername.Text, txtPassword.Text); }
+            try { Session.CurrentSession = await auth.authorize(txtUsername.Text, txtPassword.Password); }
             catch (TaskCanceledException) { }
 
             if (Session.CurrentSession != null)
                 NavigationService.GoBack();
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
+        }
+
+        private void txtPassword_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                login();
         }
     }
 }

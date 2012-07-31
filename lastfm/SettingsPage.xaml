@@ -24,7 +24,7 @@
 
         <!--TitlePanel содержит имя приложения и заголовок страницы-->
         <StackPanel x:Name="TitlePanel" Grid.Row="0" Margin="12,17,0,28">
-            <TextBlock x:Name="ApplicationTitle" Text="last.fm client for WP7" Style="{StaticResource PhoneTextNormalStyle}"/>
+            <TextBlock x:Name="ApplicationTitle" Text="wp.fm" Style="{StaticResource PhoneTextNormalStyle}"/>
             <TextBlock x:Name="PageTitle" Text="settings" Margin="9,-7,0,0" Style="{StaticResource PhoneTextTitle1Style}"/>
         </StackPanel>
         
@@ -32,6 +32,7 @@
         <!--ContentPanel – поместите здесь дополнительное содержимое-->
         <StackPanel x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
             <toolkit:ToggleSwitch Name="ScrobblingToggle" Content="Auto scrobbling" Checked="ScrobblingToggle_Checked" Unchecked="ScrobblingToggle_Unchecked" />
+            <TextBlock Padding="10,0" Text="If auto scrobbling is turned on application will continue scrobbling under locked screen and without internet connection" TextWrapping="Wrap"/>
             <toolkit:ToggleSwitch Name="SessionToggle" Content="Remember session?" Checked="SessionToggle_Checked" Unchecked="SessionToggle_Unchecked" />
         </StackPanel>
     </Grid>

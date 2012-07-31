@@ -21,6 +21,7 @@
         <shell:ApplicationBar x:Key="appbar_empty" IsVisible="True" Mode="Minimized">
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+                <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
         
@@ -31,6 +32,7 @@
             <shell:ApplicationBarIconButton IconUri="/appbar.user.png" Text="profile" Click="UserInfo" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+                <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
 
@@ -39,6 +41,7 @@
             <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+                <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
 
@@ -48,6 +51,7 @@
             <shell:ApplicationBarIconButton IconUri="/appbar.user.png" Text="profile" Click="UserInfo" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
+                <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>
             </shell:ApplicationBar.MenuItems>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.Resources>
@@ -55,7 +59,7 @@
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
-        <controls:Pivot x:Name="MainPivot" Title="last.fm scrobbler for WP7" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged">
+        <controls:Pivot x:Name="MainPivot" Title="wp.fm" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged">
             <controls:PivotItem Header="now playing">
                 <StackPanel>
                     <Image Name="AlbumCover" Source="/lastfm;component/NoImageBig.png" Height="350" />

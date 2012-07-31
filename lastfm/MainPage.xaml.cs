@@ -27,7 +27,6 @@ namespace lastfm
         ProgressIndicator prog = new ProgressIndicator();
         Song LastSong = null;
         DateTime LastSongBegan = default(DateTime);
-        private Song LastScrobbled;
         List<trackInfo> OfflineScrobble = new List<trackInfo>();
 
         public MainPage()
@@ -146,13 +145,7 @@ namespace lastfm
             prog.Text = "Scrobbling...";
             SystemTray.ProgressIndicator = prog;
             if (Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.SessionKey))
-            {
-                if (LastScrobbled != song && (songBegan + new TimeSpan(0, 0, 10) >= DateTime.Now - new TimeSpan(0, 0, song.Duration.Seconds)))
-                {
-                    Session.Scrobbles.Add(new trackInfo(song, songBegan));
-                    LastScrobbled = song;
-                }
-            }
+                Session.Scrobbles.Add(new trackInfo(song, songBegan));
             else
                 MessageBox.Show("Login to be able to use scrobbling");
             prog.IsIndeterminate = false;
@@ -265,6 +258,11 @@ namespace lastfm
         private void UserInfo(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/userInfoPage.xaml", UriKind.Relative));
+        }
+
+        private void LaunchAboutPage(object sender, EventArgs e)
+        {
+            this.NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));
         }
     }
 }

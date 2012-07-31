@@ -35,3 +35,4 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\l
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\wp.fm.icon.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\wp.fm.tile.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\SplashScreenImage.jpg
+C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\wp.fm.99.png
