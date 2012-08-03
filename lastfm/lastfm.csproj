@@ -71,29 +71,26 @@
     <Compile Include="AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="album.cs" />
-    <Compile Include="albumInfo.cs" />
-    <Compile Include="albumInfoPage.xaml.cs">
+    <Compile Include="API\album.cs" />
+    <Compile Include="Info classes and helpers\albumInfo.cs" />
+    <Compile Include="Info pages\albumInfoPage.xaml.cs">
       <DependentUpon>albumInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="artist.cs" />
-    <Compile Include="artistInfo.cs" />
-    <Compile Include="artistInfoPage.xaml.cs">
+    <Compile Include="API\artist.cs" />
+    <Compile Include="Info classes and helpers\artistInfo.cs" />
+    <Compile Include="Info pages\artistInfoPage.xaml.cs">
       <DependentUpon>artistInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="artistTopAlbumsPage.xaml.cs">
-      <DependentUpon>artistTopAlbumsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="auth.cs" />
-    <Compile Include="LinqToVisualTree.cs" />
-    <Compile Include="LastFmAPIException.cs" />
+    <Compile Include="API\auth.cs" />
+    <Compile Include="Utilities\LinqToVisualTree.cs" />
+    <Compile Include="Utilities\LastFmAPIException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scrobbling.cs" />
+    <Compile Include="Utilities\Scrobbling.cs" />
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
@@ -102,33 +99,33 @@
     <Compile Include="LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Md5.cs" />
+    <Compile Include="Utilities\Md5.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Request.cs" />
-    <Compile Include="RequestParameters.cs" />
+    <Compile Include="Requests\Request.cs" />
+    <Compile Include="Requests\RequestParameters.cs" />
     <Compile Include="SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="statistics.cs" />
-    <Compile Include="tag.cs" />
-    <Compile Include="tagInfo.cs" />
-    <Compile Include="tagInfoPage.xaml.cs">
+    <Compile Include="Info classes and helpers\statistics.cs" />
+    <Compile Include="API\tag.cs" />
+    <Compile Include="Info classes and helpers\tagInfo.cs" />
+    <Compile Include="Info pages\tagInfoPage.xaml.cs">
       <DependentUpon>tagInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="TiltEffect.cs" />
-    <Compile Include="track.cs" />
-    <Compile Include="trackInfo.cs" />
-    <Compile Include="trackInfoPage.xaml.cs">
+    <Compile Include="Utilities\TiltEffect.cs" />
+    <Compile Include="API\track.cs" />
+    <Compile Include="Info classes and helpers\trackInfo.cs" />
+    <Compile Include="Info pages\trackInfoPage.xaml.cs">
       <DependentUpon>trackInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="user.cs" />
-    <Compile Include="UserInfo.cs" />
-    <Compile Include="userInfoPage.xaml.cs">
+    <Compile Include="API\user.cs" />
+    <Compile Include="Info classes and helpers\UserInfo.cs" />
+    <Compile Include="Info pages\userInfoPage.xaml.cs">
       <DependentUpon>userInfoPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="utilities.cs" />
-    <Compile Include="WebBrowserHelper.cs" />
-    <Compile Include="xmlsanitizingstream.cs" />
+    <Compile Include="Utilities\utilities.cs" />
+    <Compile Include="Utilities\WebBrowserHelper.cs" />
+    <Compile Include="Utilities\xmlsanitizingstream.cs" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -139,15 +136,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="albumInfoPage.xaml">
+    <Page Include="Info pages\albumInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="artistInfoPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="artistTopAlbumsPage.xaml">
+    <Page Include="Info pages\artistInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -167,15 +160,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="tagInfoPage.xaml">
+    <Page Include="Info pages\tagInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="trackInfoPage.xaml">
+    <Page Include="Info pages\trackInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="userInfoPage.xaml">
+    <Page Include="Info pages\userInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -186,49 +179,53 @@
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="appbar.door.enter.png">
+    <Content Include="Icons\appbar.door.enter.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appbar.door.leave.png">
+    <Content Include="Icons\appbar.door.leave.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appbar.feature.search.rest.png">
+    <Content Include="Icons\appbar.feature.search.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appbar.upload.rest.png">
+    <Resource Include="Icons\appbar.heart.outline.png" />
+    <Resource Include="Icons\appbar.heart.png" />
+    <Resource Include="Icons\appbar.heartbreak.png" />
+    <Content Include="Icons\appbar.upload.rest.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="appbar.user.png">
+    <Content Include="Icons\appbar.user.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ApplicationIcon.png">
+    <Content Include="Icons\ApplicationIcon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Background.png">
+    <Content Include="Images\Background.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="NoImage.svg" />
-    <Content Include="SplashScreenImage.jpg">
+    <Content Include="Images\NoImage.svg" />
+    <Content Include="Images\SplashScreenImage.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ToDo.txt" />
-    <Content Include="wp.fm.99.png">
+    <Content Include="Icons\wp.fm.99.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wp.fm.icon.png">
+    <Content Include="Icons\wp.fm.icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="wp.fm.tile.png">
+    <Content Include="Icons\wp.fm.tile.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Resource Include="NoImageBig.png" />
+    <Resource Include="Images\NoImageBig.png" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="NoImage.png" />
+    <Resource Include="Images\NoImage.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

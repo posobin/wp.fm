@@ -26,10 +26,10 @@
         </shell:ApplicationBar>
         
         <shell:ApplicationBar x:Key="appbar_scrobble" IsVisible="True">
-            <shell:ApplicationBarIconButton IconUri="/appbar.upload.rest.png" Text="Scrobble" Click="ScrobbleClick" />
-            <shell:ApplicationBarIconButton IconUri="/appbar.door.leave.png" Text="log out" Click="Logout"/>
-            <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
-            <shell:ApplicationBarIconButton IconUri="/appbar.user.png" Text="profile" Click="UserInfo" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.upload.rest.png" Text="Scrobble" Click="ScrobbleClick" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.door.leave.png" Text="log out" Click="Logout"/>
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.user.png" Text="profile" Click="UserInfo" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
                 <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>
@@ -37,8 +37,8 @@
         </shell:ApplicationBar>
 
         <shell:ApplicationBar x:Key="appbar_login" IsVisible="True">
-            <shell:ApplicationBarIconButton IconUri="/appbar.door.enter.png" Text="log in" Click="Login" />
-            <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.door.enter.png" Text="log in" Click="Login" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.feature.search.rest.png" Text="search" Click="Search" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
                 <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>
@@ -46,9 +46,9 @@
         </shell:ApplicationBar>
 
         <shell:ApplicationBar x:Key="appbar_logout" IsVisible="True">
-            <shell:ApplicationBarIconButton IconUri="/appbar.door.leave.png" Text="log out" Click="Logout"/>
-            <shell:ApplicationBarIconButton IconUri="/appbar.feature.search.rest.png" Text="search" Click="Search" />
-            <shell:ApplicationBarIconButton IconUri="/appbar.user.png" Text="profile" Click="UserInfo" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.door.leave.png" Text="log out" Click="Logout"/>
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.feature.search.rest.png" Text="search" Click="Search" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.user.png" Text="profile" Click="UserInfo" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
                 <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>

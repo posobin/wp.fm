@@ -1,6 +1,3 @@
 ﻿- Add love button
-- Create folders in the project and sort files
-- Remove bug with selecting tag on trackInfoPage
 - Add infinite scrolling on info pages
-- Add limit on the userinfopage for scrolling
-- Add cool icons and splash screen
+- Add relative timing on the recent tracks tab on userInfoPage (like on twitter)

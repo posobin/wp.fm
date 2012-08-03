@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="728"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -16,7 +16,6 @@
     shell:SystemTray.IsVisible="False"
     Style="{StaticResource TransitionPageStyle}">
 
-    <!--LayoutRoot содержит корневую сетку, где размещается все содержимое страницы-->
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -27,15 +26,12 @@
             <HyperlinkButton Height="Auto" Content="{Binding Path=album.name}" Name="AlbumLink" Width="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Left" FontSize="28" />
         </StackPanel>
         <controls:Panorama Grid.Row="1" TitleTemplate="{StaticResource panoramaTitleSmall}"  Name="albumInfoPanorama">
-
-            <!--Первый элемент Panorama-->
             <controls:PanoramaItem Header="description">
                 <Grid>
                     <phone:WebBrowser Name="trackDescription" IsScriptEnabled="True" Opacity="0" Navigating="trackDescription_Navigating" Navigated="trackDescription_Navigated" ScriptNotify="ScriptNotify" />
                 </Grid>
             </controls:PanoramaItem>
 
-            <!--Второй элемент Panorama-->
             <controls:PanoramaItem Header="tags">
                 <Grid>
                     <ListBox Name="tagsLst" toolkit:TiltEffect.IsTiltEnabled="True" ItemsSource="{Binding Path=tags}" ItemTemplate="{StaticResource tagTemplate}" SelectionChanged="tagsLst_SelectionChanged" />
@@ -44,6 +40,11 @@
         </controls:Panorama>
     </Grid>
 
-    <!--Приложения на базе панорамы не должны содержать ApplicationBar-->
+    <!--Panorama-based applications should not show an ApplicationBar-->
+    <phone:PhoneApplicationPage.ApplicationBar>
+        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1.0" >
+
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

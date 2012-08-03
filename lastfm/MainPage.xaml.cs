@@ -257,7 +257,7 @@ namespace lastfm
 
         private void UserInfo(object sender, EventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("/userInfoPage.xaml", UriKind.Relative));
+            this.NavigationService.Navigate(new Uri("/Info pages/userInfoPage.xaml", UriKind.Relative));
         }
 
         private void LaunchAboutPage(object sender, EventArgs e)

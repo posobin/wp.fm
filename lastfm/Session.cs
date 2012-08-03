@@ -19,7 +19,7 @@ namespace lastfm
     public class Session
     {
         /// <summary>
-        /// Property saves to the IsolatedStorageSettings session
+        /// Last session
         /// </summary>
         public static Session CurrentSession
         { 
@@ -38,7 +38,7 @@ namespace lastfm
         }
 
         /// <summary>
-        /// Property saves to the IsolatedStorageSettings whether to save user info on exit or not
+        /// Whether to remember last session or not
         /// </summary>
         public static bool RememberSession 
         {
@@ -56,7 +56,7 @@ namespace lastfm
         }
 
         /// <summary>
-        /// Property saves to the IsolatedStorageSettings whether to scrobble new song after the song change or not
+        /// Whether to scrobble new song after the song change or not
         /// </summary>
         public static bool AutoScrobbling 
         { 
@@ -74,7 +74,7 @@ namespace lastfm
         }
 
         /// <summary>
-        /// List of all scrobbles that were not comleted. On each add/remove tracks in list are being scrobbled
+        /// List of all scrobbles that were not completed.
         /// </summary>
         public static ObservableCollection<trackInfo> Scrobbles
         {
@@ -116,7 +116,7 @@ namespace lastfm
         public string UserName { get; set; }
 
         /// <summary>
-        /// session key returned after authorization
+        /// Session key returned after authorization
         /// </summary>
         [DataMember]
         public string SessionKey { get; set; }

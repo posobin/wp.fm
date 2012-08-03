@@ -166,7 +166,7 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Info pages/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }
@@ -175,7 +175,7 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(((artistInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                NavigationService.Navigate(new Uri("/Info pages/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(((artistInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }

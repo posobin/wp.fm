@@ -60,22 +60,22 @@ namespace lastfm
             else if (str.EndsWith(" bbcode_artist"))
             {
                 navigateTo = str.Remove(str.Length - " bbcode_artist".Length).Split(new char[] { '/' }).Last();
-                navigateTo = "/artistInfoPage.xaml?artistName=" + navigateTo;
+                navigateTo = "/Info pages/artistInfoPage.xaml?artistName=" + navigateTo;
             }
             else if (str.EndsWith(" bbcode_tag"))
             {
                 navigateTo = str.Remove(str.Length - " bbcode_tag".Length).Split(new char[] { '/' }).Last();
-                navigateTo = "/tagInfoPage.xaml?tagName=" + navigateTo;
+                navigateTo = "/Info pages/tagInfoPage.xaml?tagName=" + navigateTo;
             }
             else if (str.EndsWith(" bbcode_album"))
             {
                 string[] lst = str.Remove(str.Length - " bbcode_album".Length).Split(new char[] { '/' });
-                navigateTo = "/albumInfoPage.xaml?albumName=" + lst.Last() + "&artistName=" + lst[lst.Length - 2];
+                navigateTo = "/Info pages/albumInfoPage.xaml?albumName=" + lst.Last() + "&artistName=" + lst[lst.Length - 2];
             }
             else if (str.EndsWith(" bbcode_track"))
             {
                 string[] lst = str.Remove(str.Length - " bbcode_track".Length).Split(new char[] { '/' });
-                navigateTo = "/trackInfoPage.xaml?trackName=" + lst.Last() + "&artistName=" + lst[lst.Length - 3];
+                navigateTo = "/Info pages/trackInfoPage.xaml?trackName=" + lst.Last() + "&artistName=" + lst[lst.Length - 3];
             }
             else
             {

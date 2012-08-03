@@ -99,7 +99,7 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                this.NavigationService.Navigate(new Uri("/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                this.NavigationService.Navigate(new Uri("/Info pages/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }
@@ -110,7 +110,7 @@ namespace lastfm
             {
                 trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
                 ((ListBox)sender).SelectedIndex = -1;
-                this.NavigationService.Navigate(new Uri("/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
+                this.NavigationService.Navigate(new Uri("/Info pages/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
             }
         }
     }

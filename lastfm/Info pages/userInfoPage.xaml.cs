@@ -185,7 +185,7 @@ namespace lastfm
             if (((ListBox)sender).SelectedIndex != -1)
             {
                 trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
-                this.NavigationService.Navigate(new Uri("/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
+                this.NavigationService.Navigate(new Uri("/Info pages/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }
@@ -195,7 +195,7 @@ namespace lastfm
             if (((ListBox)sender).SelectedIndex != -1)
             {
                 artistInfo selected = (artistInfo)((ListBox)sender).SelectedItem;
-                this.NavigationService.Navigate(new Uri("/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(selected.name), UriKind.Relative));
+                this.NavigationService.Navigate(new Uri("/Info pages/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(selected.name), UriKind.Relative));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }
