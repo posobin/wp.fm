@@ -85,8 +85,9 @@
       <DependentUpon>artistInfoPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="API\auth.cs" />
+    <Compile Include="Exceptions\UnauthorizedException.cs" />
     <Compile Include="Utilities\LinqToVisualTree.cs" />
-    <Compile Include="Utilities\LastFmAPIException.cs" />
+    <Compile Include="Exceptions\LastFmAPIException.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

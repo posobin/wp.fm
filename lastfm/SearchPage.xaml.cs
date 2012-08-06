@@ -30,6 +30,7 @@ namespace lastfm
     }
     public partial class SearchPage : PhoneApplicationPage
     {
+        private const int NOTHING_SELECTED_INDEX = -1;
         ObservableCollection<artistInfo> lstArtistResults = new ObservableCollection<artistInfo>();
         ObservableCollection<albumInfo> lstAlbumResults = new ObservableCollection<albumInfo>();
         ObservableCollection<trackInfo> lstTrackResults = new ObservableCollection<trackInfo>();
@@ -45,6 +46,11 @@ namespace lastfm
         private pair<int, int> albumNums = new pair<int, int>(0, 1);
         private pair<int, int> trackNums = new pair<int, int>(0, 1);
         private pair<int, int> tagNums = new pair<int, int>(0, 1);
+
+        enum PivotItem
+        {
+            First = 0, Artist = 0, Album = 1, Track = 2, Tag = 3, Last = 3
+        }
 
         bool HookedArtistScrolling = false;
         bool HookedAlbumScrolling = false;
@@ -76,32 +82,38 @@ namespace lastfm
                 NavigationContext.QueryString.TryGetValue("searchType", out searchType);
                 switch (searchType)
                 {
+                    case "artist":
+                        if (lstAlbumResults.Count == 0 || searchText != txtSearchBox.Text)
+                        {
+                            SearchPivot.SelectedIndex = (int)PivotItem.Artist;
+                            getArtistList(searchText);
+                        }
+                        break;
                     case "album":
                         if (lstAlbumResults.Count == 0 || searchText != txtSearchBox.Text)
                         {
-                            SearchPivot.SelectedIndex = 1;
+                            SearchPivot.SelectedIndex = (int)PivotItem.Album;
                             getAlbumList(searchText);
                         }
                         break;
                     case "track":
                         if (lstTrackResults.Count == 0 || searchText != txtSearchBox.Text)
                         {
-                            SearchPivot.SelectedIndex = 2;
+                            SearchPivot.SelectedIndex = (int)PivotItem.Track;
                             getTrackList(searchText);
                         }
                         break;
                     case "tag":
                         if (lstTagResults.Count == 0 || searchText != txtSearchBox.Text)
                         {
-                            SearchPivot.SelectedIndex = 3;
+                            SearchPivot.SelectedIndex = (int)PivotItem.Tag;
                             getTagList(searchText);
                         }
                         break;
-                    case "artist":
                     default:
                         if (lstTrackResults.Count == 0 || searchText != txtSearchBox.Text)
                         {
-                            SearchPivot.SelectedIndex = 0;
+                            SearchPivot.SelectedIndex = (int)PivotItem.Artist;
                             getArtistList(searchText);
                         }
                         break;
@@ -462,39 +474,41 @@ namespace lastfm
 
         private void artistResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (((ListBox)sender).SelectedIndex != -1)
+            if (((ListBox)sender).SelectedIndex != NOTHING_SELECTED_INDEX)
             {
-                NavigationService.Navigate(new Uri("/Info pages/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(((artistInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
-                ((ListBox)sender).SelectedIndex = -1;
+                artistInfo selectedArtist = ((ListBox)sender).SelectedItem as artistInfo;
+                NavigationService.Navigate(utilities.getArtistInfoPageUri(selectedArtist.name));
+                ((ListBox)sender).SelectedIndex = NOTHING_SELECTED_INDEX;
             }
         }
 
         private void albumResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (((ListBox)sender).SelectedIndex != -1)
+            if (((ListBox)sender).SelectedIndex != NOTHING_SELECTED_INDEX)
             {
-                albumInfo selected = (albumInfo)((ListBox)sender).SelectedItem;
-                this.NavigationService.Navigate(new Uri("/Info pages/albumInfoPage.xaml?albumName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artistName), UriKind.Relative));
-                ((ListBox)sender).SelectedIndex = -1;
+                albumInfo selectedAlbum = ((ListBox)sender).SelectedItem as albumInfo;
+                this.NavigationService.Navigate(utilities.getAlbumInfoPageUri(selectedAlbum.artistName, selectedAlbum.name));
+                ((ListBox)sender).SelectedIndex = NOTHING_SELECTED_INDEX;
             }
         }
 
         private void trackResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (((ListBox)sender).SelectedIndex != -1)
+            if (((ListBox)sender).SelectedIndex != NOTHING_SELECTED_INDEX)
             {
-                trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
-                this.NavigationService.Navigate(new Uri("/Info pages/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
-                ((ListBox)sender).SelectedIndex = -1;
+                trackInfo selectedTrack = (trackInfo)((ListBox)sender).SelectedItem;
+                this.NavigationService.Navigate(utilities.getTrackInfoPageUri(selectedTrack.artist.name, selectedTrack.name));
+                ((ListBox)sender).SelectedIndex = NOTHING_SELECTED_INDEX;
             }
         }
 
         private void tagResults_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (((ListBox)sender).SelectedIndex != -1)
+            if (((ListBox)sender).SelectedIndex != NOTHING_SELECTED_INDEX)
             {
-                this.NavigationService.Navigate(new Uri("/Info pages/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
-                ((ListBox)sender).SelectedIndex = -1;
+                tagInfo selectedTag = ((ListBox)sender).SelectedItem as tagInfo;
+                this.NavigationService.Navigate(utilities.getTagInfoPageUri(selectedTag.name));
+                ((ListBox)sender).SelectedIndex = NOTHING_SELECTED_INDEX;
             }
         }
 

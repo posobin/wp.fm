@@ -13,6 +13,8 @@ using System.Windows.Navigation;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using System.IO.IsolatedStorage;
+using System.IO;
 
 namespace lastfm
 {
@@ -116,6 +118,91 @@ namespace lastfm
                     return group;
 
             return null;
+        }
+
+        /// <summary>
+        /// Saves string to the file. If file does already exist, rewrites it.
+        /// </summary>
+        /// <param name="str">String to write to the file</param>
+        /// <param name="fileName">Name of the file. If not supplied, is temp.txt</param>
+        /// <returns>Name of the file</returns>
+        public static string SaveStringToFile(string str, string fileName = "temp.txt")
+        {
+            if (String.IsNullOrEmpty(fileName))
+                throw new ArgumentException("fileName cannot be empty", "fileName");
+            var store = IsolatedStorageFile.GetUserStoreForApplication();
+            using (var stream = new IsolatedStorageFileStream(fileName, FileMode.Create, FileAccess.Write, store))
+            {
+                using (var sw = new StreamWriter(stream))
+                    sw.Write(str);
+            }
+            return fileName;
+        }
+
+        /// <summary>
+        /// Constructs uri for navigating to the artist information page. Parameters should NOT be urlencoded.
+        /// </summary>
+        /// <param name="artistName">Artist name to load info for.</param>
+        /// <returns>Constructed uri</returns>
+        public static Uri getArtistInfoPageUri(string artistName)
+        {
+            string baseString= @"/Info pages/artistInfoPage.xaml";
+            if (string.IsNullOrEmpty(artistName))
+                throw new ArgumentException("artistName cannot be empty", "artistName");
+            return new Uri(string.Format("{0}?artistName={1}", baseString, HttpUtility.UrlEncode(artistName), UriKind.Relative);
+        }
+
+        /// <summary>
+        /// Constructs uri for navigating to the album information page. Parameters should NOT be urlencoded.
+        /// </summary>
+        /// <param name="artistName">Album's artist</param>
+        /// <param name="albumName">Album's name</param>
+        /// <returns>Constructed uri</returns>
+        public static Uri getAlbumInfoPageUri(string artistName, string albumName)
+        {
+            string baseString = @"/Info pages/albumInfoPage.xaml";
+            if (string.IsNullOrEmpty(artistName))
+                throw new ArgumentException("artistName cannot be empty", "artistName");
+            if (string.IsNullOrEmpty(albumName))
+                throw new ArgumentException("albumName cannot be empty", "albumName");
+            return new Uri(string.Format("{0}?artistName={1}&albumName={2}", 
+                                        baseString, 
+                                        HttpUtility.UrlEncode(artistName), 
+                                        HttpUtility.UrlEncode(albumName)), 
+                            UriKind.Relative);
+        }
+
+        /// <summary>
+        /// Constructs uri for navigating to the track information page. Parameters should NOT be urlencoded.
+        /// </summary>
+        /// <param name="artistName">Track's artist</param>
+        /// <param name="trackName">Track's name</param>
+        /// <returns>Constructed uri</returns>
+        public static Uri getTrackInfoPageUri(string artistName, string trackName)
+        {
+            string baseString = @"/Info pages/trackInfoPage.xaml";
+            if (string.IsNullOrEmpty(artistName))
+                throw new ArgumentException("artistName cannot be empty", "artistName");
+            if (string.IsNullOrEmpty(trackName))
+                throw new ArgumentException("trackName cannot be empty", "trackName");
+            return new Uri(string.Format("{0}?artistName={1}&albumName={2}",
+                                        baseString,
+                                        HttpUtility.UrlEncode(artistName),
+                                        HttpUtility.UrlEncode(trackName)),
+                            UriKind.Relative);
+        }
+
+        /// <summary>
+        /// Constructs uri for navigating to the tag information page. Parameters should NOT be urlencoded.
+        /// </summary>
+        /// <param name="tagName">Tag name</param>
+        /// <returns>Constructed uri</returns>
+        public static Uri getTagInfoPageUri(string tagName)
+        {
+            string baseString = @"/Info pages/tagInfoPage.xaml";
+            if (string.IsNullOrEmpty(tagName))
+                throw new ArgumentException("tagName connot be empty", "tagName");
+            return new Uri(string.Format("{0}?tagName={1}", baseString, tagName), UriKind.Relative);
         }
     }
 }
