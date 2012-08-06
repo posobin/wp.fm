@@ -44,28 +44,29 @@ namespace lastfm
 
         private async void getTrackInfo(string artistName, string trackName)
         {
+            // Notify user that request is being processed
             SystemTray.IsVisible = true;
             prog.IsVisible = true;
             prog.IsIndeterminate = true;
             prog.Text = "Loading...";
 
+            // Download track information
             try { currTrack = await track.getInfo(artistName, trackName); }
             catch (TaskCanceledException) { }
 
+            // Show track information to the user
             this.DataContext = currTrack;
 
-            //NavigateToString method works bad with encodings, that's why I am using this stuff
-            var store = IsolatedStorageFile.GetUserStoreForApplication();
-            using (var stream = new IsolatedStorageFileStream("track.html", FileMode.Create, FileAccess.Write, store))
-            {
-                using (var sw = new StreamWriter(stream))
-                    sw.Write(utilities.makeHtmlFromCdata(currTrack.description, currTrack.extralargeImage));
-            }
-            trackDescription.Navigate(new Uri("track.html", UriKind.Relative));
+            // Show track description
+            string descriptionFileName = utilities.SaveStringToFile(utilities.makeHtmlFromCdata(currTrack.description, currTrack.extralargeImage), "track.html");
+            trackDescription.Navigate(new Uri(descriptionFileName, UriKind.Relative));
 
+            // Add album link
             if (currTrack.album != null)
                 AlbumLink.NavigateUri = new Uri("/albumInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(artistName) +
                                                 "&albumName=" + HttpUtility.UrlEncode(currTrack.album.name), UriKind.Relative);
+
+            // Notify user that request has completed
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
             SystemTray.IsVisible = false;
@@ -105,6 +106,11 @@ namespace lastfm
                 this.NavigationService.Navigate(new Uri("/Info pages/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
                 ((ListBox)sender).SelectedIndex = -1;
             }
+        }
+
+        private void LoveOrUnlove(object sender, EventArgs e)
+        {
+
         }
     }
 }

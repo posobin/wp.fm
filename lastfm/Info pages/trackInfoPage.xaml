@@ -16,6 +16,16 @@
     shell:SystemTray.IsVisible="False"
     Style="{StaticResource TransitionPageStyle}">
 
+    <phone:PhoneApplicationPage.Resources>
+        <shell:ApplicationBar x:Name="loveAppbar" IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1.0" >
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.heart.png" Text="Love" Click="LoveOrUnlove"/>
+        </shell:ApplicationBar>
+        
+        <shell:ApplicationBar x:Name="unloveAppbar" IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1.0" >
+            <shell:ApplicationBarIconButton IconUri="/Icons/apbar.heart.outline.png" Text="Unlove" Click="LoveOrUnlove"/>
+        </shell:ApplicationBar>
+    </phone:PhoneApplicationPage.Resources>
+    
     <Grid x:Name="LayoutRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -43,7 +53,7 @@
     <!--Panorama-based applications should not show an ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1.0" >
-
+            
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.ApplicationBar>
 

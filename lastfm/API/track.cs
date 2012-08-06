@@ -140,5 +140,33 @@ namespace lastfm
             if (Request.CheckStatus(returnedXml) != 0)
                 throw new LastFmAPIException(returnedXml);
         }
+
+        public static async void love(string trackName, string artistName)
+        {
+            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+                throw new UnauthorizedException("User must login to perform this action");
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("method", "track.love");
+            rParams.Add("artist", artistName);
+            rParams.Add("track", trackName);
+            rParams.Add("sk", Session.CurrentSession.SessionKey);
+            XDocument returnedXml = await Request.MakeRequest(rParams, true);
+            if (Request.CheckStatus(returnedXml) != null)
+                throw new LastFmAPIException(returnedXml);
+        }
+
+        public static async void unlove(string trackName, string artistName)
+        {
+            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+                throw new UnauthorizedException("User must login to perform this action");
+            RequestParameters rParams = new RequestParameters();
+            rParams.Add("method", "track.love");
+            rParams.Add("artist", artistName);
+            rParams.Add("track", trackName);
+            rParams.Add("sk", Session.CurrentSession.SessionKey);
+            XDocument returnedXml = await Request.MakeRequest(rParams, true);
+            if (Request.CheckStatus(returnedXml) != null)
+                throw new LastFmAPIException(returnedXml);
+        }
     }
 }

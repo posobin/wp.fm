@@ -62,7 +62,7 @@
         <controls:Pivot x:Name="MainPivot" Title="wp.fm" Margin="1,0,-1,0" SelectionChanged="Pivot_SelectionChanged">
             <controls:PivotItem Header="now playing">
                 <StackPanel>
-                    <Image Name="AlbumCover" Source="/lastfm;component/NoImageBig.png" Height="350" />
+                    <Image Name="AlbumCover" Source="/lastfm;component/Images/NoImageBig.png" Height="350" />
                     <HyperlinkButton Name="SongTitle" FontSize="40" HorizontalContentAlignment="Left" />
                     <HyperlinkButton Name="AlbumName" FontSize="32" HorizontalContentAlignment="Left" />
                     <HyperlinkButton Name="ArtistName" HorizontalContentAlignment="Left" />

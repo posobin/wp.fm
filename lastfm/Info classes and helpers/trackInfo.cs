@@ -25,6 +25,8 @@ namespace lastfm
         public string id { get; set; }
         public int duration { get; set; } //in milliseconds
         public int position { get; set; } //track number in album
+        public int playcount { get; set; }
+        public bool userloved { get; set; }
         public Uri url { get; set; }
         public Uri smallImage { get; set; }
         public Uri mediumImage { get; set; }
@@ -53,6 +55,15 @@ namespace lastfm
                 this.artist = new artistInfo(element.Element("artist"));
             if (element.Element("toptags") != null)
                 this.tags = new List<tagInfo>(from el in element.Element("toptags").Elements() select new tagInfo(el));
+            if (element.Element("playcount") != null)
+                playcount = Int32.Parse(element.Element("playcount").Value);
+            if (element.Element("userloved") != null)
+            {
+                if (element.Element("userloved").Value == "1")
+                    userloved = true;
+                else
+                    userloved = false;
+            }
             if (element.Element("wiki") != null && element.Element("wiki").Element("content") != null)
             {
                 XCData cdata = element.Element("wiki").Element("content").DescendantNodes().OfType<XCData>().First();

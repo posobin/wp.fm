@@ -118,7 +118,7 @@ namespace lastfm
                 SongTitle.Content = "Nothing is playing";
                 AlbumName.Content = "";
                 ArtistName.Content = "";
-                AlbumCover.Source = new BitmapImage(new Uri("NoImageBig.png", UriKind.Relative));
+                AlbumCover.Source = new BitmapImage(new Uri("/Images/NoImageBig.png", UriKind.Relative));
             }
         }
 
