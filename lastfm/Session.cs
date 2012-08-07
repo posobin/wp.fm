@@ -126,5 +126,16 @@ namespace lastfm
             SessionKey = skey;
             UserName = userName;
         }
+
+        /// <summary>
+        /// Checks whether current session key can be used or not (without connecting to the internet)
+        /// </summary>
+        /// <returns>True if current session key can be used. False otherwise.</returns>
+        public static bool CanUseCurrentSession()
+        {
+            if (Session.CurrentSession == null || String.IsNullOrEmpty(Session.CurrentSession.SessionKey))
+                return false;
+            return true;
+        }
     }
 }

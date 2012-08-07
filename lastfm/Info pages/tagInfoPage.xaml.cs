@@ -68,9 +68,9 @@ namespace lastfm
         {
             if (!string.IsNullOrEmpty(e.Value))
             {
-                string navigateTo = utilities.processBBcodeLink(e.Value);
-                if (navigateTo != "")
-                    NavigationService.Navigate(new Uri(navigateTo, UriKind.Relative));
+                Uri navigateTo = utilities.processBBcodeLink(e.Value);
+                if (navigateTo != null)
+                    NavigationService.Navigate(navigateTo);
             }
         }
 

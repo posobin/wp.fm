@@ -36,9 +36,9 @@ namespace lastfm
         {
             if (!string.IsNullOrEmpty(e.Value))
             {
-                string navigateTo = utilities.processBBcodeLink(e.Value);
-                if (navigateTo != "")
-                    NavigationService.Navigate(new Uri(navigateTo, UriKind.Relative));
+                Uri navigateTo = utilities.processBBcodeLink(e.Value);
+                if (navigateTo != null)
+                    NavigationService.Navigate(navigateTo);
             }
         }
 
@@ -51,25 +51,47 @@ namespace lastfm
             prog.Text = "Loading...";
 
             // Download track information
-            try { currTrack = await track.getInfo(artistName, trackName); }
+            try 
+            {
+                if (Session.CanUseCurrentSession())
+                    currTrack = await track.getInfo(artistName, trackName, Session.CurrentSession.UserName); 
+                else
+                    currTrack = await track.getInfo(artistName, trackName); 
+            }
             catch (TaskCanceledException) { }
 
             // Show track information to the user
             this.DataContext = currTrack;
 
             // Show track description
-            string descriptionFileName = utilities.SaveStringToFile(utilities.makeHtmlFromCdata(currTrack.description, currTrack.extralargeImage), "track.html");
+            string htmlDescription = utilities.makeHtmlFromCdata(currTrack.description, currTrack.extralargeImage);
+            string descriptionFileName = utilities.SaveStringToFile(htmlDescription, "track.html");
             trackDescription.Navigate(new Uri(descriptionFileName, UriKind.Relative));
 
             // Add album link
             if (currTrack.album != null)
-                AlbumLink.NavigateUri = new Uri("/albumInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(artistName) +
-                                                "&albumName=" + HttpUtility.UrlEncode(currTrack.album.name), UriKind.Relative);
+                AlbumLink.NavigateUri = utilities.getAlbumInfoPageUri(artistName, currTrack.album.name);
 
-            // Notify user that request has completed
+            UpdateAppbar();
+
+            // Notify user that request was completed
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
             SystemTray.IsVisible = false;
+        }
+
+        private void UpdateAppbar()
+        {
+            // Show love/unlove button if user is logined
+            if (Session.CanUseCurrentSession())
+            {
+                if (currTrack.userloved == trackInfo.LoveState.Loved)
+                    this.ApplicationBar = this.Resources["unloveAppbar"] as ApplicationBar;
+                else if (currTrack.userloved == trackInfo.LoveState.Unloved)
+                    this.ApplicationBar = this.Resources["loveAppbar"] as ApplicationBar;
+            }
+            else // Else don't show appbar
+                this.ApplicationBar.IsVisible = false;
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -81,7 +103,7 @@ namespace lastfm
                 this.NavigationContext.QueryString.TryGetValue("artistName", out artistName) &&
                 (!string.Equals(albumInfoPanorama.Title, trackName) || !string.Equals(ArtistLink.Content, artistName)))
             {
-                ArtistLink.NavigateUri = new Uri("/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(artistName), UriKind.Relative);
+                ArtistLink.NavigateUri = utilities.getArtistInfoPageUri(artistName);
                 ArtistLink.Content = artistName;
                 albumInfoPanorama.Title = trackName;
                 getTrackInfo(artistName, trackName);
@@ -103,14 +125,32 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                this.NavigationService.Navigate(new Uri("/Info pages/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                tagInfo selectedTag = ((ListBox)sender).SelectedItem as tagInfo;
+                this.NavigationService.Navigate(utilities.getTagInfoPageUri(selectedTag.name));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }
 
         private void LoveOrUnlove(object sender, EventArgs e)
         {
-
+            // If track is loved send unlove request
+            if (currTrack.userloved == trackInfo.LoveState.Loved)
+                track.unlove(currTrack.name, currTrack.artist.name);
+            // Else send love request
+            else
+                track.love(currTrack.name, currTrack.artist.name);
+            // Change loved state of the track
+            switch (currTrack.userloved)
+            {
+                case trackInfo.LoveState.Loved:
+                    currTrack.userloved = trackInfo.LoveState.Unloved;
+                    break;
+                case trackInfo.LoveState.Unloved:
+                    currTrack.userloved = trackInfo.LoveState.Loved;
+                    break;
+            }
+            // Update appbar
+            UpdateAppbar();
         }
     }
 }

@@ -36,9 +36,9 @@ namespace lastfm
         {
             if (!string.IsNullOrEmpty(e.Value))
             {
-                string navigateTo = utilities.processBBcodeLink(e.Value);
-                if (navigateTo != "")
-                    NavigationService.Navigate(new Uri(navigateTo, UriKind.Relative));
+                Uri navigateTo = utilities.processBBcodeLink(e.Value);
+                if (navigateTo != null)
+                    NavigationService.Navigate(navigateTo);
             }
         }
 
@@ -77,7 +77,7 @@ namespace lastfm
                 this.NavigationContext.QueryString.TryGetValue("artistName", out artistName) && 
                 (!string.Equals(albumInfoPanorama.Title, albumName) || !string.Equals(ArtistLink.Content, artistName)))
             {
-                ArtistLink.NavigateUri = new Uri("/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(artistName), UriKind.Relative);
+                ArtistLink.NavigateUri = utilities.getArtistInfoPageUri(artistName);
                 albumInfoPanorama.Title = albumName;
                 ArtistLink.Content = artistName;
                 getAlbumInfo(artistName, albumName);
@@ -99,7 +99,8 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                this.NavigationService.Navigate(new Uri("/Info pages/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                tagInfo selectedTag = ((ListBox)sender).SelectedItem as tagInfo;
+                this.NavigationService.Navigate(utilities.getTagInfoPageUri(selectedTag.name));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }
@@ -108,9 +109,9 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
+                trackInfo selectedTrack = (trackInfo)((ListBox)sender).SelectedItem;
+                this.NavigationService.Navigate(utilities.getTrackInfoPageUri(selectedTrack.artist.name, selectedTrack.name));
                 ((ListBox)sender).SelectedIndex = -1;
-                this.NavigationService.Navigate(new Uri("/Info pages/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
             }
         }
     }

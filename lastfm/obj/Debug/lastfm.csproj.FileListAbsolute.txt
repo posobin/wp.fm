@@ -37,3 +37,46 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\w
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\SplashScreenImage.jpg
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\Bin\Debug\wp.fm.99.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\lastfm\lastfm\obj\Debug\AboutPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.door.enter.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.door.leave.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.feature.search.rest.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.heart.outline.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.heart.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.heartbreak.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.upload.rest.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.user.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\ApplicationIcon.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Images\Background.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Images\SplashScreenImage.jpg
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\wp.fm.99.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\wp.fm.icon.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\wp.fm.tile.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Images\NoImageBig.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Images\NoImage.png
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\lastfm.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\lastfm.pdb
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\AppManifest.xaml
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\lastfm.xap
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\AsyncCtpLibrary_Phone.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Microsoft.Phone.Controls.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Microsoft.Phone.Controls.Toolkit.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\AsyncCtpLibrary_Phone.xml
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Microsoft.Phone.Controls.xml
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Microsoft.Phone.Controls.Toolkit.pdb
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Microsoft.Phone.Controls.Toolkit.xml
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\App.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\AboutPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\Info pages\albumInfoPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\Info pages\artistInfoPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\LoginPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\MainPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\SearchPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\SettingsPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\Info pages\tagInfoPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\Info pages\trackInfoPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\Info pages\userInfoPage.g.i.cs
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\lastfm.g.resources
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\lastfm.dll
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\lastfm.pdb
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\XapCacheFile.xml

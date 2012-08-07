@@ -50,9 +50,9 @@ namespace lastfm
             return ret;
         }
 
-        public static string processBBcodeLink(string str)
+        public static Uri processBBcodeLink(string str)
         {
-            string navigateTo = "";
+            Uri navigateTo = null;
             if (str.EndsWith(" "))
             {
                 WebBrowserTask browser = new WebBrowserTask();
@@ -61,23 +61,29 @@ namespace lastfm
             }
             else if (str.EndsWith(" bbcode_artist"))
             {
-                navigateTo = str.Remove(str.Length - " bbcode_artist".Length).Split(new char[] { '/' }).Last();
-                navigateTo = "/Info pages/artistInfoPage.xaml?artistName=" + navigateTo;
+                string artistName = str.Remove(str.Length - " bbcode_artist".Length).Split(new char[] { '/' }).Last();
+                artistName = HttpUtility.UrlDecode(artistName);
+                navigateTo = utilities.getArtistInfoPageUri(artistName);
             }
             else if (str.EndsWith(" bbcode_tag"))
             {
-                navigateTo = str.Remove(str.Length - " bbcode_tag".Length).Split(new char[] { '/' }).Last();
-                navigateTo = "/Info pages/tagInfoPage.xaml?tagName=" + navigateTo;
+                string tagName = str.Remove(str.Length - " bbcode_tag".Length).Split(new char[] { '/' }).Last();
+                tagName = HttpUtility.UrlDecode(tagName);
+                navigateTo = utilities.getTagInfoPageUri(tagName);
             }
             else if (str.EndsWith(" bbcode_album"))
             {
                 string[] lst = str.Remove(str.Length - " bbcode_album".Length).Split(new char[] { '/' });
-                navigateTo = "/Info pages/albumInfoPage.xaml?albumName=" + lst.Last() + "&artistName=" + lst[lst.Length - 2];
+                string artistName = HttpUtility.UrlDecode(lst[lst.Length - 2]);
+                string albumName = HttpUtility.UrlDecode(lst[lst.Length - 1]);
+                navigateTo = utilities.getAlbumInfoPageUri(artistName, albumName);
             }
             else if (str.EndsWith(" bbcode_track"))
             {
                 string[] lst = str.Remove(str.Length - " bbcode_track".Length).Split(new char[] { '/' });
-                navigateTo = "/Info pages/trackInfoPage.xaml?trackName=" + lst.Last() + "&artistName=" + lst[lst.Length - 3];
+                string artistName = HttpUtility.UrlDecode(lst[lst.Length - 3]);
+                string trackName = HttpUtility.UrlDecode(lst[lst.Length - 1]);
+                navigateTo = utilities.getTrackInfoPageUri(artistName, trackName);
             }
             else
             {
@@ -149,7 +155,7 @@ namespace lastfm
             string baseString= @"/Info pages/artistInfoPage.xaml";
             if (string.IsNullOrEmpty(artistName))
                 throw new ArgumentException("artistName cannot be empty", "artistName");
-            return new Uri(string.Format("{0}?artistName={1}", baseString, HttpUtility.UrlEncode(artistName), UriKind.Relative);
+            return new Uri(string.Format("{0}?artistName={1}", baseString, HttpUtility.UrlEncode(artistName)), UriKind.Relative);
         }
 
         /// <summary>
@@ -185,7 +191,7 @@ namespace lastfm
                 throw new ArgumentException("artistName cannot be empty", "artistName");
             if (string.IsNullOrEmpty(trackName))
                 throw new ArgumentException("trackName cannot be empty", "trackName");
-            return new Uri(string.Format("{0}?artistName={1}&albumName={2}",
+            return new Uri(string.Format("{0}?artistName={1}&trackName={2}",
                                         baseString,
                                         HttpUtility.UrlEncode(artistName),
                                         HttpUtility.UrlEncode(trackName)),

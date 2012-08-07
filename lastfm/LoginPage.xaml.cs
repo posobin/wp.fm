@@ -40,7 +40,7 @@ namespace lastfm
             try { Session.CurrentSession = await auth.authorize(txtUsername.Text, txtPassword.Password); }
             catch (TaskCanceledException) { }
 
-            if (Session.CurrentSession != null)
+            if (Session.CanUseCurrentSession())
                 NavigationService.GoBack();
             prog.IsIndeterminate = false;
             prog.IsVisible = false;

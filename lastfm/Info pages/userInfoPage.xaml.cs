@@ -121,7 +121,7 @@ namespace lastfm
         {
             base.OnNavigatedTo(e);
             InfoGrid.Visibility = Visibility.Collapsed;
-            if (Session.CurrentSession != null && Session.CurrentSession.UserName != null)
+            if (Session.CanUseCurrentSession())
             {
                 UpdateUser();
                 InfoGrid.DataContext = currUser;
@@ -184,8 +184,8 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                trackInfo selected = (trackInfo)((ListBox)sender).SelectedItem;
-                this.NavigationService.Navigate(new Uri("/Info pages/trackInfoPage.xaml?trackName=" + HttpUtility.UrlEncode(selected.name) + "&artistName=" + HttpUtility.UrlEncode(selected.artist.name), UriKind.Relative));
+                trackInfo selectedTrack = ((ListBox)sender).SelectedItem as trackInfo;
+                this.NavigationService.Navigate(utilities.getTrackInfoPageUri(selectedTrack.artist.name, selectedTrack.name));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }
@@ -194,8 +194,8 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                artistInfo selected = (artistInfo)((ListBox)sender).SelectedItem;
-                this.NavigationService.Navigate(new Uri("/Info pages/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(selected.name), UriKind.Relative));
+                artistInfo selectedArtist = ((ListBox)sender).SelectedItem as artistInfo;
+                this.NavigationService.Navigate(utilities.getArtistInfoPageUri(selectedArtist.name));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }

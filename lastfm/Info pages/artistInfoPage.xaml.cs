@@ -108,9 +108,9 @@ namespace lastfm
         {
             if (!string.IsNullOrEmpty(e.Value))
             {
-                string navigateTo = utilities.processBBcodeLink(e.Value);
-                if (navigateTo != "")
-                    NavigationService.Navigate(new Uri(navigateTo, UriKind.Relative));
+                Uri navigateTo = utilities.processBBcodeLink(e.Value);
+                if (navigateTo != null)
+                    NavigationService.Navigate(navigateTo);
             }
         }
 
@@ -166,7 +166,8 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                NavigationService.Navigate(new Uri("/Info pages/tagInfoPage.xaml?tagName=" + HttpUtility.UrlEncode(((tagInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                tagInfo selectedTag = ((ListBox)sender).SelectedItem as tagInfo;
+                NavigationService.Navigate(utilities.getTagInfoPageUri(selectedTag.name));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }
@@ -175,7 +176,8 @@ namespace lastfm
         {
             if (((ListBox)sender).SelectedIndex != -1)
             {
-                NavigationService.Navigate(new Uri("/Info pages/artistInfoPage.xaml?artistName=" + HttpUtility.UrlEncode(((artistInfo)((ListBox)sender).SelectedItem).name), UriKind.Relative));
+                artistInfo selectedArtist = ((ListBox)sender).SelectedItem as artistInfo;
+                NavigationService.Navigate(utilities.getArtistInfoPageUri(selectedArtist.name));
                 ((ListBox)sender).SelectedIndex = -1;
             }
         }

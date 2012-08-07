@@ -82,7 +82,7 @@ namespace lastfm
         /// <param name="timestamp"> DateTime object representing when track was played </param>
         public static async void scrobble(string artistName, string trackName, DateTime timestamp = default(DateTime))
         {
-            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+            if (!Session.CanUseCurrentSession())
                 MessageBox.Show("This service requires authentication");
             int timeStamp;
             if (timestamp != default(DateTime) && timestamp != null)
@@ -102,7 +102,7 @@ namespace lastfm
 
         public static async void scrobble(List<trackInfo> tracks)
         {
-            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+            if (!Session.CanUseCurrentSession())
                 MessageBox.Show("This service requires authentication");
             if (tracks.Count > 50)
                 throw new ArgumentOutOfRangeException("tracks", "Number of elements in the list must not exceed 50");
@@ -127,7 +127,7 @@ namespace lastfm
 
         public static async void updateNowPlaying(string artistName, string trackName, string albumName = null)
         {
-            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+            if (!Session.CanUseCurrentSession())
                 MessageBox.Show("This service requires authentication");
             RequestParameters rParams = new RequestParameters();
             rParams.Add("method", "track.updateNowPlaying");
@@ -143,7 +143,7 @@ namespace lastfm
 
         public static async void love(string trackName, string artistName)
         {
-            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+            if (!Session.CanUseCurrentSession())
                 throw new UnauthorizedException("User must login to perform this action");
             RequestParameters rParams = new RequestParameters();
             rParams.Add("method", "track.love");
@@ -151,21 +151,21 @@ namespace lastfm
             rParams.Add("track", trackName);
             rParams.Add("sk", Session.CurrentSession.SessionKey);
             XDocument returnedXml = await Request.MakeRequest(rParams, true);
-            if (Request.CheckStatus(returnedXml) != null)
+            if (Request.CheckStatus(returnedXml) != 0)
                 throw new LastFmAPIException(returnedXml);
         }
 
         public static async void unlove(string trackName, string artistName)
         {
-            if (Session.CurrentSession == null || Session.CurrentSession.SessionKey == null)
+            if (!Session.CanUseCurrentSession())
                 throw new UnauthorizedException("User must login to perform this action");
             RequestParameters rParams = new RequestParameters();
-            rParams.Add("method", "track.love");
+            rParams.Add("method", "track.unlove");
             rParams.Add("artist", artistName);
             rParams.Add("track", trackName);
             rParams.Add("sk", Session.CurrentSession.SessionKey);
             XDocument returnedXml = await Request.MakeRequest(rParams, true);
-            if (Request.CheckStatus(returnedXml) != null)
+            if (Request.CheckStatus(returnedXml) != 0)
                 throw new LastFmAPIException(returnedXml);
         }
     }

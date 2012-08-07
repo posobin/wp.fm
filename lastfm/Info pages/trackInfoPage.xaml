@@ -8,7 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:toolkit="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone.Controls.Toolkit"
-    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="728"
+    mc:Ignorable="d" d:DesignWidth="480" d:DesignHeight="800"
     FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
@@ -22,7 +22,7 @@
         </shell:ApplicationBar>
         
         <shell:ApplicationBar x:Name="unloveAppbar" IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1.0" >
-            <shell:ApplicationBarIconButton IconUri="/Icons/apbar.heart.outline.png" Text="Unlove" Click="LoveOrUnlove"/>
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.heart.outline.png" Text="Unlove" Click="LoveOrUnlove"/>
         </shell:ApplicationBar>
     </phone:PhoneApplicationPage.Resources>
     
@@ -51,10 +51,5 @@
     </Grid>
 
     <!--Panorama-based applications should not show an ApplicationBar-->
-    <phone:PhoneApplicationPage.ApplicationBar>
-        <shell:ApplicationBar IsVisible="True" IsMenuEnabled="True" Mode="Minimized" Opacity="1.0" >
-            
-        </shell:ApplicationBar>
-    </phone:PhoneApplicationPage.ApplicationBar>
 
 </phone:PhoneApplicationPage>

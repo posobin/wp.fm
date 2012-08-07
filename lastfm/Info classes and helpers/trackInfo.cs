@@ -17,6 +17,8 @@ namespace lastfm
 {
     public class trackInfo
     {
+        public enum LoveState
+        { Unloved = 0, Loved = 1 }
         public string name { get; set; }
         public artistInfo artist { get; set; }
         public albumInfo album { get; set; }
@@ -26,7 +28,7 @@ namespace lastfm
         public int duration { get; set; } //in milliseconds
         public int position { get; set; } //track number in album
         public int playcount { get; set; }
-        public bool userloved { get; set; }
+        public LoveState userloved { get; set; }
         public Uri url { get; set; }
         public Uri smallImage { get; set; }
         public Uri mediumImage { get; set; }
@@ -60,10 +62,12 @@ namespace lastfm
             if (element.Element("userloved") != null)
             {
                 if (element.Element("userloved").Value == "1")
-                    userloved = true;
+                    userloved = LoveState.Loved;
                 else
-                    userloved = false;
+                    userloved = LoveState.Unloved;
             }
+            else
+                userloved = LoveState.Unloved;
             if (element.Element("wiki") != null && element.Element("wiki").Element("content") != null)
             {
                 XCData cdata = element.Element("wiki").Element("content").DescendantNodes().OfType<XCData>().First();

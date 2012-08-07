@@ -144,7 +144,7 @@ namespace lastfm
             prog.IsVisible = true;
             prog.Text = "Scrobbling...";
             SystemTray.ProgressIndicator = prog;
-            if (Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.SessionKey))
+            if (Session.CanUseCurrentSession())
                 Session.Scrobbles.Add(new trackInfo(song, songBegan));
             else
                 MessageBox.Show("Login to be able to use scrobbling");
@@ -162,7 +162,7 @@ namespace lastfm
             prog.IsVisible = true;
             prog.Text = "Updating now playing...";
             SystemTray.ProgressIndicator = prog;
-            if (Session.CurrentSession != null && !String.IsNullOrEmpty(Session.CurrentSession.SessionKey))
+            if (Session.CanUseCurrentSession())
                 if (NowPlaying != null)
                 {
                     try { track.updateNowPlaying(NowPlaying.Artist.Name, NowPlaying.Name, NowPlaying.Album.Name); }
@@ -221,14 +221,14 @@ namespace lastfm
                 switch (((Pivot)MainPivot).SelectedIndex)
                 {
                     case 0:
-                        if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
+                        if (Session.CanUseCurrentSession())
                             ApplicationBar = this.Resources["appbar_scrobble"] as ApplicationBar;
                         else
                             ApplicationBar = this.Resources["appbar_login"] as ApplicationBar;
                         ApplicationBar.IsVisible = true;
                         break;
                     default:
-                        if (Session.CurrentSession != null && Session.CurrentSession.SessionKey != null)
+                        if (Session.CanUseCurrentSession())
                             ApplicationBar = this.Resources["appbar_logout"] as ApplicationBar;
                         else
                             ApplicationBar = this.Resources["appbar_login"] as ApplicationBar;
