@@ -27,12 +27,12 @@ namespace lastfm
         ProgressIndicator prog = new ProgressIndicator();
         Song LastSong = null;
         DateTime LastSongBegan = default(DateTime);
-        List<trackInfo> OfflineScrobble = new List<trackInfo>();
 
         public MainPage()
         {
             InitializeComponent();
 
+            // Add timer for ActiveSongChanged and MediaStateChanged
             DispatcherTimer dt = new DispatcherTimer();
             dt.Interval = TimeSpan.FromMilliseconds(33);
             dt.Tick += delegate { try { FrameworkDispatcher.Update(); } catch { } };
@@ -49,11 +49,14 @@ namespace lastfm
         /// </summary>
         void ActiveSongChanged(object sender, EventArgs e)
         {
+            // Update info about now playing song
             UpdateNowPlayingPivot();
             if (Session.AutoScrobbling == true)
             {
                 if (NetworkInterface.GetIsNetworkAvailable())
                 {
+                    // Scrobble song that ended playing 
+                    // Last.fm recommends scrobbling at the end of the song
                     if (LastSong != null)
                     {
                         Scrobble(LastSong, LastSongBegan);
@@ -100,25 +103,32 @@ namespace lastfm
             Song NowPlaying = MediaPlayer.Queue.ActiveSong;
             if (NowPlaying != null)
             {
+                // Show song title
                 SongTitle.Content = NowPlaying.Name;
                 SongTitle.NavigateUri = new Uri("/SearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Name) + "&searchType=track", UriKind.Relative);
+                // Show album title
                 AlbumName.Content = NowPlaying.Album.Name;
                 AlbumName.NavigateUri = new Uri("/SearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Album.Name) + "&searchType=album", UriKind.Relative);
+                // Show artist name
                 ArtistName.Content = NowPlaying.Artist.Name;
                 ArtistName.NavigateUri = new Uri("/SearchPage.xaml?searchText=" + HttpUtility.UrlEncode(NowPlaying.Artist.Name) + "&searchType=artist", UriKind.Relative);
+                // If album has image then show it
                 if (NowPlaying.Album.HasArt == true)
                 {
                     BitmapImage AlbumImage = new BitmapImage();
                     AlbumImage.SetSource(NowPlaying.Album.GetAlbumArt());
                     AlbumCover.Source = AlbumImage;
                 }
+                // Else show that album has no image
+                else
+                    AlbumCover.Source = new BitmapImage(utilities.NoImageBig);
             }
             else
             {
                 SongTitle.Content = "Nothing is playing";
                 AlbumName.Content = "";
                 ArtistName.Content = "";
-                AlbumCover.Source = new BitmapImage(new Uri("/Images/NoImageBig.png", UriKind.Relative));
+                AlbumCover.Source = new BitmapImage(utilities.NoImageBig);
             }
         }
 
@@ -140,14 +150,18 @@ namespace lastfm
                 throw new ArgumentNullException("song");
             if (songBegan == null)
                 throw new ArgumentNullException("songBegan");
+            // Notify user that request is being processed
             prog.IsIndeterminate = true;
             prog.IsVisible = true;
             prog.Text = "Scrobbling...";
             SystemTray.ProgressIndicator = prog;
+            // If current session is valid, add song to list of the unscrobbled songs
             if (Session.CanUseCurrentSession())
                 Session.Scrobbles.Add(new trackInfo(song, songBegan));
+            // Else notify user that he must be logined
             else
                 MessageBox.Show("Login to be able to use scrobbling");
+            // Show that request has completed
             prog.IsIndeterminate = false;
             prog.IsVisible = false;
         }
@@ -248,18 +262,24 @@ namespace lastfm
         }
 
         /// <summary>
-        /// Navigates user to the settings page
+        /// Navigates to the settings page
         /// </summary>
         private void LaunchSettingsPage(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/SettingsPage.xaml", UriKind.Relative));
         }
 
-        private void UserInfo(object sender, EventArgs e)
+        /// <summary>
+        /// Navigates to the user info page
+        /// </summary>
+        private void LaunchUserInfoPage(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/Info pages/userInfoPage.xaml", UriKind.Relative));
         }
 
+        /// <summary>
+        /// Navigates to the about page
+        /// </summary>
         private void LaunchAboutPage(object sender, EventArgs e)
         {
             this.NavigationService.Navigate(new Uri("/AboutPage.xaml", UriKind.Relative));

@@ -19,9 +19,8 @@ namespace lastfm
     {
         public static async Task<List<tagInfo>> search(string tagName, int page = 0, int limit = 30)
         {
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("tag.search");
             rParams.Add("tag", HttpUtility.UrlEncode(tagName));
-            rParams.Add("method", "tag.search");
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
             XDocument returnedXml = await Request.MakeRequest(rParams);
@@ -44,9 +43,8 @@ namespace lastfm
         }
         public static async Task<tagInfo> getInfo(string tagName, string lang = "en")
         {
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("tag.getinfo");
             rParams.Add("tag", HttpUtility.UrlEncode(tagName));
-            rParams.Add("method", "tag.getinfo");
             rParams.Add("lang", lang);
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)

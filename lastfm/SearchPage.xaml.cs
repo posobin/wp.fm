@@ -36,7 +36,7 @@ namespace lastfm
         ObservableCollection<trackInfo> lstTrackResults = new ObservableCollection<trackInfo>();
         ObservableCollection<tagInfo> lstTagResults = new ObservableCollection<tagInfo>();
         ProgressIndicator prog;
-        //last string searched for
+        //last strings searched for
         private string lastArtistString;
         private string lastAlbumString;
         private string lastTrackString;
@@ -47,15 +47,15 @@ namespace lastfm
         private pair<int, int> trackNums = new pair<int, int>(0, 1);
         private pair<int, int> tagNums = new pair<int, int>(0, 1);
 
-        enum PivotItem
-        {
-            First = 0, Artist = 0, Album = 1, Track = 2, Tag = 3, Last = 3
-        }
-
         bool HookedArtistScrolling = false;
         bool HookedAlbumScrolling = false;
         bool HookedTrackScrolling = false;
         bool HookedTagScrolling = false;
+
+        enum PivotItem
+        {
+            First = 0, Artist = 0, Album = 1, Track = 2, Tag = 3, Last = 3
+        }
 
         public SearchPage()
         {
@@ -64,12 +64,12 @@ namespace lastfm
             albumResults.DataContext = lstAlbumResults;
             trackResults.DataContext = lstTrackResults;
             tagResults.DataContext = lstTagResults;
-            prog = new ProgressIndicator();
-            SystemTray.SetProgressIndicator(this, prog);
             artistResults.Loaded += new RoutedEventHandler(artistResults_Loaded);
             albumResults.Loaded += new RoutedEventHandler(albumResults_Loaded);
             trackResults.Loaded += new RoutedEventHandler(trackResults_Loaded);
             tagResults.Loaded += new RoutedEventHandler(tagResults_Loaded);
+            prog = new ProgressIndicator();
+            SystemTray.SetProgressIndicator(this, prog);
         }
 
         protected override void OnNavigatedTo(System.Windows.Navigation.NavigationEventArgs e)
@@ -260,21 +260,22 @@ namespace lastfm
             if (string.IsNullOrEmpty(searchText))
                 return;
             txtSearchBox.Text = searchText;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Searching for artists...";
-            List<artistInfo> lst = new List<artistInfo>();
+            ShowProgressIndicator("Searching for artists...");
+
             try
-            { lst = await artist.search(searchText); }
-            catch (TaskCanceledException) { }
+            {
+                List<artistInfo> lst = new List<artistInfo>();
+                lst = await artist.search(searchText);
 
-            foreach (artistInfo info in lst)
-                lstArtistResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
-            lastArtistString = searchText;
-            artistNums.PageNumber++;
+                foreach (artistInfo info in lst)
+                    lstArtistResults.Add(info);
+                artistNums.PageNumber++;
+            }
+            finally
+            {
+                HideProgressIndicator();
+                lastArtistString = searchText;
+            }
         }
 
         private async void getAlbumList(string searchText)
@@ -282,22 +283,22 @@ namespace lastfm
             if (string.IsNullOrEmpty(searchText))
                 return;
             txtSearchBox.Text = searchText;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Searching for albums...";
+            ShowProgressIndicator("Searching for albums...");
 
-            List<albumInfo> lst = new List<albumInfo>();
             try
-            { lst = (await album.search(searchText)); }
-            catch (TaskCanceledException) { }
+            {
+                List<albumInfo> lst = new List<albumInfo>();
+                lst = (await album.search(searchText));
 
-            foreach (albumInfo info in lst)
-                lstAlbumResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
-            lastAlbumString = searchText;
-            albumNums.PageNumber++;
+                foreach (albumInfo info in lst)
+                    lstAlbumResults.Add(info);
+                albumNums.PageNumber++;
+            }
+            finally
+            {
+                HideProgressIndicator();
+                lastAlbumString = searchText;
+            }
         }
 
         private async void getTrackList(string searchText)
@@ -305,22 +306,22 @@ namespace lastfm
             if (string.IsNullOrEmpty(searchText))
                 return;
             txtSearchBox.Text = searchText;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Searching for tracks...";
+            ShowProgressIndicator("Searching for tracks...");
 
-            List<trackInfo> lst = new List<trackInfo>();
             try
-            { lst = await track.search(searchText); }
-            catch (TaskCanceledException) { }
+            {
+                List<trackInfo> lst = new List<trackInfo>();
+                lst = await track.search(searchText);
 
-            foreach (trackInfo info in lst)
-                lstTrackResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
-            lastTrackString = searchText;
-            trackNums.PageNumber++;
+                foreach (trackInfo info in lst)
+                    lstTrackResults.Add(info);
+                trackNums.PageNumber++;
+            }
+            finally
+            {
+                HideProgressIndicator();
+                lastTrackString = searchText;
+            }
         }
 
         private async void getTagList(string searchText)
@@ -328,22 +329,22 @@ namespace lastfm
             if (string.IsNullOrEmpty(searchText))
                 return;
             txtSearchBox.Text = searchText;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Searching for tags...";
+            ShowProgressIndicator("Searching for tags...");
 
-            List<tagInfo> lst = new List<tagInfo>();
             try
-            { lst = await tag.search(searchText); }
-            catch (TaskCanceledException) { }
+            {
+                List<tagInfo> lst = new List<tagInfo>();
+                lst = await tag.search(searchText);
 
-            foreach (tagInfo info in lst)
-                lstTagResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
-            lastTagString = searchText;
-            tagNums.PageNumber++;
+                foreach (tagInfo info in lst)
+                    lstTagResults.Add(info);
+                tagNums.PageNumber++;
+            }
+            finally
+            {
+                HideProgressIndicator();
+                lastTagString = searchText;
+            }
         }
         #endregion
 
@@ -353,86 +354,88 @@ namespace lastfm
         {
             if (String.IsNullOrEmpty(lastArtistString))
                 return;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Loading more artists...";
-
-            List<artistInfo> lst = new List<artistInfo>();
+            ShowProgressIndicator("Loading more artists...");
 
             try
-            { lst = await artist.search(lastArtistString, artistNums.PageNumber++); }
-            catch (TaskCanceledException) { artistNums.PageNumber--; }
+            {
+                List<artistInfo> lst = new List<artistInfo>();
+                lst = await artist.search(lastArtistString, artistNums.PageNumber);
+                // If add increment inside tag.search call 
+                // then if the exception occured page number would still increase, 
+                // so we would have to decrement it inside of exception handler
+                artistNums.PageNumber++;
+
+                foreach (artistInfo info in lst)
+                    lstArtistResults.Add(info);
+            }
             catch (IndexOutOfRangeException) { prog.Text = "No more results"; }
-
-            foreach (artistInfo info in lst)
-                lstArtistResults.Add(info);
-
-            prog.IsVisible = false;
-            prog.IsIndeterminate = false;
+            finally { HideProgressIndicator(); }
         }
 
         private async void loadMoreAlbums()
         {
             if (string.IsNullOrEmpty(lastAlbumString))
                 return;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Loading more albums...";
-
-            List<albumInfo> lst = new List<albumInfo>();
+            ShowProgressIndicator("Loading more albums...");
 
             try
-            { lst = new List<albumInfo>(await album.search(lastAlbumString, albumNums.PageNumber++)); }
-            catch (TaskCanceledException) { albumNums.PageNumber--; }
+            {
+                List<albumInfo> lst = new List<albumInfo>();
+                lst = new List<albumInfo>(await album.search(lastAlbumString, albumNums.PageNumber));
+                // If add increment inside tag.search call 
+                // then if the exception occured page number would still increase, 
+                // so we would have to decrement it inside of exception handler
+                albumNums.PageNumber++;
+
+                foreach (albumInfo info in lst)
+                    lstAlbumResults.Add(info);
+            }
             catch (IndexOutOfRangeException) { prog.Text = "No more results"; }
-
-            foreach (albumInfo info in lst)
-                lstAlbumResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
+            finally { HideProgressIndicator(); }
         }
 
         private async void loadMoreTracks()
         {
             if (string.IsNullOrEmpty(lastTrackString))
                 return;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Loading more tracks...";
+            ShowProgressIndicator("Loading more tracks...");
 
-            List<trackInfo> lst = new List<trackInfo>();
             try
-            { lst = new List<trackInfo>(await track.search(lastTrackString, trackNums.PageNumber++)); }
-            catch (TaskCanceledException) { trackNums.PageNumber--; }
+            {
+                List<trackInfo> lst = new List<trackInfo>();
+                lst = new List<trackInfo>(await track.search(lastTrackString, trackNums.PageNumber));
+                // If add increment inside tag.search call 
+                // then if the exception occured page number would still increase, 
+                // so we would have to decrement it inside of exception handler
+                trackNums.PageNumber++;
+
+                foreach (trackInfo info in lst)
+                    lstTrackResults.Add(info);
+            }
             catch (IndexOutOfRangeException) { prog.Text = "No more results"; }
-
-            foreach (trackInfo info in lst)
-                lstTrackResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
+            finally { HideProgressIndicator(); }
         }
 
         private async void loadMoreTags()
         {
             if (string.IsNullOrEmpty(lastTagString))
                 return;
-            prog.IsVisible = true;
-            prog.IsIndeterminate = true;
-            prog.Text = "Loading more tags...";
+            ShowProgressIndicator("Loading more tags...");
 
-            List<tagInfo> lst = new List<tagInfo>();
             try
-            { lst = new List<tagInfo>(await tag.search(lastTagString, tagNums.PageNumber++)); }
-            catch (TaskCanceledException) { tagNums.PageNumber--; }
+            {
+                List<tagInfo> lst = new List<tagInfo>();
+                lst = new List<tagInfo>(await tag.search(lastTagString, tagNums.PageNumber));
+                // If add increment inside tag.search call 
+                // then if the exception occured page number would still increase, 
+                // so we would have to decrement it inside of exception handler
+                tagNums.PageNumber++;
+
+                foreach (tagInfo info in lst)
+                    lstTagResults.Add(info);
+            }
             catch (IndexOutOfRangeException) { prog.Text = "No more results"; }
-
-            foreach (tagInfo info in lst)
-                lstTagResults.Add(info);
-
-            prog.IsIndeterminate = false;
-            prog.IsVisible = false;
+            finally { HideProgressIndicator(); }
         }
 
         #endregion
@@ -445,22 +448,18 @@ namespace lastfm
         {
             if (string.IsNullOrEmpty(searchText))
                 return;
-            switch (SearchPivot.SelectedIndex)
+            switch ((PivotItem)SearchPivot.SelectedIndex)
             {
-                case 0:
-                    //artists
+                case PivotItem.Artist:
                     getArtistList(searchText);
                     break;
-                case 1:
-                    //albums
+                case PivotItem.Album:
                     getAlbumList(searchText);
                     break;
-                case 2:
-                    //tracks
+                case PivotItem.Track:
                     getTrackList(searchText);
                     break;
-                case 3:
-                    //tags
+                case PivotItem.Tag:
                     getTagList(searchText);
                     break;
                 default:
@@ -514,25 +513,21 @@ namespace lastfm
 
         private void SearchPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            switch (SearchPivot.SelectedIndex)
+            switch ((PivotItem)SearchPivot.SelectedIndex)
             {
-                case 0:
-                    //artists
+                case PivotItem.Artist:
                     if (lstArtistResults.Count == 0)
                         getArtistList(txtSearchBox.Text);
                     break;
-                case 1:
-                    //albums
+                case PivotItem.Album:
                     if (lstAlbumResults.Count == 0)
                         getAlbumList(txtSearchBox.Text);
                     break;
-                case 2:
-                    //tracks
+                case PivotItem.Track:
                     if (lstTrackResults.Count == 0)
                         getTrackList(txtSearchBox.Text);
                     break;
-                case 3:
-                    //tags
+                case PivotItem.Tag:
                     if (lstTagResults.Count == 0)
                         getTagList(txtSearchBox.Text);
                     break;
@@ -550,13 +545,32 @@ namespace lastfm
         {
             if (e.Key == Key.Enter)
             {
+                // Hide keyboard
                 this.Focus();
+                // Clear all the previous searches
                 lstArtistResults.Clear();
                 lstAlbumResults.Clear();
                 lstTrackResults.Clear();
                 lstTagResults.Clear();
+                // Begin new search
                 getList(txtSearchBox.Text);
             }
+        }
+
+        private void HideProgressIndicator()
+        {
+            SystemTray.ProgressIndicator = prog;
+            prog.IsIndeterminate = false;
+            prog.IsVisible = false;
+        }
+
+        private void ShowProgressIndicator(string text = "")
+        {
+            if (!string.IsNullOrEmpty(text))
+                prog.Text = text;
+            prog.IsIndeterminate = true;
+            prog.IsVisible = true;
+            SystemTray.ProgressIndicator = prog;
         }
     }
 }

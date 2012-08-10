@@ -24,9 +24,8 @@ namespace lastfm
         /// <returns>Artist info object, containing artist desription</returns>
         public static async Task<artistInfo> getInfo(string artistName)
         {
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("artist.getinfo");
             rParams.Add("artist", HttpUtility.UrlEncode(artistName));
-            rParams.Add("method", "artist.getinfo");
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)
             {
@@ -44,9 +43,8 @@ namespace lastfm
         /// <returns>List of top albums</returns>
         public static async Task<List<albumInfo>> getTopAlbums(string artistName, int page = 0, int limit = 0)
         {
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("artist.getTopAlbums");
             rParams.Add("artist", artistName);
-            rParams.Add("method", "artist.getTopAlbums");
             rParams.Add("page", page.ToString());
             rParams.Add("limit", limit.ToString());
             XDocument returnedXml = await Request.MakeRequest(rParams);
@@ -68,9 +66,8 @@ namespace lastfm
         /// <returns>List of artistInfos with returned artists data</returns>
         public static async Task<List<artistInfo>> search(string artistName, int page = 0, int limit = 30)
         {
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("artist.search");
             rParams.Add("artist", HttpUtility.UrlEncode(artistName));
-            rParams.Add("method", "artist.search");
             rParams.Add("page", page.ToString());
             rParams.Add("limit", limit.ToString());
             XDocument returnedXml = await Request.MakeRequest(rParams);

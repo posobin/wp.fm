@@ -20,8 +20,11 @@ namespace lastfm
         public static void Scrobbles_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             Scrobble();
-            Session.Scrobbles.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Scrobbling.Scrobbles_CollectionChanged);
         }
+
+        /// <summary>
+        /// Sends unscrobbled songs list to last.fm
+        /// </summary>
         public static void Scrobble()
         {
             if (NetworkInterface.GetIsNetworkAvailable())
@@ -37,6 +40,7 @@ namespace lastfm
                     catch (TaskCanceledException) { }
                 }
                 Session.Scrobbles = new ObservableCollection<trackInfo>();
+                Session.Scrobbles.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Scrobbling.Scrobbles_CollectionChanged);
             }
         }
     }

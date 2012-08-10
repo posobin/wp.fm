@@ -31,5 +31,16 @@ namespace lastfm
         {
             return Encoding.UTF8.GetBytes(ToString());
         }
+
+        /// <summary>
+        /// RequestParameters constructor.
+        /// </summary>
+        /// <param name="MethodName">Method name to use RequestParameters with</param>
+        public RequestParameters(string MethodName) : base()
+        {
+            if (string.IsNullOrEmpty(MethodName))
+                throw new ArgumentException("Method name cannot be empty", "MethodName");
+            this.Add("method", MethodName);
+        }
     }
 }

@@ -24,10 +24,9 @@ namespace lastfm
         {
             string password_hash = MD5CryptoServiceProvider.GetMd5String(password);
             string authToken = MD5CryptoServiceProvider.GetMd5String(username.ToLower() + password_hash);
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("auth.getMobileSession");
             rParams.Add("username", username);
             rParams.Add("authToken", authToken);
-            rParams.Add("method", "auth.getMobileSession");
             XDocument ReturnedXML = await Request.MakeRequest(rParams, true);
 
             if (Request.CheckStatus(ReturnedXML) == 0)

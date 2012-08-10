@@ -19,6 +19,14 @@ namespace lastfm
     public class Session
     {
         /// <summary>
+        /// Static constructor
+        /// </summary>
+        static Session()
+        {
+            Session.Scrobbles.CollectionChanged += new System.Collections.Specialized.NotifyCollectionChangedEventHandler(Scrobbling.Scrobbles_CollectionChanged);
+        }
+
+        /// <summary>
         /// Last session
         /// </summary>
         public static Session CurrentSession

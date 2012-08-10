@@ -210,5 +210,7 @@ namespace lastfm
                 throw new ArgumentException("tagName connot be empty", "tagName");
             return new Uri(string.Format("{0}?tagName={1}", baseString, tagName), UriKind.Relative);
         }
+
+        public static Uri NoImageBig { get{ return new Uri("/Images/NoImageBig.png", UriKind.Relative); } }
     }
 }

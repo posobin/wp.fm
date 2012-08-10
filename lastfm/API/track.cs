@@ -19,9 +19,8 @@ namespace lastfm
     {
         public static async Task<List<trackInfo>> search(string trackName, int page = 0, int limit = 30)
         {
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("track.search");
             rParams.Add("track", HttpUtility.UrlEncode(trackName));
-            rParams.Add("method", "track.search");
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
             XDocument returnedXml = await Request.MakeRequest(rParams);
@@ -45,12 +44,11 @@ namespace lastfm
 
         public static async Task<trackInfo> getInfo(string artistName, string trackName, string username = "")
         {
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("track.getinfo");
             rParams.Add("artist", HttpUtility.UrlEncode(artistName));
             rParams.Add("track", HttpUtility.UrlEncode(trackName));
             if (!string.IsNullOrEmpty(username))
                 rParams.Add("username", username);
-            rParams.Add("method", "track.getinfo");
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)
             {
@@ -89,11 +87,10 @@ namespace lastfm
                 timeStamp = (int)(timestamp.ToUniversalTime() - new DateTime(1970, 1, 1)).TotalSeconds;
             else
                 timeStamp = (int)(DateTime.UtcNow - new DateTime(1970, 1, 1)).TotalSeconds;
-            RequestParameters rParams = new RequestParameters();
+            RequestParameters rParams = new RequestParameters("track.scrobble");
             rParams.Add("artist", artistName);
             rParams.Add("track", trackName);
             rParams.Add("timestamp", timeStamp.ToString());
-            rParams.Add("method", "track.scrobble");
             rParams.Add("sk", Session.CurrentSession.SessionKey);
             XDocument returnedXml = await Request.MakeRequest(rParams, true);
             if (Request.CheckStatus(returnedXml) != 0)
@@ -106,8 +103,7 @@ namespace lastfm
                 MessageBox.Show("This service requires authentication");
             if (tracks.Count > 50)
                 throw new ArgumentOutOfRangeException("tracks", "Number of elements in the list must not exceed 50");
-            RequestParameters rParams = new RequestParameters();
-            rParams.Add("method", "track.scrobble");
+            RequestParameters rParams = new RequestParameters("track.scrobble");
             rParams.Add("sk", Session.CurrentSession.SessionKey);
             for (int i = 0; i < tracks.Count; ++i)
             {
@@ -129,8 +125,7 @@ namespace lastfm
         {
             if (!Session.CanUseCurrentSession())
                 MessageBox.Show("This service requires authentication");
-            RequestParameters rParams = new RequestParameters();
-            rParams.Add("method", "track.updateNowPlaying");
+            RequestParameters rParams = new RequestParameters("track.updateNowPlaying");
             rParams.Add("artist", artistName);
             rParams.Add("track", trackName);
             rParams.Add("sk", Session.CurrentSession.SessionKey);
@@ -145,8 +140,7 @@ namespace lastfm
         {
             if (!Session.CanUseCurrentSession())
                 throw new UnauthorizedException("User must login to perform this action");
-            RequestParameters rParams = new RequestParameters();
-            rParams.Add("method", "track.love");
+            RequestParameters rParams = new RequestParameters("track.love");
             rParams.Add("artist", artistName);
             rParams.Add("track", trackName);
             rParams.Add("sk", Session.CurrentSession.SessionKey);
@@ -159,8 +153,7 @@ namespace lastfm
         {
             if (!Session.CanUseCurrentSession())
                 throw new UnauthorizedException("User must login to perform this action");
-            RequestParameters rParams = new RequestParameters();
-            rParams.Add("method", "track.unlove");
+            RequestParameters rParams = new RequestParameters("track.unlove");
             rParams.Add("artist", artistName);
             rParams.Add("track", trackName);
             rParams.Add("sk", Session.CurrentSession.SessionKey);

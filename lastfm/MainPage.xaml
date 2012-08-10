@@ -29,7 +29,7 @@
             <shell:ApplicationBarIconButton IconUri="/Icons/appbar.upload.rest.png" Text="Scrobble" Click="ScrobbleClick" />
             <shell:ApplicationBarIconButton IconUri="/Icons/appbar.door.leave.png" Text="log out" Click="Logout"/>
             <shell:ApplicationBarIconButton IconUri="/Icons/appbar.feature.search.rest.png" Text="search" Click="Search" />
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.user.png" Text="profile" Click="UserInfo" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.user.png" Text="profile" Click="LaunchUserInfoPage" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
                 <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>
@@ -48,7 +48,7 @@
         <shell:ApplicationBar x:Key="appbar_logout" IsVisible="True">
             <shell:ApplicationBarIconButton IconUri="/Icons/appbar.door.leave.png" Text="log out" Click="Logout"/>
             <shell:ApplicationBarIconButton IconUri="/Icons/appbar.feature.search.rest.png" Text="search" Click="Search" />
-            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.user.png" Text="profile" Click="UserInfo" />
+            <shell:ApplicationBarIconButton IconUri="/Icons/appbar.user.png" Text="profile" Click="LaunchUserInfoPage" />
             <shell:ApplicationBar.MenuItems>
                 <shell:ApplicationBarMenuItem Text="Settings" Click="LaunchSettingsPage"/>
                 <shell:ApplicationBarMenuItem Text="About" Click="LaunchAboutPage"/>
@@ -71,7 +71,6 @@
         </controls:Pivot>
     </Grid>
 
-    <!--Sample code showing usage of ApplicationBar-->
     <phone:PhoneApplicationPage.ApplicationBar>
         <shell:ApplicationBar IsVisible="False" IsMenuEnabled="False">
         </shell:ApplicationBar>

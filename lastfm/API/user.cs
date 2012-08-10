@@ -19,8 +19,7 @@ namespace lastfm
     {
         public static async Task<UserInfo> getInfo(string user)
         {
-            RequestParameters rParams = new RequestParameters();
-            rParams.Add("method", "user.getInfo");
+            RequestParameters rParams = new RequestParameters("user.getinfo");
             rParams.Add("user", user);
             XDocument ReturnedXML = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(ReturnedXML) == 0)
@@ -31,8 +30,7 @@ namespace lastfm
 
         public static async Task<List<trackInfo>> getRecentTracks(String user, int limit = 50, int page = 1)
         {
-            RequestParameters rParams = new RequestParameters();
-            rParams.Add("method", "user.getRecentTracks");
+            RequestParameters rParams = new RequestParameters("user.getRecentTracks");
             rParams.Add("user", user);
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
@@ -51,8 +49,7 @@ namespace lastfm
 
         public static async Task<List<artistInfo>> getRecommendedArtists(int page = 1, int limit = 50)
         {
-            RequestParameters rParams = new RequestParameters();
-            rParams.Add("method", "user.getRecommendedArtists");
+            RequestParameters rParams = new RequestParameters("user.getRecommendedArtists");
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
             rParams.Add("sk", Session.CurrentSession.SessionKey);
