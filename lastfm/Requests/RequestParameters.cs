@@ -22,7 +22,7 @@ namespace lastfm
         {
             StringBuilder sb = new StringBuilder();
             foreach (string key in this.Keys)
-                sb.Append(key+'='+this[key]+'&');
+                sb.Append(key + '=' + HttpUtility.UrlEncode(this[key]) + '&');
             string ret = sb.ToString().Substring(0, sb.Length-1);
             return ret;
         }

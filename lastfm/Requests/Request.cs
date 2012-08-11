@@ -84,7 +84,7 @@ namespace lastfm
             }
             string request_string = rParams.ToString();
             WebClient client = new WebClient();
-            client.Headers["User-Agent"] = "last.fm scrobbler for WP";
+            client.Headers["User-Agent"] = "wp.fm";
             client.Headers["Content-Type"] = "application/x-www-form-urlencoded";
             client.Headers["Accept-Charset"] = "utf-8";
             client.Encoding = Encoding.UTF8;

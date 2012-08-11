@@ -60,9 +60,9 @@ namespace lastfm
                     if (LastSong != null)
                     {
                         Scrobble(LastSong, LastSongBegan);
-                        LastSong = MediaPlayer.Queue.ActiveSong;
-                        LastSongBegan = DateTime.Now;
                     }
+                    LastSong = MediaPlayer.Queue.ActiveSong;
+                    LastSongBegan = DateTime.Now;
                     UpdateNowPlaying();
                 }
                 else
@@ -86,13 +86,7 @@ namespace lastfm
             // ActiveSongChanged is not being fired when application launches and the song starts playing
             Song NowPlaying = MediaPlayer.Queue.ActiveSong;
             if (NowPlaying != null && LastSong == null)
-                if (NetworkInterface.GetIsNetworkAvailable())
-                    if (Session.AutoScrobbling == true)
-                    {
-                        UpdateNowPlaying();
-                        LastSong = MediaPlayer.Queue.ActiveSong;
-                        LastSongBegan = DateTime.Now;
-                    }
+                ActiveSongChanged(sender, e);
         }
 
         /// <summary>
@@ -195,6 +189,8 @@ namespace lastfm
             {
                 UpdateAppBar();
                 UpdateNowPlayingPivot();
+                if (Session.Scrobbles.Count() != 0)
+                    Scrobbling.Scrobble();
             }
             else
                 MessageBox.Show("No internet connection is available");

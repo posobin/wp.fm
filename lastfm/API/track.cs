@@ -20,7 +20,7 @@ namespace lastfm
         public static async Task<List<trackInfo>> search(string trackName, int page = 0, int limit = 30)
         {
             RequestParameters rParams = new RequestParameters("track.search");
-            rParams.Add("track", HttpUtility.UrlEncode(trackName));
+            rParams.Add("track", trackName);
             rParams.Add("limit", limit.ToString());
             rParams.Add("page", page.ToString());
             XDocument returnedXml = await Request.MakeRequest(rParams);
@@ -45,8 +45,8 @@ namespace lastfm
         public static async Task<trackInfo> getInfo(string artistName, string trackName, string username = "")
         {
             RequestParameters rParams = new RequestParameters("track.getinfo");
-            rParams.Add("artist", HttpUtility.UrlEncode(artistName));
-            rParams.Add("track", HttpUtility.UrlEncode(trackName));
+            rParams.Add("artist", artistName);
+            rParams.Add("track", trackName);
             if (!string.IsNullOrEmpty(username))
                 rParams.Add("username", username);
             XDocument returnedXml = await Request.MakeRequest(rParams);

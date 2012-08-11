@@ -20,7 +20,7 @@
     </SupportedCultures>
     <XapOutputs>true</XapOutputs>
     <GenerateSilverlightManifest>true</GenerateSilverlightManifest>
-    <XapFilename>lastfm.xap</XapFilename>
+    <XapFilename>wp.fm.xap</XapFilename>
     <SilverlightManifestTemplate>Properties\AppManifest.xml</SilverlightManifestTemplate>
     <SilverlightAppEntry>lastfm.App</SilverlightAppEntry>
     <ValidateXaml>true</ValidateXaml>
@@ -175,7 +175,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lastfm_2012_08_10_15_00_22.sap" />
     <None Include="Properties\AppManifest.xml" />
     <None Include="Properties\WMAppManifest.xml" />
   </ItemGroup>

@@ -25,7 +25,7 @@ namespace lastfm
         public static async Task<artistInfo> getInfo(string artistName)
         {
             RequestParameters rParams = new RequestParameters("artist.getinfo");
-            rParams.Add("artist", HttpUtility.UrlEncode(artistName));
+            rParams.Add("artist", artistName);
             XDocument returnedXml = await Request.MakeRequest(rParams);
             if (Request.CheckStatus(returnedXml) == 0)
             {
@@ -67,7 +67,7 @@ namespace lastfm
         public static async Task<List<artistInfo>> search(string artistName, int page = 0, int limit = 30)
         {
             RequestParameters rParams = new RequestParameters("artist.search");
-            rParams.Add("artist", HttpUtility.UrlEncode(artistName));
+            rParams.Add("artist", artistName);
             rParams.Add("page", page.ToString());
             rParams.Add("limit", limit.ToString());
             XDocument returnedXml = await Request.MakeRequest(rParams);

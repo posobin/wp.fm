@@ -47,7 +47,6 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Ic
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\appbar.user.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\ApplicationIcon.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Images\Background.png
-C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Images\SplashScreenImage.jpg
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\wp.fm.99.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\wp.fm.icon.png
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\Icons\wp.fm.tile.png
@@ -80,3 +79,4 @@ C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\la
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\lastfm.dll
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\lastfm.pdb
 C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\obj\Debug\XapCacheFile.xml
+C:\Users\passick\Documents\Visual Studio 2010\Projects\wp.fm\lastfm\Bin\Debug\SplashScreenImage.jpg
