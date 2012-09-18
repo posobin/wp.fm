@@ -2,3 +2,4 @@
 - Add relative timing on the recent tracks tab on userInfoPage (like on twitter)
 - Add background working
 - Cooool design
+- Add top charts

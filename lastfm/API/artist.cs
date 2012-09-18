@@ -40,6 +40,8 @@ namespace lastfm
         /// artist.getTopAlbums last.fm api function
         /// </summary>
         /// <param name="artistName">Name of the artist to find top albums for</param>
+        /// <param name="page">Page number to return content of</param>
+        /// <param name="limit">Maximum number of elements per page</param>
         /// <returns>List of top albums</returns>
         public static async Task<List<albumInfo>> getTopAlbums(string artistName, int page = 0, int limit = 0)
         {

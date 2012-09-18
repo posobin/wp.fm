@@ -72,6 +72,10 @@
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="API\album.cs" />
+    <Compile Include="API\chart.cs" />
+    <Compile Include="ChartsPage.xaml.cs">
+      <DependentUpon>ChartsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Info classes and helpers\albumInfo.cs" />
     <Compile Include="Info pages\albumInfoPage.xaml.cs">
       <DependentUpon>albumInfoPage.xaml</DependentUpon>
@@ -134,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
     <Page Include="AboutPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChartsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
